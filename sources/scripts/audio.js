@@ -154,7 +154,7 @@ $(document).ready(function (e) {
             $('.playerPlaylist').hide();
             
             // hide cover
-            $("#coverImage").hide();
+            //$("#coverImage").hide();
             $("#audioPlayerWrapper").show();
             autoplay = false;
             setupHTML5Player();
@@ -232,7 +232,7 @@ $(document).ready(function (e) {
             	$('#coverImage').hide();
 
             	// show the player framework
-            	$('#audioPlayerWrapper').show();
+            	$('#audioPlayerWrapper').fadeIn();
 
             	// call the setupHTML5Player function
             	autoplay = true;
@@ -241,6 +241,8 @@ $(document).ready(function (e) {
 			}
 
         }); // end click listener
+        
+        $("#coverImage").show();
 
     } // end cover image function
 
