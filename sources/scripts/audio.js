@@ -1,12 +1,13 @@
-// execute when the page is ready
-$(document).ready(function (e) {
+/* global MediaElementPlayer */
+
+$(document).ready(function () {
 
     // global variables declaration
-    var player, mediaData, XMLData, album, track, tracks, img, scrollLength = 41, trackIndex = 0,
-    	autoplay = true;
-        firstList = true,
-        trackCount = 0,
-        previousTrack = 0;
+    var player, mediaData, album, track, tracks, img, trackIndex = 0,
+		autoplay = true,
+		firstList = true,
+		trackCount = 0,
+		previousTrack = 0;
 
     // AJAX setup
     $.ajaxSetup({
@@ -50,7 +51,7 @@ $(document).ready(function (e) {
 
         // create a new album object
         // and assign the data from the XML
-        album = new Object;
+        album = {};
         album.name = $(xml).find('album').find('name').text();
         album.author = $(xml).find('album').find('author').text();
         album.image = $(xml).find('album').find('image').text();
@@ -63,7 +64,7 @@ $(document).ready(function (e) {
         TRACK = $(xml).find('tracks').find('track');
 
         // create a new array to hold all of the tracks
-        tracks = new Array();
+        tracks = [];
 
         // loop through each track node
         // and assign each track's information
@@ -71,7 +72,7 @@ $(document).ready(function (e) {
 
             // create a new track object
             // and assign the data from the XML
-            track = new Object();
+            track = {};
             track.id = trackIndex;
             track.source = $(this).find('source').text();
             track.title = $(this).find('title').text();
@@ -128,7 +129,7 @@ $(document).ready(function (e) {
                     }); // end loop
 
                     // if current trackCount does not equal to the previous track
-                    if (trackCount != previousTrack) {
+                    if (trackCount !== previousTrack) {
 
                         // call the loadTrack function
                         loadTrack(mediaData, trackCount);
@@ -185,7 +186,7 @@ $(document).ready(function (e) {
             // success: set the splash image
             $('#coverImage').css('background-image', 'url(assets/images/splash.jpg)');
 
-        }).error(function (error) {
+        }).error(function () {
 
             // failed: set the default splash image
             $('#coverImage').css('background-image', 'url(https://mediastreamer.doit.wisc.edu/uwli-ltc/media/mp3_player/sources/images/default_cover.jpg)');
@@ -208,7 +209,7 @@ $(document).ready(function (e) {
 				blackberry: ua.match(/BlackBerry/),
 				android: ua.match(/Android/)
 			},
-			mobile = (getParameterByName("m") == "0") ? false : true;
+			mobile = (getParameterByName("m") === "0") ? false : true;
 			
 			// if the device is mobile
 			if ((checker.iphone || checker.ipod || checker.ipad || checker.blackberry || checker.android) && mobile) {
@@ -229,14 +230,14 @@ $(document).ready(function (e) {
 			} else {
 				
 				// hide the cover image
-            	$('#coverImage').hide();
+				$('#coverImage').hide();
 
-            	// show the player framework
-            	$('#audioPlayerWrapper').fadeIn();
+				// show the player framework
+				$('#audioPlayerWrapper').fadeIn();
 
-            	// call the setupHTML5Player function
-            	autoplay = true;
-            	setupHTML5Player();
+				// call the setupHTML5Player function
+				autoplay = true;
+				setupHTML5Player();
 				
 			}
 
@@ -288,7 +289,7 @@ $(document).ready(function (e) {
             // when this player starts, it will pause other players
             pauseOtherPlayers: true,
             // on track successfully ends, determind next track
-            success: function (media, node, player) {
+            success: function (media) {
 
 				// listen to the loadedmetadata event
 				media.addEventListener('loadedmetadata', function () {
@@ -389,7 +390,7 @@ $(document).ready(function (e) {
     } // end load track function
 
     // format time function
-    function formatTime(time, forceHours, fps) {
+    function formatTime(time, forceHours) {
 
         var hours = Math.floor(time / 3600) % 24,
             minutes = Math.floor(time / 60) % 60,
@@ -417,7 +418,7 @@ $(document).ready(function (e) {
             // success: set the loaded image
             $('.image').html(img);
 
-        }).error(function (error) {
+        }).error(function () {
 
             // failed: set the default track image
             $('.image').html('<img src="sources/images/default_profile.jpg" width="60" height="60" border="0" alt="" />');
@@ -476,9 +477,9 @@ $(document).ready(function (e) {
         var regex = new RegExp(regexS);
         var results = regex.exec(window.location.href);
 
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		
-        if (results == null) {
+        if (results === null) {
             return "";
         } else {
             return decodeURIComponent(results[1].replace(/\+/g, " "));
