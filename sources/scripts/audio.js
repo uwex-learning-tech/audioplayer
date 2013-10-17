@@ -2,55 +2,44 @@
 
 $(document).ready(function () {
 
-    // global variables declaration
-    var player, mediaData, album, track, tracks, img, trackIndex = 0,
-		autoplay = true,
-		firstList = true,
-		trackCount = 0,
-		previousTrack = 0;
+    /************************** GLOBAL-SCOPE VARIABLES *******************************/
+    var player, mediaData, album, track, tracks, img, trackIndex = 0, autoplay = true,
+		firstList = true, trackCount = 0, previousTrack = 0;
 
-    // AJAX setup
+    /************************** AJAX SETUP/REQUEST *******************************/
     $.ajaxSetup({
-
-        url: 'assets/tracks.xml',
+		url: 'assets/tracks.xml',
         type: 'GET',
         dataType: 'xml',
         accepts: 'xml',
         content: 'xml',
         contentType: 'xml; charset="utf-8"',
         cache: false
+    });
 
-    }); // end AJAX setup
-
-    // Encoding XML data
     $.ajax({
-
         encoding: 'UTF-8',
         beforeSend: function (xhr) {
             xhr.overrideMimeType("xml; charset=utf-8");
             xhr.setRequestHeader("Accept", "text/xml");
         },
         success: function (xml) {
-
             $('#errorMsg').hide();
             parseXML(xml);
-
         },
         error: function (xhr, exception) {
             displayError(xhr.status, exception);
         }
+    });
+	
+	/************************** FUNCTIONS *******************************/
 
-    }); // end encoding XML data
-
-    // parse xml function
     function parseXML(xml) {
 
-        // declare a TRACK variable to hold the
-        // XML track nodes
+        // declare a TRACK variable to hold the XML track nodes
         var TRACK;
 
-        // create a new album object
-        // and assign the data from the XML
+        // create a new album object and assign the data from the XML
         album = {};
         album.name = $(xml).find('album').find('name').text();
         album.author = $(xml).find('album').find('author').text();
@@ -66,12 +55,10 @@ $(document).ready(function () {
         // create a new array to hold all of the tracks
         tracks = [];
 
-        // loop through each track node
-        // and assign each track's information
+        // loop through each track node and assign each track's information
         TRACK.each(function () {
 
-            // create a new track object
-            // and assign the data from the XML
+            // create a new track object and assign the data from the XML
             track = {};
             track.id = trackIndex;
             track.source = $(this).find('source').text();
@@ -79,8 +66,7 @@ $(document).ready(function () {
             track.author = ( ($(this).find('author').text().length <= 0) ? album.author : $(this).find('author').text() );
             track.image = ( ($(this).find('image').text().length <= 0) ? album.image : $(this).find('image').text() );
 
-            // pust the track to the tracks array
-            // at the current trackIndex value
+            // pust the track to the tracks array at the current trackIndex value
             tracks[trackIndex] = track;
 
             // increment the trackIndex by 1
@@ -205,19 +191,18 @@ $(document).ready(function () {
 			// declare browser checker variables
 			var ua = navigator.userAgent,
 			checker = {
-				iphone: ua.match(/(iPhone|iPod|iPad)/),
+				ios: ua.match(/(iPhone|iPod|iPad)/),
 				blackberry: ua.match(/BlackBerry/),
 				android: ua.match(/Android/)
 			},
 			mobile = (getParameterByName("m") === "0") ? false : true;
 			
 			// if the device is mobile
-			if ((checker.iphone || checker.ipod || checker.ipad || checker.blackberry || checker.android) && mobile) {
+			if ((checker.ios || checker.blackberry || checker.android) && mobile) {
 				
 				// declare variables to hold the URL
 				var location = window.location.href,
-					locTemp,
-					locIndex = location.indexOf(".");
+					locTemp, locIndex = location.indexOf(".");
 				
 				// assign the new location
 				locTemp = location.substr(locIndex);
