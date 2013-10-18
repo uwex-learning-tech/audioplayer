@@ -178,3 +178,51 @@ noscript p {
 	background: #000000;
 	color: white;
 }
+
+/* DOWNLOAD BAR */
+#download_bar {
+	position: absolute;
+	text-align: right;
+	right:50px;
+	bottom: 7px;
+}
+#download_bar p {
+	font-size: 12px;
+	color: #b5b5b5;
+	font-weight: normal;
+	margin: 0;
+	display: inline-block;
+	margin-left: 10px;
+}
+#download_bar ul {
+	width: inherit;
+	margin: 0px;
+	padding: 0px;
+	display: inline-block;
+	list-style: none;
+}
+#download_bar ul li {
+	display: inline-block;
+	margin-left: 10px;
+}
+#download_bar ul li:first-child {
+	margin-left: 0px;
+}
+#download_bar ul li a,
+#download_bar ul li a:visited {
+	display: block;
+	position: relative;
+	font-size: 12px;
+	text-decoration: none;
+	height: 14px;
+	padding: 2px 0px 0px 18px;
+	font-weight: normal;
+	color: #ffffff;
+	background-image: url("../images/download_icon.png");
+	background-repeat: no-repeat;
+	background-position: left top;
+	opacity: .75;
+}
+#download_bar ul li a:hover {
+	opacity: 1;
+}

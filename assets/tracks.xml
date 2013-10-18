@@ -47,7 +47,8 @@
 	
 	<!-- for multiple tracks, add more track nodes -->
 	
-	<track>
+	<!--
+<track>
 		<source>Gentleman.mp3</source>
 		<title>Gentleman</title>
 		<author>PSY</author>
@@ -74,5 +75,6 @@
 		<author>Fall Out Boy</author>
 		<image>fall out boy.jpg</image>
 	</track>
+-->
 	
 </tracks>

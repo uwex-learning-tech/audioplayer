@@ -3,7 +3,7 @@
 $(document).ready(function () {
 
     /************************** GLOBAL-SCOPE VARIABLES *******************************/
-    var player, mediaData, album, track, tracks, img, trackIndex = 0, autoplay = true,
+    var player, mediaData, album, track, tracks, source, img, trackIndex = 0, autoplay = true,
 		firstList = true, trackCount = 0, previousTrack = 0;
 
     /************************** AJAX SETUP/REQUEST *******************************/
@@ -38,7 +38,9 @@ $(document).ready(function () {
 
         // declare a TRACK variable to hold the XML track nodes
         var TRACK;
-
+		
+		getSource();
+		
         // create a new album object and assign the data from the XML
         album = {};
         album.name = $(xml).find('album').find('name').text();
@@ -73,6 +75,8 @@ $(document).ready(function () {
             trackIndex++;
 
         }); // end each loop
+        
+        $(".playerInfoPanel").append("<div id=\"download_bar\"><ul></li></div>");
 
         // if tracks array length is greater than one
         if (tracks.length > 1) {
@@ -130,6 +134,8 @@ $(document).ready(function () {
             
             // call the getCoverImage() function
 			getCoverImage();
+			
+			dowloadableFile(source, "zip");
 
             // if tracks array is 1 or less than 1
         } else {
@@ -146,9 +152,12 @@ $(document).ready(function () {
             autoplay = false;
             setupHTML5Player();
             
-
+            dowloadableFile(tracks[0].source.replace(".mp3",""), "mp3");
+            
         } // end if
-
+		
+		dowloadableFile(source, "pdf");
+		
     } // end parse XML function
 
     // cover image function
@@ -454,6 +463,77 @@ $(document).ready(function () {
         $('#errorMsg').html('<p>' + statusMsg + '<br />' + exceptionMsg + '</p>'); // display error message
 
     } // end display error function
+	
+	function dowloadableFile(file, ext) {
+	
+		var content_type;
+		
+		if (ext === "pdf") {
+			content_type = "application/pdf";
+			file = "assets/"+file;
+		} else if (ext === "mp3") {
+			content_type = "audio/mpeg";
+			file = "assets/audio/"+file;
+		} else if (ext === "zip") {
+			content_type = "application/zip";
+			file = "assets/audio/"+file;
+		}
+		
+		$.ajax({
+			url: file + "." + ext,
+			type: 'HEAD',
+			dataType: 'text',
+			contentType: content_type,
+			async: false,
+			beforeSend: function (xhr) {
+				xhr.overrideMimeType(content_type);
+				xhr.setRequestHeader("Accept", content_type);
+			},
+			success: function () {
+				
+				var f = file, downloadBar = $("#download_bar ul");
+				
+				if (location.protocol !== "http:") {
+					var url = window.location.href;
+					url = url.substr(0,url.lastIndexOf("/")+1).replace("https","http");
+					f = url + file;
+				}
+				
+				if (ext === "pdf") {
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Transcript</a></li>");
+				} else if (ext === "mp3") {
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Audio</a></li>");
+				} else if (ext === "zip") {
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Audio</a></li>");
+				}
+				
+			},
+			error: function () {
+		
+				var string;
+		
+				if (ext === "mp3") {
+					string = "MP3";
+				} else if (ext === "zip") {
+					string = "Audio";
+				} else if (ext === "pdf") {
+					string = "Transcript";
+				}
+				
+				string += " pending...";
+				$("#download_bar ul").after("<p>" + string + "</p>");
+
+			}
+		});
+	}
+	
+	function getSource() {
+		var urlToParse = window.location.href, src;
+		src = urlToParse.split("?");
+		src = src[0].split("/");
+		src = src[src.length-2];
+		source = src;
+	}
 	
 	// getParameterByName function
 	function getParameterByName(name) {
