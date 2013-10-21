@@ -39,6 +39,7 @@ $(document).ready(function () {
         // declare a TRACK variable to hold the XML track nodes
         var TRACK;
 		
+		// get the last directory folder name as the source
 		getSource();
 		
         // create a new album object and assign the data from the XML
@@ -76,7 +77,8 @@ $(document).ready(function () {
 
         }); // end each loop
         
-        $(".playerInfoPanel").append("<div id=\"download_bar\"><ul></li></div>");
+        // inject the download bar to them DOM
+        $(".playerInfoPanel").append("<div id=\"download_bar\"><p><small>Download:</small></p><ul></li></div>");
 
         // if tracks array length is greater than one
         if (tracks.length > 1) {
@@ -135,6 +137,7 @@ $(document).ready(function () {
             // call the getCoverImage() function
 			getCoverImage();
 			
+			// get the downloadable audio zip folder
 			dowloadableFile(source, "zip");
 
             // if tracks array is 1 or less than 1
@@ -152,10 +155,12 @@ $(document).ready(function () {
             autoplay = false;
             setupHTML5Player();
             
+            // get the downloadable audio track
             dowloadableFile(tracks[0].source.replace(".mp3",""), "mp3");
             
         } // end if
 		
+		// get the downloadable transcript
 		dowloadableFile(source, "pdf");
 		
     } // end parse XML function
@@ -470,13 +475,11 @@ $(document).ready(function () {
 		
 		if (ext === "pdf") {
 			content_type = "application/pdf";
-			file = "assets/"+file;
 		} else if (ext === "mp3") {
 			content_type = "audio/mpeg";
 			file = "assets/audio/"+file;
 		} else if (ext === "zip") {
 			content_type = "application/zip";
-			file = "assets/audio/"+file;
 		}
 		
 		$.ajax({
