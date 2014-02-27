@@ -513,17 +513,12 @@ $(document).ready(function () {
 			},
 			error: function () {
 		
-				var string;
+				var string = "";
 		
-				if (ext === "mp3") {
-					string = "MP3";
-				} else if (ext === "zip") {
-					string = "Audio";
-				} else if (ext === "pdf") {
-					string = "Transcript";
+				if (ext === "mp3" || ext === "zip") {
+					string = "Aduio pending...";
 				}
 				
-				string += " pending...";
 				$("#download_bar ul").after("<p>" + string + "</p>");
 
 			}
