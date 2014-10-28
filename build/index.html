@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Audio Player</title>
+    <link href="../sources/player/mediaelementplayer.min.css" rel="stylesheet" type="text/css" />
+    <link href="../sources/css/audio.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <noscript>
+        <h1>JavaScript is disabled.</h1>
+        <p>JavaScript is required to view this page.<br />
+        	<a href="http://www.enable-javascript.com/" target="_blank">Instructions on how to enable JavaScript in your web browser.</a></p>
+    </noscript>
+
+    <div id="errorMsg"></div>
+
+    <div id="coverImage">
+    	<p class="album_name"></p>
+    	<p class="album_author"></p>
+    	<p class="album_length"></p>
+    	<p><button id="playBtn" class="btn btn-primary">PLAY</button></p>
+    </div>
+
+    <div id="audioPlayerWrapper">
+    	<div class="playerInfoPanel">
+    		<div class="image"></div>
+    		<div class="info">
+    			<p class="title"></p>
+    			<p class="author"></p>
+    			<p class="duration"></p>
+    		</div>
+    		<div class="currentTrackNum"></div>
+    	</div>
+    	<div class="player"></div>
+    	<div class="playerPlaylist">
+    		<ol id="selectable"></ol>
+    	</div>
+    </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="../sources/scripts/jquery-ui.min.js"></script>
+<script src="../sources/player/mediaelement-and-player.min.js"></script>
+<script src="../sources/scripts/audio.js"></script>
+</body>
+</html>
