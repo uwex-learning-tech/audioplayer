@@ -1,6 +1,302 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-
 @import "compass/reset";
+
+body {
+
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, Arial, sans-serif;
+	background-color: transparent;
+
+}
+
+noscript {
+
+    h1 {
+        font-size: 18px;
+    	color: #f00;
+    	margin: 10px 0 5px 0;
+    	padding-left: 10px;
+    }
+
+    p {
+    	margin: 5px 0;
+    	font-size: 14px;
+    	line-height: 18px;
+    	padding-left: 10px;
+    }
+
+}
+
+#errorMsg {
+	padding: 10px;
+	color: #c00;
+	font-size: 14px;
+}
+
+#coverImage {
+
+	display: none;
+	width: 340px;
+	height: 190px;
+	padding: 80px 20px 0 20px;
+	margin: 0;
+	background-repeat: no-repeat;
+	cursor: pointer;
+
+	p {
+    	margin: 0 0 8px 0;
+    	padding: 0;
+    	text-align: center;
+    	color: #fff;
+    	text-shadow: 1px 1px 1px #000;
+	}
+
+	p.album_name {
+    	font-size: 24px;
+        font-weight: bold;
+	}
+
+	p.album_author {
+    	font-size: 14px;
+	}
+
+	p.album_length {
+    	@extend p.album_author;
+	}
+
+	.btn {
+    	-moz-border-bottom-colors: none;
+    	-moz-border-image: none;
+    	-moz-border-left-colors: none;
+    	-moz-border-right-colors: none;
+    	-moz-border-top-colors: none;
+    	border-radius: 4px 4px 4px 4px;
+    	border-style: solid;
+    	border-width: 1px;
+    	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    	cursor: pointer;
+    	display: inline-block;
+    	font-size: 14px;
+    	line-height: 20px;
+    	margin-bottom: 0;
+    	padding: 4px 12px;
+    	text-align: center;
+    	vertical-align: middle;
+    }
+
+    .btn.btn-primary {
+    	background-color: #006dcc;
+    	background-image: -moz-linear-gradient(center top, #0088cc, #0044cc);
+    	background-repeat: repeat-x;
+    	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    	color: #fff;
+    	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+
+}
+
+/* Audio Player */
+#audioPlayerWrapper {
+
+	display: none;
+	width: 380px;
+	margin: 0 0 0 10px;
+
+	.playerInfoPanel {
+
+    	position: relative;
+    	width: 350px;
+    	height: 60px;
+    	background-image: url("../images/info_panel.png");
+    	background-repeat: repeat-x;
+    	background-color: rgb(51,51,51);
+    	margin: 0 auto;
+    	padding: 10px;
+    	border-top-left-radius: 5px;
+    	border-top-right-radius: 5px;
+    	clear: both;
+
+    	.image {
+
+        	width: 60px;
+        	height: 60px;
+        	background-color: #fff;
+        	float: left;
+
+        	img {
+            	width: 60px;
+            	height: 60px;
+            }
+
+        }
+
+        .info {
+        	width: 280px;
+        	height: 60px;
+        	color: #fff;
+        	margin-left: 10px;
+        	float: left;
+
+            .title {
+            	font-size: 14px;
+            	margin: 0 0 4px 0;
+            }
+
+            .author {
+                margin: 0;
+                font-size: 11px;
+            }
+
+            .duration {
+                @extend .author;
+            }
+
+        }
+
+        .currentTrackNum {
+        	position: absolute;
+        	color: #808080;
+        	opacity: .5;
+        	font-weight: bold;
+        	font-size: 60px;
+        	top: 10px;
+        	right: 10px;
+        	text-shadow: 1px 1px 1px #000;
+        }
+
+    }
+
+    .player {
+
+    	width: 380px;
+    	height: 30px;
+    	box-shadow: 0 0 6px #000;
+    	border-top: rgb(102,102,102) solid 1px;
+    	border-bottom: rgb(102,102,102) solid 1px;
+
+    	#ap {
+        	width: 380px;
+        	height: 80px;
+        	display: block;
+    	}
+
+    }
+
+    .playerPlaylist {
+    	position:relative;
+    	width: 370px;
+    	height: 156px;
+    	margin: 0 auto;
+    	background-color: rgb(51,51,51);
+    	overflow-x: hide;
+    	overflow-y: auto;
+    }
+
+}
+
+/* Table of content selection */
+#selectable {
+
+    list-style:none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+
+    .ui-selecting {
+    	color: #fff;
+    }
+
+    .ui-selected {
+    	background: #000;
+    	color: #fff;
+    }
+
+    li {
+        width: 370px;
+    	margin: 0;
+    	font-size: 14px;
+    	color: #ccc;
+    	padding: 12px 0;
+    	height: auto;
+    	cursor: pointer;
+    	float: left;
+    	clear: both;
+    	border-bottom: solid 1px #777;
+    }
+
+    li:hover {
+    	background: #000;
+    	color: #fff;
+    }
+
+}
+
+/* DOWNLOAD BAR */
+#download_bar {
+
+	position: absolute;
+	text-align: right;
+	right: 50px;
+	bottom: 6px;
+
+	p {
+
+    	font-size: 10px;
+    	color: #979797;
+    	font-weight: normal;
+    	margin: 0;
+    	display: inline-block;
+    	margin-left: 10px;
+
+    	small {
+        	font-size: 10px;
+            color: #979797;
+    	}
+
+	}
+
+	ul {
+
+    	width: inherit;
+    	margin: 0;
+    	padding: 0;
+    	display: inline-block;
+    	list-style: none;
+
+    	li {
+
+        	display: inline-block;
+            margin-left: 10px;
+
+            a {
+                display: block;
+            	position: relative;
+            	font-size: 12px;
+            	text-decoration: none;
+            	height: 14px;
+            	padding: 2px 0 0 18px;
+            	font-weight: normal;
+            	color: #fff;
+            	background-image: url("../images/download_icon.png");
+            	background-repeat: no-repeat;
+            	background-position: left top;
+            	opacity: .75;
+            }
+
+            a:visited {
+                @extend a;
+            }
+
+            a:hover {
+                opacity: 1;
+            }
+
+    	}
+
+    	li:first-child {
+        	margin-left: 5px;
+        }
+
+    }
+
+}
