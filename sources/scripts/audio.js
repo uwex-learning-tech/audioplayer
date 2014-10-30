@@ -1,3 +1,15 @@
+/*
+ * HTML5 MP3 Audio Player
+ *
+ * @author: Ethan Lin
+ * @url: https://github.com/oel-mediateam/audioplayer
+ * @version: 1.0.1
+ *
+ * @license: The MIT License (MIT)
+ * Copyright (c) 2014 UW-EX CEOEL
+ *
+ */
+
 /* global MediaElementPlayer */
 
 $(document).ready(function () {
@@ -31,24 +43,24 @@ $(document).ready(function () {
             displayError(xhr.status, exception);
         }
     });
-	
+
 	/************************** FUNCTIONS *******************************/
 
     function parseXML(xml) {
 
         // declare a TRACK variable to hold the XML track nodes
         var TRACK;
-		
+
 		// get the last directory folder name as the source
 		getSource();
-		
+
         // create a new album object and assign the data from the XML
         album = {};
         album.name = $(xml).find('album').find('name').text();
         album.author = $(xml).find('album').find('author').text();
         album.image = $(xml).find('album').find('image').text();
         album.length = $(xml).find('album').find('length').text();
-		
+
 		// set the page title to the ablum name
 		$(document).attr('title', album.name);
 
@@ -76,9 +88,9 @@ $(document).ready(function () {
             trackIndex++;
 
         }); // end each loop
-        
+
         // inject the download bar to them DOM
-        $(".playerInfoPanel").append("<div id=\"download_bar\"><p><small>Download:</small></p><ul></li></div>");
+        $(".playerInfoPanel").append("<div id=\"download_bar\"><ul></ul></div>");
 
         // if tracks array length is greater than one
         if (tracks.length > 1) {
@@ -133,10 +145,10 @@ $(document).ready(function () {
                 } // end stop function
 
             }); // end table of content selection
-            
+
             // call the getCoverImage() function
 			getCoverImage();
-			
+
 			// get the downloadable audio zip folder
 			dowloadableFile(source, "zip");
 
@@ -148,21 +160,21 @@ $(document).ready(function () {
 
             // hide the playlist
             $('.playerPlaylist').hide();
-            
+
             // hide cover
             //$("#coverImage").hide();
             $("#audioPlayerWrapper").show();
             autoplay = false;
             setupHTML5Player();
-            
+
             // get the downloadable audio track
             dowloadableFile(tracks[0].source.replace(".mp3",""), "mp3");
-            
+
         } // end if
-		
+
 		// get the downloadable transcript
 		dowloadableFile(source, "pdf");
-		
+
     } // end parse XML function
 
     // cover image function
@@ -210,24 +222,24 @@ $(document).ready(function () {
 				android: ua.match(/Android/)
 			},
 			mobile = (getParameterByName("m") === "0") ? false : true;
-			
+
 			// if the device is mobile
 			if ((checker.ios || checker.blackberry || checker.android) && mobile) {
-				
+
 				// declare variables to hold the URL
 				var location = window.location.href,
 					locTemp, locIndex = location.indexOf(".");
-				
+
 				// assign the new location
 				locTemp = location.substr(locIndex);
 				location = "http://webstreamer" + locTemp + "?m=0";
-				
+
 				// open the new URL in a new tab/window
 				window.open(location);
-		
+
 				// if not a mobile device
 			} else {
-				
+
 				// hide the cover image
 				$('#coverImage').hide();
 
@@ -237,11 +249,11 @@ $(document).ready(function () {
 				// call the setupHTML5Player function
 				autoplay = true;
 				setupHTML5Player();
-				
+
 			}
 
         }); // end click listener
-        
+
         $("#coverImage").show();
 
     } // end cover image function
@@ -295,12 +307,12 @@ $(document).ready(function () {
 
 					// assign values from the media to the globle mediaData variable
 					mediaData = media;
-					
+
 					// set the track duration
 					$('.duration').html(formatTime(media.duration, false, 25));
 
 				}, false); // loadedmetadata event listener
-					
+
 				// listen to the ended event
 				media.addEventListener('ended', function () {
 
@@ -347,7 +359,7 @@ $(document).ready(function () {
             media.setSrc('assets/audio/' + tracks[trackCount].source);
             media.load();
             media.pause();
-			
+
 			$('.playerPlaylist').animate({ scrollTop: 0 }, 1000);
 
             // all else...
@@ -365,11 +377,11 @@ $(document).ready(function () {
 
         // select the current item in the playlist
         $('#selectable li:nth-child(' + Number(trackCount + 1) + ')').addClass('ui-selected');
-		
+
 		if (trackCount >= 4 && trackCount < tracks.length) {
-			
+
 			$('.playerPlaylist').animate({ scrollTop: $('#selectable li:nth-child(' + Number(trackCount + 1) + ')').offset().top }, 500);
-			
+
 		}
 
     } // end determind next track function
@@ -468,11 +480,11 @@ $(document).ready(function () {
         $('#errorMsg').html('<p>' + statusMsg + '<br />' + exceptionMsg + '</p>'); // display error message
 
     } // end display error function
-	
+
 	function dowloadableFile(file, ext) {
-	
+
 		var content_type;
-		
+
 		if (ext === "pdf") {
 			content_type = "application/pdf";
 		} else if (ext === "mp3") {
@@ -481,7 +493,7 @@ $(document).ready(function () {
 		} else if (ext === "zip") {
 			content_type = "application/zip";
 		}
-		
+
 		$.ajax({
 			url: file + "." + ext,
 			type: 'HEAD',
@@ -493,38 +505,45 @@ $(document).ready(function () {
 				xhr.setRequestHeader("Accept", content_type);
 			},
 			success: function () {
-				
+
 				var f = file, downloadBar = $("#download_bar ul");
-				
+
 				if (location.protocol !== "http:") {
 					var url = window.location.href;
 					url = url.substr(0,url.lastIndexOf("/")+1).replace("https","http");
 					f = url + file;
 				}
-				
-				if (ext === "pdf") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Transcript</a></li>");
-				} else if (ext === "mp3") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Audio</a></li>");
-				} else if (ext === "zip") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Audio</a></li>");
+
+				switch (ext) {
+
+    				case "pdf":
+    				    downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Transcript</a></li>");
+    				break;
+
+    				case "mp3":
+    				case "zip":
+    				    downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Audio</a></li>");
+    				break;
+
 				}
-				
+
 			},
 			error: function () {
-		
-				var string = "";
-		
+
+				/*
+var string = "";
+
 				if (ext === "mp3" || ext === "zip") {
 					string = "Aduio pending...";
 				}
-				
+
 				$("#download_bar ul").after("<p>" + string + "</p>");
+*/
 
 			}
 		});
 	}
-	
+
 	function getSource() {
 		var urlToParse = window.location.href, src;
 		src = urlToParse.split("?");
@@ -532,16 +551,16 @@ $(document).ready(function () {
 		src = src[src.length-2];
 		source = src;
 	}
-	
+
 	// getParameterByName function
 	function getParameterByName(name) {
-		
+
         var regexS = "[\\?&]" + name + "=([^&#]*)";
         var regex = new RegExp(regexS);
         var results = regex.exec(window.location.href);
 
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-		
+
         if (results === null) {
             return "";
         } else {
