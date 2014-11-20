@@ -3,7 +3,7 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/audioplayer
- * @version: 1.0.1
+ * @version: 1.0.2
  *
  * @license: The MIT License (MIT)
  * Copyright (c) 2014 UW-EX CEOEL
@@ -11,6 +11,8 @@
  */
 
 /* global MediaElementPlayer */
+
+var ROOT_PATH = "https://media.uwex.edu/";
 
 $(document).ready(function () {
 
@@ -201,7 +203,7 @@ $(document).ready(function () {
         }).error(function () {
 
             // failed: set the default splash image
-            $('#coverImage').css('background-image', 'url(https://mediastreamer.doit.wisc.edu/uwli-ltc/media/mp3_player/sources/images/default_cover.jpg)');
+            $('#coverImage').css('background-image', 'url(' + ROOT_PATH + 'media/mp3_player/sources/images/default_cover.jpg)');
 
             // set image to load attributes
         }).attr({
@@ -214,7 +216,8 @@ $(document).ready(function () {
         // set the click listener to the cover image
         $('#coverImage').click(function () {
 
-			// declare browser checker variables
+			/*
+// declare browser checker variables
 			var ua = navigator.userAgent,
 			checker = {
 				ios: ua.match(/(iPhone|iPod|iPad)/),
@@ -239,6 +242,7 @@ $(document).ready(function () {
 
 				// if not a mobile device
 			} else {
+*/
 
 				// hide the cover image
 				$('#coverImage').hide();
@@ -250,7 +254,7 @@ $(document).ready(function () {
 				autoplay = true;
 				setupHTML5Player();
 
-			}
+			// }
 
         }); // end click listener
 
@@ -552,7 +556,8 @@ var string = "";
 		source = src;
 	}
 
-	// getParameterByName function
+	/*
+// getParameterByName function
 	function getParameterByName(name) {
 
         var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -567,5 +572,6 @@ var string = "";
             return decodeURIComponent(results[1].replace(/\+/g, " "));
         }
     } // end getParameterByName function
+*/
 
 }); // end document ready

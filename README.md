@@ -1,5 +1,5 @@
 #Audio Player
-**_version 1.0.1_**
+**_version 1.0.2_**
 
 ### Minimum Supported Web Browsers
 * Internet Explorer 9+
@@ -20,6 +20,10 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 
 ---
 ####Version Change Log
+**1.0.2**
+* Updated to work with the new media web server
+* Updated index.html file
+
 **1.0.1**
 * Improved download with spelling and grammar fixes
 * Updated MediaElementJS (the audio player) to version 2.15.1
