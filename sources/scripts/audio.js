@@ -12,7 +12,7 @@
 
 /* global MediaElementPlayer */
 
-var ROOT_PATH = "https://media.uwex.edu/";
+var ROOT_PATH = "https://media.uwex.edu/content/";
 
 $(document).ready(function () {
 
