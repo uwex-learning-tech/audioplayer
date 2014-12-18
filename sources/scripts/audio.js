@@ -12,7 +12,7 @@
 
 /* global MediaElementPlayer */
 
-var ROOT_PATH = "https://media.uwex.edu/content/";
+var ROOT_PATH = "https://media.uwex.edu/app/audio_player_v1/";
 
 $(document).ready(function () {
 
@@ -203,7 +203,7 @@ $(document).ready(function () {
         }).error(function () {
 
             // failed: set the default splash image
-            $('#coverImage').css('background-image', 'url(' + ROOT_PATH + 'media/mp3_player/sources/images/default_cover.jpg)');
+            $('#coverImage').css('background-image', 'url(' + ROOT_PATH + 'images/default_cover.jpg)');
 
             // set image to load attributes
         }).attr({
