@@ -216,12 +216,13 @@ noscript {
     	margin: 0;
     	font-size: 14px;
     	color: #ccc;
-    	padding: 12px 0;
+    	padding: 12px 12px 12px 0;
     	height: auto;
     	cursor: pointer;
     	float: left;
     	clear: both;
     	border-bottom: solid 1px #777;
+    	box-sizing: border-box;
     }
 
     li:hover {
