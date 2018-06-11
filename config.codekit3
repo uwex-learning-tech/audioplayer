@@ -12,129 +12,34 @@
 	"\/.gitignore": {
 		"cB": 0,
 		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/.gitignore",
+		"oA": 1,
+		"oAP": "\/build\/.gitignore",
+		"oF": 1
+		},
+	"\/build": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "\/build\/build",
 		"oF": 0
 		},
-	"\/build\/assets\/audio\/FasterRide.mp3": {
-		"cB": 0,
-		"ft": 8192,
+	"\/config.rb": {
+		"ft": 131072,
 		"oA": 0,
-		"oAP": "\/build\/assets\/audio\/FasterRide.mp3",
+		"oAP": "\/config.rb",
 		"oF": 0
 		},
-	"\/build\/assets\/audio\/Gentleman.mp3": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/assets\/audio\/Gentleman.mp3",
-		"oF": 0
-		},
-	"\/build\/assets\/audio\/HeresToNeverGrowingUp.mp3": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/assets\/audio\/HeresToNeverGrowingUp.mp3",
-		"oF": 0
-		},
-	"\/build\/assets\/audio\/MySongsKnowWhatYouDidInTheDark.mp3": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/assets\/audio\/MySongsKnowWhatYouDidInTheDark.mp3",
-		"oF": 0
-		},
-	"\/build\/assets\/audio\/YestoLove.mp3": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/assets\/audio\/YestoLove.mp3",
-		"oF": 0
-		},
-	"\/build\/assets\/images\/cartel.jpg": {
-		"ft": 16384,
-		"iS": 150072,
-		"jF": 0,
-		"oA": 0,
-		"oAP": "\/build\/assets\/images\/cartel.jpg",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"q": 100
-		},
-	"\/build\/assets\/images\/fall out boy.jpg": {
-		"ft": 16384,
-		"iS": 63883,
-		"jF": 0,
-		"oA": 0,
-		"oAP": "\/build\/assets\/images\/fall out boy.jpg",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"q": 100
-		},
-	"\/build\/assets\/images\/me.jpg": {
-		"ft": 16384,
-		"iS": 34749,
-		"jF": 0,
-		"oA": 0,
-		"oAP": "\/build\/assets\/images\/me.jpg",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"q": 100
-		},
-	"\/build\/assets\/images\/psy.jpg": {
-		"ft": 16384,
-		"iS": 236968,
-		"jF": 0,
-		"oA": 0,
-		"oAP": "\/build\/assets\/images\/psy.jpg",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"q": 100
-		},
-	"\/build\/assets\/tracks.xml": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/assets\/tracks.xml",
-		"oF": 0
-		},
-	"\/build\/build.pdf": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/build.pdf",
-		"oF": 0
-		},
-	"\/build\/build.zip": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/build.zip",
-		"oF": 0
-		},
-	"\/build\/index.html": {
+	"\/index.html": {
 		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/build\/index.html",
 		"oF": 0
 		},
-	"\/config.rb": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/config.rb",
-		"oF": 0
-		},
 	"\/LICENSE": {
 		"cB": 0,
 		"ft": 8192,
 		"oA": 1,
-		"oAP": "\/LICENSE",
+		"oAP": "\/build\/LICENSE",
 		"oF": 1
 		},
 	"\/README.md": {
@@ -146,7 +51,7 @@
 		"eSQ": 1,
 		"ft": 4096,
 		"oA": 1,
-		"oAP": "\/README.html",
+		"oAP": "\/build\/README.html",
 		"oF": 1,
 		"oFM": 0,
 		"oS": 0,
@@ -155,283 +60,25 @@
 		"rFN": 0,
 		"uCM": 0
 		},
-	"\/sources\/css\/audio.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/sources\/css\/audio-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"\/sources\/images\/default_cover.jpg": {
-		"ft": 16384,
-		"iS": 9544,
-		"jF": 0,
-		"oA": 0,
-		"oAP": "\/sources\/images\/default_cover.jpg",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"q": 100
-		},
-	"\/sources\/images\/default_profile.jpg": {
-		"ft": 16384,
-		"iS": 1776,
-		"jF": 0,
-		"oA": 0,
-		"oAP": "\/sources\/images\/default_profile.jpg",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"q": 100
-		},
-	"\/sources\/images\/download_icon.png": {
-		"ft": 32768,
-		"iS": 172,
-		"oA": 0,
-		"oAP": "\/sources\/images\/download_icon.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
-		},
-	"\/sources\/images\/info_panel.png": {
-		"ft": 32768,
-		"iS": 195,
-		"oA": 0,
-		"oAP": "\/sources\/images\/info_panel.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
-		},
-	"\/sources\/player\/background.png": {
-		"ft": 32768,
-		"iS": 166,
-		"oA": 0,
-		"oAP": "\/sources\/player\/background.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
-		},
-	"\/sources\/player\/bigplay.png": {
-		"ft": 32768,
-		"iS": 3001,
-		"oA": 0,
-		"oAP": "\/sources\/player\/bigplay.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
-		},
-	"\/sources\/player\/bigplay.svg": {
-		"ft": 2097152,
-		"miP": 0,
+	"\/source\/manifest.json": {
+		"ft": 524288,
 		"oA": 2,
-		"oAP": "\/sources\/player\/bigplay.svg",
-		"oF": 0,
-		"opt": 0,
-		"plM": 3758088159,
-		"prP": 0
+		"oAP": "\/build\/source\/manifest.json",
+		"oF": 3,
+		"oO": 0,
+		"oS": 1
 		},
-	"\/sources\/player\/controls.png": {
-		"ft": 32768,
-		"iS": 1892,
-		"oA": 0,
-		"oAP": "\/sources\/player\/controls.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
-		},
-	"\/sources\/player\/controls.svg": {
-		"ft": 2097152,
-		"miP": 0,
-		"oA": 2,
-		"oAP": "\/sources\/player\/controls.svg",
-		"oF": 0,
-		"opt": 0,
-		"plM": 3758088159,
-		"prP": 0
-		},
-	"\/sources\/player\/flashmediaelement-cdn.swf": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/sources\/player\/flashmediaelement-cdn.swf",
-		"oF": 0
-		},
-	"\/sources\/player\/flashmediaelement.swf": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/sources\/player\/flashmediaelement.swf",
-		"oF": 0
-		},
-	"\/sources\/player\/loading.gif": {
-		"ft": 4194304,
-		"iS": 6224,
-		"oA": 0,
-		"oAP": "\/sources\/player\/loading.gif",
-		"oF": 0,
-		"opt": 0
-		},
-	"\/sources\/player\/mediaelement-and-player.js": {
+	"\/source\/scripts\/audio-dev.js": {
 		"ft": 64,
-		"ma": 0,
+		"ma": 1,
 		"mi": 1,
 		"oA": 0,
-		"oAP": "\/sources\/player\/min\/mediaelement-and-player-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
+		"oAP": "\/build\/source\/script\/audio.js",
+		"oF": 2,
+		"sC": 3,
+		"tS": 1
 		},
-	"\/sources\/player\/mediaelement-and-player.min.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/player\/min\/mediaelement-and-player.min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/player\/mediaelement.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/player\/min\/mediaelement-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/player\/mediaelement.min.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/player\/min\/mediaelement.min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/player\/mediaelementplayer.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/sources\/player\/mediaelementplayer-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"\/sources\/player\/mediaelementplayer.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/player\/min\/mediaelementplayer-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/player\/mediaelementplayer.min.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/sources\/player\/mediaelementplayer.min-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"\/sources\/player\/mediaelementplayer.min.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/player\/min\/mediaelementplayer.min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/player\/mejs-skins.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "\/sources\/player\/mejs-skins-min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"\/sources\/player\/silverlightmediaelement.xap": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/sources\/player\/silverlightmediaelement.xap",
-		"oF": 0
-		},
-	"\/sources\/scripts\/audio.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/scripts\/min\/audio-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/scripts\/audio.min.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/scripts\/min\/audio.min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/scripts\/jquery-ui-1.10.3.custom.min.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/scripts\/min\/jquery-ui-1.10.3.custom.min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/scripts\/jquery-ui.min.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/scripts\/min\/jquery-ui.min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/scripts\/jquery.js": {
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/sources\/scripts\/min\/jquery-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/sources\/scss\/audio.scss": {
+	"\/source\/scss\/audio.scss": {
 		"aP": 0,
 		"bl": 0,
 		"dP": 10,
@@ -439,10 +86,17 @@
 		"ft": 4,
 		"ma": 0,
 		"oA": 0,
-		"oAP": "\/sources\/css\/audio.css",
+		"oAP": "\/build\/source\/css\/audio.css",
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
+		},
+	"\/tracks.xml": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 0,
+		"oAP": "\/build\/assets\/tracks.xml",
+		"oF": 2
 		}
 	},
 "hooks": [
@@ -454,7 +108,8 @@
 	"displayValue": "audioplayer",
 	"displayValueWasSetByUser": 0,
 	"iconImageName": "meme-karate",
-	"iconImageWasSetByUser": 0
+	"iconImageWasSetByUser": 0,
+	"lastBuiltDate": 550444524
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
@@ -710,9 +365,9 @@
 	"bowerSaveDevDependencies": 0,
 	"bowerUseExactVersion": 0,
 	"browserRefreshDelay": 0,
-	"buildFolderActive": 0,
+	"buildFolderActive": 1,
 	"buildFolderName": "build",
-	"cleanBuild": 1,
+	"cleanBuild": 0,
 	"coffeeLintFlags2": {
 		"arrow_spacing": {
 			"active": 0,
@@ -1850,7 +1505,7 @@
 		},
 	"esLintSourceType": 0,
 	"externalServerAddress": "http:\/\/localhost:8888",
-	"gitIgnoreBuildFolder": 1,
+	"gitIgnoreBuildFolder": 0,
 	"hideConfigFile": 0,
 	"jsCheckerReservedNamesString": "",
 	"jsHintFlags2": {
@@ -2262,15 +1917,15 @@
 		},
 	"languageDefaultsJS": {
 		"autoOutputAction": 0,
-		"autoOutputPathFilenamePattern": "*-min.js",
+		"autoOutputPathFilenamePattern": "*.js",
 		"autoOutputPathRelativePath": "\/min",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 2,
-		"createSourceMap": 0,
+		"autoOutputPathStyle": 0,
+		"createSourceMap": 1,
 		"minifyOutput": 1,
-		"syntaxCheckerStyle": 1,
-		"transpilerStyle": 0
+		"syntaxCheckerStyle": 3,
+		"transpilerStyle": 1
 		},
 	"languageDefaultsJSON": {
 		"autoOutputAction": 1,
@@ -2607,7 +2262,7 @@
 			}
 		},
 	"uglifyReservedNamesString": "$",
-	"websiteRelativeRoot": ""
+	"websiteRelativeRoot": "\/build"
 	},
 "settingsFileVersion": "3"
 }

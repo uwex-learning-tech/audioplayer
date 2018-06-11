@@ -3,14 +3,14 @@ require 'compass/import-once/activate'
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "sources/css"
-sass_dir = "sources/scss"
-images_dir = "sources/images"
-javascripts_dir = "sources/scripts"
-fonts_dir = "sources/fonts"
+css_dir = "build/source/css"
+sass_dir = "source/scss"
+images_dir = "build/source/images"
+javascripts_dir = "build/source/script"
+fonts_dir = "build/source/fonts"
 
 output_style = :compressed
-environment = :production
+environment = :development
 
 # To enable relative paths to assets via compass helper functions. Uncomment:
 # relative_assets = true

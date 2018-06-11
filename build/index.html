@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Audio Player</title>
-    <link href="https://media.uwex.edu/content/media/mp3_player/sources/player/mediaelementplayer.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://media.uwex.edu/content/media/mp3_player/sources/css/audio.css" rel="stylesheet" type="text/css" />
+    <link id="ap-manifest" href="sources/manifest.json" rel="manifest"/>
+    <link href="source/css/audio.css" rel="stylesheet" type="text/css" />
+    <script src="source/script/audio.js"></script>
 </head>
 
 <body>
@@ -15,34 +16,24 @@
         	<a href="http://www.enable-javascript.com/" target="_blank">Instructions on how to enable JavaScript in your web browser.</a></p>
     </noscript>
 
-    <div id="errorMsg"></div>
-
-    <div id="coverImage">
-    	<p class="album_name"></p>
-    	<p class="album_author"></p>
-    	<p class="album_length"></p>
-    	<p><button id="playBtn" class="btn btn-primary">PLAY</button></p>
+    <div id="audio-player-wrapper">
+        
+        <div id="ap-slash-screen">
+            
+            <div class="cover-info">
+                <h1 class="title">Playlist Title</h1>
+                <p class="subtitle">Subtitle</p>
+                <p class="author">Ethan Lin</p>
+                <p class="length">99 Minutes</p>
+            </div>
+            
+        </div>
+        
+        <div id="ap-main">
+            
+        </div>
+        
     </div>
 
-    <div id="audioPlayerWrapper">
-    	<div class="playerInfoPanel">
-    		<div class="image"></div>
-    		<div class="info">
-    			<p class="title"></p>
-    			<p class="author"></p>
-    			<p class="duration"></p>
-    		</div>
-    		<div class="currentTrackNum"></div>
-    	</div>
-    	<div class="player"></div>
-    	<div class="playerPlaylist">
-    		<ol id="selectable"></ol>
-    	</div>
-    </div>
-
-<script src="https://media.uwex.edu/content/media/mp3_player/sources/scripts/jquery.js"></script>
-<script src="https://media.uwex.edu/content/media/mp3_player/sources/scripts/jquery-ui.min.js"></script>
-<script src="https://media.uwex.edu/content/media/mp3_player/sources/player/mediaelement-and-player.min.js"></script>
-<script src="https://media.uwex.edu/content/media/mp3_player/sources/scripts/audio.js"></script>
 </body>
 </html>

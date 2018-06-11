@@ -1,0 +1,49 @@
+html {
+  width: 100%;
+  height: 100%; }
+  html body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0; }
+    html body * {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+
+#audio-player-wrapper {
+  width: 100%;
+  height: 100%; }
+  #audio-player-wrapper div, #audio-player-wrapper span, #audio-player-wrapper applet, #audio-player-wrapper object, #audio-player-wrapper iframe,
+  #audio-player-wrapper h1, #audio-player-wrapper h2, #audio-player-wrapper h3, #audio-player-wrapper h4, #audio-player-wrapper h5, #audio-player-wrapper h6, #audio-player-wrapper p, #audio-player-wrapper blockquote, #audio-player-wrapper pre,
+  #audio-player-wrapper a, #audio-player-wrapper abbr, #audio-player-wrapper acronym, #audio-player-wrapper address, #audio-player-wrapper big, #audio-player-wrapper cite, #audio-player-wrapper code,
+  #audio-player-wrapper del, #audio-player-wrapper dfn, #audio-player-wrapper em, #audio-player-wrapper img, #audio-player-wrapper ins, #audio-player-wrapper kbd, #audio-player-wrapper q, #audio-player-wrapper s, #audio-player-wrapper samp,
+  #audio-player-wrapper small, #audio-player-wrapper strike, #audio-player-wrapper strong, #audio-player-wrapper sub, #audio-player-wrapper sup, #audio-player-wrapper tt, #audio-player-wrapper var,
+  #audio-player-wrapper b, #audio-player-wrapper u, #audio-player-wrapper i, #audio-player-wrapper center,
+  #audio-player-wrapper dl, #audio-player-wrapper dt, #audio-player-wrapper dd, #audio-player-wrapper ol, #audio-player-wrapper ul, #audio-player-wrapper li,
+  #audio-player-wrapper fieldset, #audio-player-wrapper form, #audio-player-wrapper label, #audio-player-wrapper legend,
+  #audio-player-wrapper table, #audio-player-wrapper caption, #audio-player-wrapper tbody, #audio-player-wrapper tfoot, #audio-player-wrapper thead, #audio-player-wrapper tr, #audio-player-wrapper th, #audio-player-wrapper td,
+  #audio-player-wrapper article, #audio-player-wrapper aside, #audio-player-wrapper canvas, #audio-player-wrapper details, #audio-player-wrapper embed,
+  #audio-player-wrapper figure, #audio-player-wrapper figcaption, #audio-player-wrapper footer, #audio-player-wrapper header, #audio-player-wrapper hgroup,
+  #audio-player-wrapper menu, #audio-player-wrapper nav, #audio-player-wrapper output, #audio-player-wrapper ruby, #audio-player-wrapper section, #audio-player-wrapper summary,
+  #audio-player-wrapper time, #audio-player-wrapper mark, #audio-player-wrapper audio, #audio-player-wrapper video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline; }
+  #audio-player-wrapper table {
+    border-collapse: collapse;
+    border-spacing: 0; }
+  #audio-player-wrapper caption, #audio-player-wrapper th, #audio-player-wrapper td {
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle; }
+  #audio-player-wrapper q, #audio-player-wrapper blockquote {
+    quotes: none; }
+    #audio-player-wrapper q:before, #audio-player-wrapper q:after, #audio-player-wrapper blockquote:before, #audio-player-wrapper blockquote:after {
+      content: "";
+      content: none; }
+  #audio-player-wrapper a img {
+    border: none; }
