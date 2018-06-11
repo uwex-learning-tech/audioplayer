@@ -1,49 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 html {
-  width: 100%;
-  height: 100%; }
+  height: 100%;
+  font-size: 16px; }
   html body {
-    width: 100%;
     height: 100%;
     padding: 0;
-    margin: 0; }
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem; }
     html body * {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box; }
 
-#audio-player-wrapper {
-  width: 100%;
+#ap-wrapper {
+  min-width: 20rem;
   height: 100%; }
-  #audio-player-wrapper div, #audio-player-wrapper span, #audio-player-wrapper applet, #audio-player-wrapper object, #audio-player-wrapper iframe,
-  #audio-player-wrapper h1, #audio-player-wrapper h2, #audio-player-wrapper h3, #audio-player-wrapper h4, #audio-player-wrapper h5, #audio-player-wrapper h6, #audio-player-wrapper p, #audio-player-wrapper blockquote, #audio-player-wrapper pre,
-  #audio-player-wrapper a, #audio-player-wrapper abbr, #audio-player-wrapper acronym, #audio-player-wrapper address, #audio-player-wrapper big, #audio-player-wrapper cite, #audio-player-wrapper code,
-  #audio-player-wrapper del, #audio-player-wrapper dfn, #audio-player-wrapper em, #audio-player-wrapper img, #audio-player-wrapper ins, #audio-player-wrapper kbd, #audio-player-wrapper q, #audio-player-wrapper s, #audio-player-wrapper samp,
-  #audio-player-wrapper small, #audio-player-wrapper strike, #audio-player-wrapper strong, #audio-player-wrapper sub, #audio-player-wrapper sup, #audio-player-wrapper tt, #audio-player-wrapper var,
-  #audio-player-wrapper b, #audio-player-wrapper u, #audio-player-wrapper i, #audio-player-wrapper center,
-  #audio-player-wrapper dl, #audio-player-wrapper dt, #audio-player-wrapper dd, #audio-player-wrapper ol, #audio-player-wrapper ul, #audio-player-wrapper li,
-  #audio-player-wrapper fieldset, #audio-player-wrapper form, #audio-player-wrapper label, #audio-player-wrapper legend,
-  #audio-player-wrapper table, #audio-player-wrapper caption, #audio-player-wrapper tbody, #audio-player-wrapper tfoot, #audio-player-wrapper thead, #audio-player-wrapper tr, #audio-player-wrapper th, #audio-player-wrapper td,
-  #audio-player-wrapper article, #audio-player-wrapper aside, #audio-player-wrapper canvas, #audio-player-wrapper details, #audio-player-wrapper embed,
-  #audio-player-wrapper figure, #audio-player-wrapper figcaption, #audio-player-wrapper footer, #audio-player-wrapper header, #audio-player-wrapper hgroup,
-  #audio-player-wrapper menu, #audio-player-wrapper nav, #audio-player-wrapper output, #audio-player-wrapper ruby, #audio-player-wrapper section, #audio-player-wrapper summary,
-  #audio-player-wrapper time, #audio-player-wrapper mark, #audio-player-wrapper audio, #audio-player-wrapper video {
+  #ap-wrapper div, #ap-wrapper span, #ap-wrapper applet, #ap-wrapper object, #ap-wrapper iframe,
+  #ap-wrapper h1, #ap-wrapper h2, #ap-wrapper h3, #ap-wrapper h4, #ap-wrapper h5, #ap-wrapper h6, #ap-wrapper p, #ap-wrapper blockquote, #ap-wrapper pre,
+  #ap-wrapper a, #ap-wrapper abbr, #ap-wrapper acronym, #ap-wrapper address, #ap-wrapper big, #ap-wrapper cite, #ap-wrapper code,
+  #ap-wrapper del, #ap-wrapper dfn, #ap-wrapper em, #ap-wrapper img, #ap-wrapper ins, #ap-wrapper kbd, #ap-wrapper q, #ap-wrapper s, #ap-wrapper samp,
+  #ap-wrapper small, #ap-wrapper strike, #ap-wrapper strong, #ap-wrapper sub, #ap-wrapper sup, #ap-wrapper tt, #ap-wrapper var,
+  #ap-wrapper b, #ap-wrapper u, #ap-wrapper i, #ap-wrapper center,
+  #ap-wrapper dl, #ap-wrapper dt, #ap-wrapper dd, #ap-wrapper ol, #ap-wrapper ul, #ap-wrapper li,
+  #ap-wrapper fieldset, #ap-wrapper form, #ap-wrapper label, #ap-wrapper legend,
+  #ap-wrapper table, #ap-wrapper caption, #ap-wrapper tbody, #ap-wrapper tfoot, #ap-wrapper thead, #ap-wrapper tr, #ap-wrapper th, #ap-wrapper td,
+  #ap-wrapper article, #ap-wrapper aside, #ap-wrapper canvas, #ap-wrapper details, #ap-wrapper embed,
+  #ap-wrapper figure, #ap-wrapper figcaption, #ap-wrapper footer, #ap-wrapper header, #ap-wrapper hgroup,
+  #ap-wrapper menu, #ap-wrapper nav, #ap-wrapper output, #ap-wrapper ruby, #ap-wrapper section, #ap-wrapper summary,
+  #ap-wrapper time, #ap-wrapper mark, #ap-wrapper audio, #ap-wrapper video {
     margin: 0;
     padding: 0;
     border: 0;
     font: inherit;
     font-size: 100%;
     vertical-align: baseline; }
-  #audio-player-wrapper table {
+  #ap-wrapper table {
     border-collapse: collapse;
     border-spacing: 0; }
-  #audio-player-wrapper caption, #audio-player-wrapper th, #audio-player-wrapper td {
+  #ap-wrapper caption, #ap-wrapper th, #ap-wrapper td {
     text-align: left;
     font-weight: normal;
     vertical-align: middle; }
-  #audio-player-wrapper q, #audio-player-wrapper blockquote {
+  #ap-wrapper q, #ap-wrapper blockquote {
     quotes: none; }
-    #audio-player-wrapper q:before, #audio-player-wrapper q:after, #audio-player-wrapper blockquote:before, #audio-player-wrapper blockquote:after {
+    #ap-wrapper q:before, #ap-wrapper q:after, #ap-wrapper blockquote:before, #ap-wrapper blockquote:after {
       content: "";
       content: none; }
-  #audio-player-wrapper a img {
+  #ap-wrapper a img {
     border: none; }
+  #ap-wrapper #ap-splash {
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background-image: url("../images/340.svg");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover; }
+    #ap-wrapper #ap-splash .cover-info {
+      position: relative;
+      padding: 1rem;
+      min-width: 17.5rem;
+      width: 80%;
+      max-height: 80%;
+      -moz-border-radius: 0.33333rem;
+      -webkit-border-radius: 0.33333rem;
+      border-radius: 0.33333rem;
+      background-color: rgba(255, 255, 255, 0.55); }
+      #ap-wrapper #ap-splash .cover-info .title {
+        font-weight: bold;
+        font-size: 1.5rem;
+        line-height: 1.75rem;
+        margin-bottom: 0.5rem; }
+      #ap-wrapper #ap-splash .cover-info .subtitle {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+        margin-bottom: 1rem; }
+      #ap-wrapper #ap-splash .cover-info .author, #ap-wrapper #ap-splash .cover-info .length {
+        font-size: 1rem;
+        line-height: 1.25rem; }
+      #ap-wrapper #ap-splash .cover-info .actions .btn {
+        display: block;
+        border: none;
+        cursor: pointer;
+        background-color: #00f;
+        color: #fff;
+        width: 100%;
+        margin-top: 0.5rem;
+        font-size: 1.125rem;
+        height: 2.5rem;
+        text-transform: uppercase;
+        -moz-border-radius: 0.33333rem;
+        -webkit-border-radius: 0.33333rem;
+        border-radius: 0.33333rem; }
+      #ap-wrapper #ap-splash .cover-info .actions .btn:first-child {
+        margin-top: 1rem; }
+
+@media (min-width: 768px) {
+  html {
+    height: unset; }
+    html body {
+      height: unset; }
+
+  #ap-wrapper {
+    max-width: 20rem;
+    margin: 1rem auto;
+    height: 35.5rem; } }

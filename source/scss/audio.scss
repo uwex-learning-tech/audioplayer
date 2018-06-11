@@ -1,6 +1,11 @@
 @import "compass/css3/box-sizing";
+@import "compass/css3/border-radius";
+@import "compass/css3/flexbox";
 @import "compass/reset/utilities";
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+$font: 'Open Sans', sans-serif;
 $font-size: 16px;
 $gutter: 16px;
 
@@ -10,14 +15,16 @@ $gutter: 16px;
 
 html {
     
-    width: 100%;
     height: 100%;
+    font-size: $font-size;
     
     body {
-        width: 100%;
+        
         height: 100%;
         padding: 0;
         margin: 0;
+        font-family: $font;
+        font-size: rem( 16px );
         
         * {
             @include box-sizing( "border-box" );
@@ -27,10 +34,97 @@ html {
     
 }
 
-#audio-player-wrapper {
+#ap-wrapper {
     
     @include nested-reset();
-    width: 100%;
+    min-width: rem( 320px );
     height: 100%;
+    
+    #ap-splash {
+        
+        height: 100%;
+        @include display-flex();
+        @include align-items( center );
+        @include justify-content( center );
+        background-image: url("../images/340.svg");
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        
+        .cover-info {
+            
+            position: relative;
+            padding: rem( $gutter );
+            min-width: rem( 280px );
+            width: 80%;
+            max-height: 80%;
+            @include border-radius( rem( $gutter / 3 ) );
+            background-color: rgba( 255, 255, 255, 0.55 );
+            
+            .title {
+                font-weight: bold;
+                font-size: rem( 24px );
+                line-height: rem( 28px );
+                margin-bottom: rem( $gutter / 2 );
+            }
+            
+            .subtitle {
+                font-size: rem( 20px );
+                line-height: rem( 24px );
+                margin-bottom: rem( $gutter );
+            }
+            
+            .author, .length {
+                font-size: rem( 16px );
+                line-height: rem( 20px );
+            }
+            
+            .actions {
+                
+                .btn {
+                    display: block;
+                    border: none;
+                    cursor: pointer;
+                    background-color: #00f;
+                    color: #fff;
+                    width: 100%;
+                    margin-top: rem( $gutter / 2 );
+                    font-size: rem( 18px );
+                    height: rem( 40px );
+                    text-transform: uppercase;
+                    @include border-radius( rem( $gutter / 3 ) );
+                }
+                
+                .btn:first-child {
+                    margin-top: rem( $gutter );
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+}
+
+@media (min-width: 768px) {
+    
+    html {
+        
+        height: unset;
+        
+        body {
+            height: unset;
+        }
+        
+    }
+    
+    #ap-wrapper {
+        
+        max-width: rem( 320px );
+        margin: rem( $gutter ) auto;
+        height: rem( 568px );
+        
+    }
     
 }
