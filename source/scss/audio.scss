@@ -7,6 +7,7 @@
 
 $font: 'Open Sans', sans-serif;
 $font-size: 16px;
+$accent: #0c3b6b;
 $gutter: 16px;
 
 @function rem( $px, $base: $font-size ) {
@@ -37,22 +38,52 @@ html {
 #ap-wrapper {
     
     @include nested-reset();
+    position: relative;
     min-width: rem( 320px );
     height: 100%;
     
+    .icon {
+        display: inline-block;
+        width: rem( $font-size );
+        height: rem( $font-size );
+        stroke-width: 0;
+        stroke: $accent;
+        fill: $accent;
+        vertical-align: baseline;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .sr-only {
+        position: absolute;
+        border: 0;
+        clip: rect( 0 0 0 0 );
+        width: rem( 1px );
+        height: rem( 1px );
+        margin: rem( -1px );
+        overflow: hidden;
+        padding: 0;
+    }
+    
     #ap-splash {
         
-        height: 100%;
         @include display-flex();
         @include align-items( center );
         @include justify-content( center );
-        background-image: url("../images/340.svg");
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("../images/splash.svg");
         background-position: top center;
         background-repeat: no-repeat;
         background-size: cover;
+        z-index: 0;
         
         .cover-info {
             
+            display: none;
             position: relative;
             padding: rem( $gutter );
             min-width: rem( 280px );
@@ -85,11 +116,12 @@ html {
                     display: block;
                     border: none;
                     cursor: pointer;
-                    background-color: #00f;
+                    background-color: $accent;
                     color: #fff;
                     width: 100%;
                     margin-top: rem( $gutter / 2 );
                     font-size: rem( 18px );
+                    line-height: 0;
                     height: rem( 40px );
                     text-transform: uppercase;
                     @include border-radius( rem( $gutter / 3 ) );
@@ -99,10 +131,199 @@ html {
                     margin-top: rem( $gutter );
                 }
                 
+                .dropdown {
+                    
+                    position: relative;
+                    
+                    .download-btn {
+                    
+                        font-size: rem( 14px );
+                        height: rem( 30px );
+                        
+                        .icon {
+                            width: rem( 14px );
+                            height: rem( 14px );
+                            stroke: $accent;
+                            fill: #fff;
+                        }
+                        
+                    }
+                    
+                    .dropdown-content {
+                        
+                        display: none;
+                        position: absolute;
+                        background-color: #f9f9f9;
+                        width: 100%;
+                        top: 0;
+                        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                        z-index: 1;
+                        
+                        a {
+                            display: block;
+                            font-size: rem( 14px );
+                            color: $accent;
+                            text-decoration: none;
+                            padding: rem( $gutter / 2 ) rem( $gutter );
+                        }
+                        
+                        a:hover {
+                            background-color: #f1f1f1;
+                        }
+                        
+                    }
+                    
+                }
+                
+                .dropdown:hover .dropdown-content {
+                    display: block;
+                }
+                
             }
             
         }
         
+    } // end splash
+    
+    #ap-main {
+        
+        @include display-flex();
+        @include flex-flow( row wrap );
+        @include align-items( flex-start );
+        
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        overflow: hidden;
+        
+        .head {
+            
+            @include display-flex();
+            @include flex( 1 0 auto );
+            width: 100%;
+            height: rem( 107px );
+            background-color: rgba( 255, 255, 255, 0.65 );
+            padding: rem( $gutter );
+            
+            .track-img {
+                
+                @include flex( 0 0 rem( 75px ) );
+                width: rem( 75px );
+                height: rem( 75px );
+                background-color: red;
+                margin-right: rem( $gutter );
+                
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fix: cover;
+                }
+                
+            }
+            
+            .track-info {
+                
+                width: calc( 100% - ( 91px ) );
+                @include display-flex();
+                @include flex-flow( row wrap );
+                @include align-items( flex-start );
+                @include flex( 1 0 auto );
+                
+                .title {
+                    @include flex( 1 0 100% );
+                    font-weight: bold;
+                    font-size: ren( 18px );
+                    line-height: 1;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+                
+                .author {
+                    @include flex( 1 0 100% );
+                    line-height: 1;
+                }
+                
+                .meta {
+                    @include align-self( flex-end );
+                    @include flex( 1 0 100% );
+                    font-size: rem( 14px );
+                    z-index: 1;
+                }
+                
+            }
+            
+        } // end head
+        
+        .body {
+            
+            @include flex( 2 0 auto );
+            width: 100%;
+            height: calc( 100% - 307px );
+            background-color: rgba( 255, 255, 255, 0.25 );
+            
+            .track-list {
+                
+                .minimized-display {
+                    @include display-flex();
+                    @include align-items( center );
+                    @include justify-content( center );
+                    height: rem( 30px );
+                    font-size: rem( 14px );
+                    background-color: rgba(226, 226, 226, 0.5);
+                }
+                
+                .tracks {
+                    display: none;
+                }
+                
+            }
+            
+            .spectrum {
+                display: none;
+                //@include display-flex();
+                @include align-items( center );
+                @include justify-content( center );
+                height: calc( 100% - 30px );
+            }
+            
+            .caption {
+                display: none;
+                //@include display-flex();
+                @include align-items( center );
+                @include justify-content( center );
+                height: calc( 100% - 30px );
+            }
+            
+        }
+        
+        .foot {
+            
+            @include flex( 1 0 auto );
+            @include align-self( flex-end );
+            width: 100%;
+            height: rem( 200px );
+            background-color: rgba( 255, 255, 255, 0.75 );
+            
+        }
+        
+    } // end main
+    
+    #ap-main:before {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-image: url("../images/splash.svg");
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: blur( rem( 8px ) );
+        content: ' ';
+        z-index: -1;
     }
     
 }
@@ -121,9 +342,9 @@ html {
     
     #ap-wrapper {
         
-        max-width: rem( 320px );
+        max-width: rem( 414px );
         margin: rem( $gutter ) auto;
-        height: rem( 568px );
+        height: rem( 736px );
         
     }
     

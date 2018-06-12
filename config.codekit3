@@ -23,7 +23,8 @@
 		"oF": 0
 		},
 	"\/config.rb": {
-		"ft": 131072,
+		"cB": 0,
+		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/config.rb",
 		"oF": 0
@@ -60,11 +61,32 @@
 		"rFN": 0,
 		"uCM": 0
 		},
-	"\/source\/images\/340.svg": {
+	"\/source\/fonts\/symbol-defs.svg": {
 		"ft": 2097152,
 		"miP": 0,
 		"oA": 2,
-		"oAP": "\/build\/source\/images\/340.svg",
+		"oAP": "\/build\/source\/fonts\/symbol-defs.svg",
+		"oF": 2,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
+		},
+	"\/source\/images\/pic.jpg": {
+		"ft": 16384,
+		"iS": 95263,
+		"jF": 0,
+		"oA": 2,
+		"oAP": "\/build\/source\/images\/pic.jpg",
+		"oF": 3,
+		"oIPL": 0,
+		"opt": 1,
+		"q": 100
+		},
+	"\/source\/images\/splash.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/build\/source\/images\/splash.svg",
 		"oF": 2,
 		"opt": 0,
 		"plM": 3758088159,
@@ -85,6 +107,16 @@
 		"oA": 0,
 		"oAP": "\/build\/source\/script\/audio.js",
 		"oF": 2,
+		"sC": 3,
+		"tS": 1
+		},
+	"\/source\/scripts\/lib\/modernizr.js": {
+		"ft": 64,
+		"ma": 1,
+		"mi": 1,
+		"oA": 2,
+		"oAP": "\/build\/source\/script\/lib\/modernizr.js",
+		"oF": 3,
 		"sC": 3,
 		"tS": 1
 		},
@@ -119,7 +151,7 @@
 	"displayValueWasSetByUser": 0,
 	"iconImageName": "meme-karate",
 	"iconImageWasSetByUser": 0,
-	"lastBuiltDate": 550448723
+	"lastBuiltDate": 550518027
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,

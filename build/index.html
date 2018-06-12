@@ -27,8 +27,23 @@
                 <p class="author">Ethan Lin</p>
                 <p class="length">99 Minutes</p>
                 <div class="actions">
+                    
                     <button class="btn">Start</button>
                     <button class="btn">Resume</button>
+                
+                    <div class="dropdown" role="menu">
+                        <button id="dwnld-btn" class="btn download-btn" aria-haspopup="true" aria-expanded="false">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="source/fonts/symbol-defs.svg#icon-download"></use>
+                            </svg> Downloads
+                        </button>
+                        <div class="dropdown-content" aria-expanded="false" aria-labelledby="dwnld-btn">
+                            <a href="#" role="menuitem" download>Transcript</a>
+                            <a href="#" role="menuitem" download>Audio</a>
+                            <a href="#" role="menuitem" download>Supplement</a>
+                        </div>
+                    </div>
+                    
                 </div>
                     
             </div>
@@ -36,6 +51,43 @@
         </div>
         
         <div id="ap-main">
+            
+            <div class="head">
+                
+                <div class="track-img">
+                    <img src="source/images/pic.jpg" alt="An Image of the Author" />
+                </div>
+                
+                <div class="track-info">
+                    <h2 class="title">Title Goes Here Title Goes Here Title Goes Here Title Goes Here Title Goes Here Title Goes Here</h2>
+                    <p class="author">Author Name</p>
+                    <p class="meta">
+                        <span class="duration">00:99</span> &bull; 
+                        Track <span class="current">8</span> of 
+                        <span class="total">12</span>
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="body">
+                
+                <div class="track-list">
+                    <div class="minimized-display">Up Next: Next Track Title</div>
+                    <div class="tracks"></div>
+                </div>
+                
+                <div class="spectrum"></div>
+                <div class="caption">This is a caption.</div>
+                
+            </div>
+            
+            <div class="foot">
+                
+                <div class="controls">
+                </div>
+                
+            </div>
             
         </div>
         
