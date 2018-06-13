@@ -28,6 +28,34 @@
 
 function initAP() {
     
+    let trackTitle = document.querySelectorAll( '.track-info .title-wrapper .title' )[0];
     
+    marqueeEl( trackTitle );
+    
+}
+
+function marqueeEl( el ) {
+    
+    if ( el.offsetWidth < el.scrollWidth ) {
+        
+        let runTime = 15500;
+        let startTime = 5000;
+        
+        let start = window.setInterval( function() {
+            
+            el.parentNode.classList.add( 'marquee' );
+            window.clearInterval( start );
+            
+            let stop = window.setTimeout( function() {
+                
+                el.parentNode.classList.remove( 'marquee' );
+                window.clearTimeout( stop );
+                marqueeEl( el );
+                
+            }, runTime );
+            
+        }, startTime );
+        
+    }
     
 }

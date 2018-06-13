@@ -1,3 +1,5 @@
+@import "compass/css3/animation";
+@import "compass/css3/transform";
 @import "compass/css3/box-sizing";
 @import "compass/css3/border-radius";
 @import "compass/css3/flexbox";
@@ -12,6 +14,11 @@ $gutter: 16px;
 
 @function rem( $px, $base: $font-size ) {
     @return ( $px / $base ) * 1rem;
+}
+
+@include keyframes( marquee ) {
+    0% { @include translateX( 0% ); }
+    100% { @include translateX( -100% ); }
 }
 
 html {
@@ -79,11 +86,10 @@ html {
         background-position: top center;
         background-repeat: no-repeat;
         background-size: cover;
-        z-index: 0;
+        z-index: 2;
         
         .cover-info {
             
-            display: none;
             position: relative;
             padding: rem( $gutter );
             min-width: rem( 280px );
@@ -185,6 +191,16 @@ html {
         
     } // end splash
     
+    #ap-splash.hide-splash {
+        
+        z-index: 0;
+        
+        .cover-info {
+            display: none;
+        }
+        
+    }
+    
     #ap-main {
         
         @include display-flex();
@@ -230,26 +246,52 @@ html {
                 @include align-items( flex-start );
                 @include flex( 1 0 auto );
                 
-                .title {
-                    @include flex( 1 0 100% );
-                    font-weight: bold;
-                    font-size: ren( 18px );
-                    line-height: 1;
-                    text-overflow: ellipsis;
+                .title-wrapper {
+                    
+                    width: 100%;
+                    @include flex( 1 0 auto );
+                    
+                    .title {
+                        font-weight: bold;
+                        font-size: ren( 18px );
+                        line-height: normal;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap; 
+                    }
+                    
+                }
+                
+                .marquee {
+                    
+                    position: relative;
+                    width: 100%;
+                    height: rem( 23px );
+                    @include flex( 1 0 auto );
                     overflow: hidden;
-                    white-space: nowrap;
+                    
+                    .title {
+                        position: absolute;
+                        overflow: unset;
+                        margin: 0;
+                        width: 185%;
+                        height: 100%;
+                        text-overflow: unset;
+                        @include translateX( 100% );
+                        @include animation( marquee 15s linear 1 );
+                    }
+                    
                 }
                 
                 .author {
                     @include flex( 1 0 100% );
-                    line-height: 1;
+                    line-height: 0;
                 }
                 
                 .meta {
                     @include align-self( flex-end );
                     @include flex( 1 0 100% );
-                    font-size: rem( 14px );
-                    z-index: 1;
+                    font-size: rem( 12px );
                 }
                 
             }
@@ -342,9 +384,9 @@ html {
     
     #ap-wrapper {
         
-        max-width: rem( 414px );
+        max-width: rem( 320px );
         margin: rem( $gutter ) auto;
-        height: rem( 736px );
+        height: rem( 568px );
         
     }
     
