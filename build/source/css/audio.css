@@ -24,6 +24,61 @@
     -ms-transform: translateX(-100%);
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%); } }
+@-moz-keyframes marquee {
+  0% {
+    -moz-transform: translateX(0%);
+    transform: translateX(0%); }
+  100% {
+    -moz-transform: translateX(-100%);
+    transform: translateX(-100%); } }
+@-webkit-keyframes marquee {
+  0% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%); }
+  100% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%); } }
+@keyframes marquee {
+  0% {
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%); }
+  100% {
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%); } }
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+@keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
 html {
   height: 100%;
   font-size: 16px; }
@@ -94,6 +149,46 @@ html {
     margin: -0.0625rem;
     overflow: hidden;
     padding: 0; }
+  #ap-wrapper .fadeIn {
+    -moz-animation: fadeIn 1s linear 1;
+    -webkit-animation: fadeIn 1s linear 1;
+    animation: fadeIn 1s linear 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1; }
+  #ap-wrapper .fadeOut {
+    -moz-animation: fadeOut 1s linear 1;
+    -webkit-animation: fadeOut 1s linear 1;
+    animation: fadeOut 1s linear 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0; }
+  #ap-wrapper #ap-error {
+    display: none;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #d43131;
+    z-index: 10; }
+    #ap-wrapper #ap-error .msg {
+      text-align: center;
+      padding: 1rem; }
+      #ap-wrapper #ap-error .msg .icon {
+        width: auto;
+        height: auto;
+        display: block;
+        font-size: 500%; }
+      #ap-wrapper #ap-error .msg .title {
+        font-weight: bold;
+        font-size: 1.25rem; }
+      #ap-wrapper #ap-error .msg .body {
+        color: #fff; }
+        #ap-wrapper #ap-error .msg .body a {
+          color: #fff; }
   #ap-wrapper #ap-splash {
     display: -webkit-flex;
     display: flex;
@@ -207,7 +302,7 @@ html {
         flex: 0 0 4.6875rem;
         width: 4.6875rem;
         height: 4.6875rem;
-        background-color: red;
+        background-color: #ccc;
         margin-right: 1rem; }
         #ap-wrapper #ap-main .head .track-img img {
           display: block;
@@ -246,7 +341,7 @@ html {
             position: absolute;
             overflow: unset;
             margin: 0;
-            width: 185%;
+            width: 100%;
             height: 100%;
             text-overflow: unset;
             -moz-transform: translateX(100%);
@@ -256,6 +351,14 @@ html {
             -moz-animation: marquee 15s linear 1;
             -webkit-animation: marquee 15s linear 1;
             animation: marquee 15s linear 1; }
+        #ap-wrapper #ap-main .head .track-info .marquee:before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0.625rem;
+          height: 100%;
+          content: ' ';
+          z-index: 2; }
         #ap-wrapper #ap-main .head .track-info .author {
           -webkit-flex: 1 0 100%;
           flex: 1 0 100%;
@@ -267,6 +370,7 @@ html {
           flex: 1 0 100%;
           font-size: 0.75rem; }
     #ap-wrapper #ap-main .body {
+      position: relative;
       -webkit-flex: 2 0 auto;
       flex: 2 0 auto;
       width: 100%;
@@ -292,12 +396,23 @@ html {
         justify-content: center;
         height: calc( 100% - 30px ); }
       #ap-wrapper #ap-main .body .caption {
-        display: none;
+        display: -webkit-flex;
+        display: flex;
         -webkit-align-items: center;
         align-items: center;
         -webkit-justify-content: center;
         justify-content: center;
         height: calc( 100% - 30px ); }
+      #ap-wrapper #ap-main .body .warning-msg {
+        display: none;
+        position: absolute;
+        font-size: 0.75rem;
+        text-align: center;
+        padding: 0.25rem;
+        width: 100%;
+        background-color: rgba(255, 242, 162, 0.9);
+        bottom: 0;
+        left: 0; }
     #ap-wrapper #ap-main .foot {
       -webkit-flex: 1 0 auto;
       flex: 1 0 auto;
@@ -321,7 +436,7 @@ html {
     content: ' ';
     z-index: -1; }
 
-@media (min-width: 768px) {
+@media only screen and (min-width: 768px) {
   html {
     height: unset; }
     html body {
@@ -331,3 +446,46 @@ html {
     max-width: 20rem;
     margin: 1rem auto;
     height: 35.5rem; } }
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: portrait) {
+  html {
+    height: 100%; }
+    html body {
+      height: 100%; }
+
+  #ap-wrapper {
+    max-width: unset;
+    margin: unset;
+    height: 100%; }
+    #ap-wrapper #ap-main .head {
+      height: 13.375rem;
+      padding-bottom: 0.5rem; }
+      #ap-wrapper #ap-main .head .track-img {
+        -webkit-flex: 0 0 11.375rem;
+        flex: 0 0 11.375rem;
+        width: 11.375rem;
+        height: 11.375rem; }
+      #ap-wrapper #ap-main .head .track-info {
+        width: calc( 100% - ( 198px ) ); }
+        #ap-wrapper #ap-main .head .track-info .title-wrapper .title {
+          font-weight: bold;
+          font-size: 2.125rem; }
+        #ap-wrapper #ap-main .head .track-info .marquee {
+          height: 2.875rem; }
+        #ap-wrapper #ap-main .head .track-info .author {
+          font-size: 1.875rem; }
+        #ap-wrapper #ap-main .head .track-info .meta {
+          font-size: 1.625rem; }
+    #ap-wrapper #ap-main .body {
+      height: calc( 100% - 714px ); }
+      #ap-wrapper #ap-main .body .track-list .minimized-display {
+        height: 3.75rem;
+        font-size: 1.75rem; }
+      #ap-wrapper #ap-main .body .spectrum {
+        height: calc( 100% - 60px ); }
+      #ap-wrapper #ap-main .body .caption {
+        height: calc( 100% - 60px );
+        font-size: 2rem; }
+      #ap-wrapper #ap-main .body .warning-msg {
+        font-size: 1.5rem; }
+    #ap-wrapper #ap-main .foot {
+      height: 31.25rem; } }

@@ -3,6 +3,7 @@
 @import "compass/css3/box-sizing";
 @import "compass/css3/border-radius";
 @import "compass/css3/flexbox";
+@import "compass/css3/opacity";
 @import "compass/reset/utilities";
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
@@ -19,6 +20,21 @@ $gutter: 16px;
 @include keyframes( marquee ) {
     0% { @include translateX( 0% ); }
     100% { @include translateX( -100% ); }
+}
+
+@include keyframes( marquee ) {
+    0% { @include translateX( 0% ); }
+    100% { @include translateX( -100% ); }
+}
+
+@include keyframes( fadeIn ) {
+    0% { @include opacity( 0 ); }
+    100% { @include opacity( 1 ); }
+}
+
+@include keyframes( fadeOut ) {
+    0% { @include opacity( 1 ); }
+    100% { @include opacity( 0 ); }
 }
 
 html {
@@ -71,6 +87,61 @@ html {
         overflow: hidden;
         padding: 0;
     }
+    
+    .fadeIn {
+        @include animation( fadeIn 1s linear 1 );
+        @include opacity( 1 );
+    }
+    
+    .fadeOut {
+        @include animation( fadeOut 1s linear 1 );
+        @include opacity( 0 );
+    }
+    
+    #ap-error {
+        
+        display: none;
+        //@include display-flex();
+        @include align-items( center );
+        @include justify-content( center );
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #d43131;
+        z-index: 10;
+        
+        .msg {
+            
+            text-align: center;
+            padding: rem( $gutter );
+            
+            .icon {
+                width: auto;
+                height: auto;
+                display: block;
+                font-size: 500%;
+            }
+            
+            .title {
+                font-weight: bold;
+                font-size: rem( 20px );
+            }
+            
+            .body {
+                
+                color: #fff;
+                
+                a {
+                    color: #fff;
+                }
+                
+            }
+            
+        }
+        
+    } // end error
     
     #ap-splash {
         
@@ -226,7 +297,7 @@ html {
                 @include flex( 0 0 rem( 75px ) );
                 width: rem( 75px );
                 height: rem( 75px );
-                background-color: red;
+                background-color: #ccc;
                 margin-right: rem( $gutter );
                 
                 img {
@@ -274,13 +345,23 @@ html {
                         position: absolute;
                         overflow: unset;
                         margin: 0;
-                        width: 185%;
+                        width: 100%;
                         height: 100%;
                         text-overflow: unset;
                         @include translateX( 100% );
                         @include animation( marquee 15s linear 1 );
                     }
                     
+                }
+                
+                .marquee:before {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: rem( 10px );
+                    height: 100%;
+                    content: ' ';
+                    z-index: 2;
                 }
                 
                 .author {
@@ -300,6 +381,7 @@ html {
         
         .body {
             
+            position: relative;
             @include flex( 2 0 auto );
             width: 100%;
             height: calc( 100% - 307px );
@@ -331,11 +413,23 @@ html {
             }
             
             .caption {
-                display: none;
-                //@include display-flex();
+                //display: none;
+                @include display-flex();
                 @include align-items( center );
                 @include justify-content( center );
                 height: calc( 100% - 30px );
+            }
+            
+            .warning-msg {
+                display: none;
+                position: absolute;
+                font-size: rem( 12px );
+                text-align: center;
+                padding: rem( $gutter / 4 );
+                width: 100%;
+                background-color: rgba(255, 242, 162, 0.9);
+                bottom: 0;
+                left: 0;
             }
             
         }
@@ -370,7 +464,7 @@ html {
     
 }
 
-@media (min-width: 768px) {
+@media only screen and (min-width: 768px) {
     
     html {
         
@@ -389,5 +483,106 @@ html {
         height: rem( 568px );
         
     }
+    
+}
+
+@media only screen and ( min-device-width : 414px ) 
+and ( max-device-width : 736px ) and ( orientation : portrait ) {
+    
+    html {
+        
+        height: 100%;
+        
+        body {
+            height: 100%;
+        }
+        
+    }
+    
+    #ap-wrapper {
+        
+        max-width: unset;
+        margin: unset;
+        height: 100%;
+        
+        #ap-main {
+            
+            .head {
+            
+                height: rem( 214px );
+                padding-bottom: rem( $gutter / 2 );
+                
+                .track-img {
+                    
+                    @include flex( 0 0 rem( 182px ) );
+                    width: rem( 182px );
+                    height: rem( 182px );
+                    
+                }
+                
+                .track-info {
+                    
+                    width: calc( 100% - ( 198px ) );
+                    
+                    .title-wrapper {
+                        
+                        .title {
+                            font-weight: bold;
+                            font-size: rem( 34px );
+                        }
+                        
+                    }
+                    
+                    .marquee {
+                        height: rem( 46px );
+                    }
+                    
+                    .author {
+                        font-size: rem( 30px );
+                    }
+                    
+                    .meta {
+                        font-size: rem( 26px );
+                    }
+                    
+                }
+                
+            } // end head
+        
+            .body {
+                
+                height: calc( 100% - 714px );
+                
+                .track-list {
+                    
+                    .minimized-display {
+                        height: rem( 60px );
+                        font-size: rem( 28px );
+                    }
+                    
+                }
+                
+                .spectrum {
+                    height: calc( 100% - 60px );
+                }
+                
+                .caption {
+                    height: calc( 100% - 60px );
+                    font-size: rem( 32px );
+                }
+                
+                .warning-msg {
+                    font-size: rem( 24px );
+                }
+                
+            }
+            
+            .foot {
+                height: rem( 500px );
+            }
+            
+        } // end main
+        
+    } // end wrapper
     
 }

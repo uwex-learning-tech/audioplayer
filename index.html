@@ -5,6 +5,7 @@
     <title>Audio Player</title>
     <link id="ap-manifest" href="sources/manifest.json" rel="manifest"/>
     <link href="source/css/audio.css" rel="stylesheet" type="text/css" />
+    <script src="source/script/lib/modernizr.js"></script>
     <script src="source/script/audio.js"></script>
 </head>
 
@@ -17,6 +18,16 @@
     </noscript>
 
     <div id="ap-wrapper">
+        
+        <div id="ap-error">
+            
+            <div class="msg">
+                <span class="icon" aria-hidden="true"></span>
+                <p class="title"></p>
+                <p class="body"></p>
+            </div>
+            
+        </div>
         
         <div id="ap-splash" class="hide-splash">
             
@@ -41,6 +52,7 @@
                             <a href="#" role="menuitem" download>Transcript</a>
                             <a href="#" role="menuitem" download>Audio</a>
                             <a href="#" role="menuitem" download>Supplement</a>
+                            
                         </div>
                     </div>
                     
@@ -60,9 +72,9 @@
                 
                 <div class="track-info">
                     <div class="title-wrapper">
-                        <h2 class="title">This is a title.</h2>
+                        <h2 class="title">This Is A Long Track Title That Can Be As Long As It Takes</h2>
                     </div>
-                    <p class="author">Authgor Name</p>
+                    <p class="author">Author Name</p>
                     <p class="meta">
                         <span class="duration">00:99</span> &bull; 
                         Track <span class="current">8</span> of 
@@ -81,6 +93,7 @@
                 
                 <div class="spectrum"></div>
                 <div class="caption">This is a caption.</div>
+                <div class="warning-msg"></div>
                 
             </div>
             

@@ -23,8 +23,7 @@
 		"oF": 0
 		},
 	"\/config.rb": {
-		"cB": 0,
-		"ft": 8192,
+		"ft": 131072,
 		"oA": 0,
 		"oAP": "\/config.rb",
 		"oF": 0
@@ -1549,7 +1548,7 @@
 	"externalServerAddress": "http:\/\/localhost:8888",
 	"gitIgnoreBuildFolder": 0,
 	"hideConfigFile": 0,
-	"jsCheckerReservedNamesString": "",
+	"jsCheckerReservedNamesString": "Modernizr",
 	"jsHintFlags2": {
 		"asi": {
 			"active": 0,
