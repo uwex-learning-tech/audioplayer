@@ -79,6 +79,36 @@
     opacity: 1; }
   100% {
     opacity: 0; } }
+@-moz-keyframes slideDown {
+  0% {
+    height: 1.875rem; }
+  100% {
+    height: 100%; } }
+@-webkit-keyframes slideDown {
+  0% {
+    height: 1.875rem; }
+  100% {
+    height: 100%; } }
+@keyframes slideDown {
+  0% {
+    height: 1.875rem; }
+  100% {
+    height: 100%; } }
+@-moz-keyframes slideUp {
+  0% {
+    height: 100%; }
+  100% {
+    height: 1.875rem; } }
+@-webkit-keyframes slideUp {
+  0% {
+    height: 100%; }
+  100% {
+    height: 1.875rem; } }
+@keyframes slideUp {
+  0% {
+    height: 100%; }
+  100% {
+    height: 1.875rem; } }
 html {
   height: 100%;
   font-size: 16px; }
@@ -161,6 +191,16 @@ html {
     animation: fadeOut 1s linear 1;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0; }
+  #ap-wrapper .slideDown {
+    -moz-animation: slideDown 0.25s linear 1;
+    -webkit-animation: slideDown 0.25s linear 1;
+    animation: slideDown 0.25s linear 1;
+    height: 100%; }
+  #ap-wrapper .slideUp {
+    -moz-animation: slideUp 0.25s linear 1;
+    -webkit-animation: slideUp 0.25s linear 1;
+    animation: slideUp 0.25s linear 1;
+    height: 1.875rem; }
   #ap-wrapper #ap-error {
     display: none;
     -webkit-align-items: center;
@@ -252,9 +292,7 @@ html {
           height: 1.875rem; }
           #ap-wrapper #ap-splash .cover-info .actions .dropdown .download-btn .icon {
             width: 0.875rem;
-            height: 0.875rem;
-            stroke: #0c3b6b;
-            fill: #fff; }
+            height: 0.875rem; }
         #ap-wrapper #ap-splash .cover-info .actions .dropdown .dropdown-content {
           display: none;
           position: absolute;
@@ -376,18 +414,83 @@ html {
       width: 100%;
       height: calc( 100% - 307px );
       background-color: rgba(255, 255, 255, 0.25); }
-      #ap-wrapper #ap-main .body .track-list .minimized-display {
+      #ap-wrapper #ap-main .body .track-list {
         display: -webkit-flex;
         display: flex;
-        -webkit-align-items: center;
-        align-items: center;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
         -webkit-justify-content: center;
         justify-content: center;
-        height: 1.875rem;
-        font-size: 0.875rem;
+        position: relative;
         background-color: rgba(226, 226, 226, 0.5); }
-      #ap-wrapper #ap-main .body .track-list .tracks {
-        display: none; }
+        #ap-wrapper #ap-main .body .track-list .minimized-display {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-align-items: center;
+          align-items: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          width: 100%;
+          height: 1.875rem;
+          font-size: 0.875rem; }
+        #ap-wrapper #ap-main .body .track-list .tracks {
+          display: none;
+          position: relative;
+          width: 100%;
+          margin: 0;
+          list-style: none;
+          height: 100%;
+          overflow-y: auto;
+          overflow-x: hidden; }
+          #ap-wrapper #ap-main .body .track-list .tracks .label {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-items: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            height: 1.25rem;
+            padding: 0 1rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #666;
+            background-color: rgba(226, 226, 226, 0.9); }
+          #ap-wrapper #ap-main .body .track-list .tracks li {
+            font-size: 0.875rem; }
+            #ap-wrapper #ap-main .body .track-list .tracks li a {
+              display: -webkit-flex;
+              display: flex;
+              -webkit-align-items: center;
+              align-items: center;
+              width: 100%;
+              height: 2.5rem;
+              padding: 0.25rem 1rem;
+              color: #000;
+              text-decoration: none; }
+          #ap-wrapper #ap-main .body .track-list .tracks li:hover {
+            background-color: rgba(226, 226, 226, 0.5); }
+        #ap-wrapper #ap-main .body .track-list .expand-btn {
+          position: absolute;
+          border: none;
+          width: 1.875rem;
+          height: 0.9375rem;
+          bottom: -0.9375rem;
+          padding: 0;
+          border-bottom-left-radius: 1.875rem;
+          border-bottom-right-radius: 1.875rem;
+          background-color: rgba(226, 226, 226, 0.5);
+          cursor: pointer; }
+          #ap-wrapper #ap-main .body .track-list .expand-btn .icon {
+            width: 0.75rem;
+            height: 0.75rem; }
+        #ap-wrapper #ap-main .body .track-list .expand-btn.rotate {
+          background-color: rgba(226, 226, 226, 0.9); }
+          #ap-wrapper #ap-main .body .track-list .expand-btn.rotate .icon {
+            margin-top: 0.0625rem;
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
       #ap-wrapper #ap-main .body .spectrum {
         display: none;
         -webkit-align-items: center;
@@ -396,8 +499,7 @@ html {
         justify-content: center;
         height: calc( 100% - 30px ); }
       #ap-wrapper #ap-main .body .caption {
-        display: -webkit-flex;
-        display: flex;
+        display: none;
         -webkit-align-items: center;
         align-items: center;
         -webkit-justify-content: center;

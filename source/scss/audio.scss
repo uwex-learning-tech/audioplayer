@@ -37,6 +37,16 @@ $gutter: 16px;
     100% { @include opacity( 0 ); }
 }
 
+@include keyframes( slideDown ) {
+    0% { height: rem( 30px ); }
+    100% { height: 100%; }
+}
+
+@include keyframes( slideUp ) {
+    0% { height: 100%; }
+    100% { height: rem( 30px ); }
+}
+
 html {
     
     height: 100%;
@@ -96,6 +106,16 @@ html {
     .fadeOut {
         @include animation( fadeOut 1s linear 1 );
         @include opacity( 0 );
+    }
+    
+    .slideDown {
+        @include animation( slideDown 0.25s linear 1 );
+        height: 100%;
+    }
+    
+    .slideUp {
+        @include animation( slideUp 0.25s linear 1 );
+        height: rem( 30px );
     }
     
     #ap-error {
@@ -220,8 +240,6 @@ html {
                         .icon {
                             width: rem( 14px );
                             height: rem( 14px );
-                            stroke: $accent;
-                            fill: #fff;
                         }
                         
                     }
@@ -389,17 +407,96 @@ html {
             
             .track-list {
                 
+                @include display-flex();
+                @include align-items( flex-start );
+                @include justify-content( center );
+                position: relative;
+                background-color: rgba(226, 226, 226, 0.5);
+                
                 .minimized-display {
                     @include display-flex();
                     @include align-items( center );
                     @include justify-content( center );
+                    width: 100%;
                     height: rem( 30px );
                     font-size: rem( 14px );
-                    background-color: rgba(226, 226, 226, 0.5);
                 }
                 
                 .tracks {
+                    
                     display: none;
+                    position: relative;
+                    width: 100%;
+                    margin: 0;
+                    list-style: none;
+                    height: 100%;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    
+                    .label {
+                        @include display-flex();
+                        @include align-items( center );
+                        position: sticky;
+                        top: 0;
+                        height: rem( 20px );
+                        padding: 0 rem( $gutter );
+                        font-size: rem( 12px );
+                        font-weight: bold;
+                        color: #666;
+                        background-color: rgba(226, 226, 226, 0.9);
+                    }
+                    
+                    li {
+                        
+                        font-size: rem( 14px );
+                        
+                        a {
+                            @include display-flex();
+                            @include align-items( center );
+                            width: 100%;
+                            height: rem( 40px );
+                            padding: rem( $gutter / 4 ) rem( $gutter );
+                            color: #000;
+                            text-decoration: none;
+                        }
+                        
+                    }
+                    
+                    li:hover {
+                        background-color: rgba(226, 226, 226, 0.5);
+                    }
+                    
+                }
+                
+                .expand-btn {
+                        
+                    position: absolute;
+                    border: none;
+                    width: rem( 30px );
+                    height: rem( 15px );
+                    bottom: rem( -15px );
+                    padding: 0;
+                    border-bottom-left-radius: rem( 30px );
+                    border-bottom-right-radius: rem( 30px );
+                    background-color: rgba(226, 226, 226, 0.5);
+                    cursor: pointer;
+                    
+                    .icon {
+                        width: rem( 12px );
+                        height: rem( 12px );
+                    }
+                    
+                }
+                
+                .expand-btn.rotate {
+                    
+                    background-color: rgba(226, 226, 226, 0.9);
+                    
+                    .icon {
+                        margin-top: rem( 1px );
+                        @include rotate( 180deg );
+                    }
+                    
                 }
                 
             }
@@ -413,8 +510,8 @@ html {
             }
             
             .caption {
-                //display: none;
-                @include display-flex();
+                display: none;
+                //@include display-flex();
                 @include align-items( center );
                 @include justify-content( center );
                 height: calc( 100% - 30px );

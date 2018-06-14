@@ -30,6 +30,11 @@ let el = {
     splash: '#ap-splash',
     main: '#ap-main',
     trackTitle: '.track-info .title-wrapper .title',
+    miniDisplay: '.track-list .minimized-display',
+    trackList: '.track-list .tracks',
+    expandTracksBtn: '.track-list .expand-btn',
+    spectrumDisplay: '.body .spectrum',
+    captionDisplay: '.body .caption',
     warningMsg: '.body .warning-msg',
     errorMsg: '#ap-error'
 }
@@ -50,8 +55,30 @@ function initAP() {
     }
     
     let trackTitle = document.querySelector( el.trackTitle );
+    let expandTracksBtn = document.querySelector( el.expandTracksBtn );
     
     marqueeEl( trackTitle );
+    
+    expandTracksBtn.addEventListener( 'click', function() {
+        
+        let trackList = document.querySelector( el.trackList );
+        let minDisplay = document.querySelector( el.miniDisplay );
+        
+        if ( trackList.style.display == 'none' || trackList.style.display == '' ) {
+            trackList.style.display = 'block';
+            minDisplay.style.display = 'none';
+            expandTracksBtn.parentNode.classList.add( 'slideDown' );
+            expandTracksBtn.parentNode.classList.remove( 'slideUp' );
+            expandTracksBtn.classList.add( 'rotate' );
+        } else {
+            trackList.style.display = 'none';
+            minDisplay.style.display = 'flex';
+            expandTracksBtn.parentNode.classList.add( 'slideUp' );
+            expandTracksBtn.parentNode.classList.remove( 'slideDown' );
+            expandTracksBtn.classList.remove( 'rotate' );
+        }
+        
+    } );
     
 }
 
