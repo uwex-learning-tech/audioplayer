@@ -350,7 +350,7 @@ html {
                     
                     .title {
                         font-weight: bold;
-                        font-size: ren( 18px );
+                        font-size: rem( 18px );
                         line-height: normal;
                         text-overflow: ellipsis;
                         overflow: hidden;
@@ -363,7 +363,7 @@ html {
                     
                     position: relative;
                     width: 100%;
-                    height: rem( 23px );
+                    height: rem( 25px );
                     @include flex( 1 0 auto );
                     overflow: hidden;
                     
