@@ -1,80 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<album accent="#7b3009" splashImgFormat="svg" imgFormat="jpg" analytics="off" xmlVersion="2">
 
-<tracks>
-
-	<!-- "Album" information -->
-	<album>
-
+	<settings program="" course="">
 		<name>HTML5 Audio Player Demo</name>
-
-		<!--
-			author name for all of the tracks
-
-			NOTE: author specified in each individual
-			track will override this author, and if the
-			track's author is empty, author specified here will
-			be use.
-		-->
-		<author>Ethan S. Lin</author>
-
-		<!--
-			image for all of the tracks;
-			leave blank if none
-
-			NOTE: image specified in each individual track
-			will override this image, and if the track's
-			image is empty, image specified here will
-			be use.
-		-->
-		<image>me.jpg</image>
-
-		<!--
-			total length of all the tracks combined;
-			leave it blank if none
-		-->
+		<author name="Ethan Lin"></author>
 		<length />
+	</settings>
 
-	</album>
+	<!-- single track only need one track element -->
 
-	<!-- single track only need one track node -->
-
-	<track>
-		<source>FasterRide.mp3</source>
+	<track img="cartel.jpg" src="FasterRide.mp3" >
 		<title>Faster Ride</title>
 		<author>Cartel</author>
-		<image>cartel.jpg</image>
 	</track>
 
-	<!-- for multiple tracks, add more track nodes -->
+	<!-- for multiple tracks, add more track elements -->
 
-
-<track>
-		<source>Gentleman.mp3</source>
-		<title>Gentleman</title>
-		<author>PSY</author>
-		<image>psy.jpg</image>
-	</track>
-
-	<track>
-		<source>HeresToNeverGrowingUp.mp3</source>
-		<title>Here's To Never Growing Up</title>
-		<author />
-		<image />
-	</track>
-
-	<track>
-		<source>YestoLove.mp3</source>
-		<title>Yes to Love</title>
-		<author>Stefano</author>
-		<image />
-	</track>
-
-	<track>
-		<source>MySongsKnowWhatYouDidInTheDark.mp3</source>
-		<title>My Songs Know What You Did In The Dark So I Can Have Two Lines</title>
-		<author>Fall Out Boy</author>
-		<image>fall out boy.jpg</image>
-	</track>
-
-
-</tracks>
+</album>
