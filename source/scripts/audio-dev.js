@@ -40,7 +40,7 @@ class APlayer {
         
         if ( self.hasCoreFeaturesSupport() ) {
         
-            self.showError('🙈', '', 'Your web browser does not support core audio player features.<br><a href="http://outdatedbrowser.com/en" target="_blank">Please update your web browser.</a>');
+            self.showError( '🙈', '', 'Your web browser does not support core audio player features.<br><a href="http://outdatedbrowser.com/en" target="_blank">Please update your web browser.</a>' );
             return;
             
         }
@@ -51,91 +51,11 @@ class APlayer {
             
         }
         
-        let trackTitle = document.querySelector( this.el.trackTitle );
-        let expandTracksBtn = document.querySelector( this.el.expandTracksBtn );
+        self.setUIs();
         
-        self._marqueeEl( trackTitle );
+        /************ DEV ONLY (remove later) ***********/
         
-        expandTracksBtn.addEventListener( 'click', function() {
-            
-            let trackList = document.querySelector( self.el.trackList );
-            let minDisplay = document.querySelector( self.el.miniDisplay );
-            
-            if ( trackList.style.display == 'none' || trackList.style.display == '' ) {
-                trackList.style.display = 'block';
-                minDisplay.style.display = 'none';
-                expandTracksBtn.parentNode.classList.add( 'slideDown' );
-                expandTracksBtn.parentNode.classList.remove( 'slideUp' );
-                expandTracksBtn.classList.add( 'rotate' );
-            } else {
-                trackList.style.display = 'none';
-                minDisplay.style.display = 'flex';
-                expandTracksBtn.parentNode.classList.add( 'slideUp' );
-                expandTracksBtn.parentNode.classList.remove( 'slideDown' );
-                expandTracksBtn.classList.remove( 'rotate' );
-            }
-            
-        } );
-        
-        /************** DEV ONLY ********************/
-        
-        let errToggle = document.querySelector( '#dev-error-toggle' );
-        
-        errToggle.addEventListener('click', function(evt) {
-            
-            let errorDisplay = document.querySelector( self.el.error );
-            
-            if ( errorDisplay.style.display == '' || 
-                errorDisplay.style.display == 'none' ) {
-                self.showError('👾', 'Error Title', 'Error message goes here with <a href="#">link</a>.');      
-            } else {
-                let splash = document.querySelector( self.el.splash );
-                let main = document.querySelector( self.el.main );
-                let icon = document.querySelector( self.el.errorIcon );
-                let title = document.querySelector( self.el.errorTitle );
-                let body = document.querySelector( self.el.errorBody );
-                
-                splash.style.display = '';
-                main.style.display = '';
-                
-                self._fadeOut( errorDisplay );
-                
-                window.setTimeout( function() {
-                    
-                    icon.innerHTML = '';
-                    title.innerHTML = '';
-                    body.innerHTML = '';
-                    
-                }, 1000 );
-            }
-            
-            evt.preventDefault();
-            
-        } );
-        
-        let warningToggle = document.querySelector( '#dev-warning-toggle' );
-        
-        warningToggle.addEventListener('click', function(evt) {
-            
-            self.showWarning( 'This is a warning message. Will disappear on its own.' );
-            
-            evt.preventDefault();
-            
-        } );
-        
-        let splashToggle = document.querySelector( '#dev-splash-toggle' );
-        
-        splashToggle.addEventListener('click', function(evt) {
-            
-            if ( document.querySelector( self.el.splash ).classList.contains( 'hide-splash' ) ) {
-                document.querySelector( self.el.splash ).classList.remove('hide-splash');
-            } else {
-                self.hideSplash();
-            }
-            
-            evt.preventDefault();
-            
-        } );
+        self.devOnly();
         
         /************** END DEV ONLY ********************/
         
@@ -176,12 +96,12 @@ class APlayer {
     
     showError( iconStr, titleStr, bodyStr ) {
     
-        let splash = document.querySelector( this.el.splash );
-        let main = document.querySelector( this.el.main );
-        let error = document.querySelector( this.el.error );
-        let icon = document.querySelector( this.el.errorIcon );
-        let title = document.querySelector( this.el.errorTitle );
-        let body = document.querySelector( this.el.errorBody );
+        let splash = this._selector( this.el.splash );
+        let main = this._selector( this.el.main );
+        let error = this._selector( this.el.error );
+        let icon = this._selector( this.el.errorIcon );
+        let title = this._selector( this.el.errorTitle );
+        let body = this._selector( this.el.errorBody );
         
         let ariaHidden = document.createAttribute( 'aria-hidden' );
         
@@ -204,7 +124,7 @@ class APlayer {
     showWarning( str ) {
     
         let self = this;
-        let warning = document.querySelector( this.el.warning );
+        let warning = self._selector( self.el.warning );
         let hideTime = 6000;
         let delayTime = 1000;
         
@@ -227,9 +147,38 @@ class APlayer {
         
     }
     
+    setUIs() {
+        
+        let self = this;
+        let trackTitle = self._selector( self.el.trackTitle );
+        let expandTracksBtn = self._selector( self.el.expandTracksBtn );
+        
+        self._marqueeEl( trackTitle );
+        
+        expandTracksBtn.addEventListener( 'click', function() {
+            
+            let trackList = self._selector( self.el.trackList );
+            let minDisplay = self._selector( self.el.miniDisplay );
+            
+            if ( trackList.style.display == 'none' || trackList.style.display == '' ) {
+                trackList.style.display = 'block';
+                minDisplay.style.display = 'none';
+                self._slideDown( expandTracksBtn.parentNode );
+                expandTracksBtn.classList.add( 'rotate' );
+            } else {
+                trackList.style.display = 'none';
+                minDisplay.style.display = 'flex';
+                self._slideUp( expandTracksBtn.parentNode );
+                expandTracksBtn.classList.remove( 'rotate' );
+            }
+            
+        } );
+        
+    }
+    
     hideSplash() {
     
-        let splash = document.querySelector( this.el.splash );
+        let splash = this._selector( this.el.splash );
         let ariaHidden = document.createAttribute( 'aria-hidden' );
         
         ariaHidden.value = true;
@@ -237,6 +186,12 @@ class APlayer {
         splash.classList.add( 'hide-splash' );
         splash.setAttributeNode( ariaHidden );
         
+    }
+    
+    /*** HELPER METHODS ***/
+    
+    _selector( str ) {
+        return document.querySelector( str );
     }
     
     /*** ANIMATION METHODS ***/
@@ -308,6 +263,84 @@ class APlayer {
         }, 1000 );
         
     }
+    
+    _slideDown( el ) {
+        
+        el.classList.add( 'slideDown' );
+        el.classList.remove( 'slideUp' );
+        
+    }
+    
+    _slideUp( el ) {
+        
+        el.classList.add( 'slideUp' );
+        el.classList.remove( 'slideDown' );
+        
+    }
+    
+    /*** DEV ONLY (remove later) ***/
+    devOnly() {
+        
+        let self = this;
+        let errToggle = self._selector( '#dev-error-toggle' );
+        
+        errToggle.addEventListener('click', function(evt) {
+            
+            let errorDisplay = self._selector( self.el.error );
+            
+            if ( errorDisplay.style.display == '' || 
+                errorDisplay.style.display == 'none' ) {
+                self.showError('👾', 'Error Title', 'Error message goes here with <a href="#">link</a>.');      
+            } else {
+                let splash = self._selector( self.el.splash );
+                let main = self._selector( self.el.main );
+                let icon = self._selector( self.el.errorIcon );
+                let title = self._selector( self.el.errorTitle );
+                let body = self._selector( self.el.errorBody );
+                
+                splash.style.display = '';
+                main.style.display = '';
+                
+                self._fadeOut( errorDisplay );
+                
+                window.setTimeout( function() {
+                    
+                    icon.innerHTML = '';
+                    title.innerHTML = '';
+                    body.innerHTML = '';
+                    
+                }, 1000 );
+            }
+            
+            evt.preventDefault();
+            
+        } );
+        
+        let warningToggle = self._selector( '#dev-warning-toggle' );
+        
+        warningToggle.addEventListener('click', function(evt) {
+            
+            self.showWarning( 'This is a warning message. Will disappear on its own.' );
+            
+            evt.preventDefault();
+            
+        } );
+        
+        let splashToggle = self._selector( '#dev-splash-toggle' );
+        
+        splashToggle.addEventListener('click', function(evt) {
+            
+            if ( self._selector( self.el.splash ).classList.contains( 'hide-splash' ) ) {
+                self._selector( self.el.splash ).classList.remove('hide-splash');
+            } else {
+                self.hideSplash();
+            }
+            
+            evt.preventDefault();
+            
+        } );
+        
+    } /*** DEV ONLY ***/
     
 } // end APlayer class
 
