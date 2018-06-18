@@ -117,7 +117,8 @@ html {
     padding: 0;
     margin: 0;
     font-family: "Open Sans", sans-serif;
-    font-size: 1rem; }
+    font-size: 1rem;
+    background-color: #EFEEE8; }
     html body * {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -132,7 +133,8 @@ html {
 #ap-wrapper {
   position: relative;
   min-width: 20rem;
-  height: 100%; }
+  height: 100%;
+  background-color: #ccc; }
   #ap-wrapper div, #ap-wrapper span, #ap-wrapper applet, #ap-wrapper object, #ap-wrapper iframe,
   #ap-wrapper h1, #ap-wrapper h2, #ap-wrapper h3, #ap-wrapper h4, #ap-wrapper h5, #ap-wrapper h6, #ap-wrapper p, #ap-wrapper blockquote, #ap-wrapper pre,
   #ap-wrapper a, #ap-wrapper abbr, #ap-wrapper acronym, #ap-wrapper address, #ap-wrapper big, #ap-wrapper cite, #ap-wrapper code,

@@ -183,6 +183,10 @@ class APlayer {
         let title = document.querySelector( this.el.errorTitle );
         let body = document.querySelector( this.el.errorBody );
         
+        let ariaHidden = document.createAttribute( 'aria-hidden' );
+        
+        ariaHidden.value = false;
+        
         icon.innerHTML = iconStr;
         title.innerHTML = titleStr;
         body.innerHTML = bodyStr;
@@ -191,6 +195,7 @@ class APlayer {
         main.style.display = 'none';
         
         error.style.display = 'flex';
+        error.setAttributeNode( ariaHidden );
         
         this._fadeIn( error );
         
@@ -225,8 +230,12 @@ class APlayer {
     hideSplash() {
     
         let splash = document.querySelector( this.el.splash );
+        let ariaHidden = document.createAttribute( 'aria-hidden' );
+        
+        ariaHidden.value = true;
         
         splash.classList.add( 'hide-splash' );
+        splash.setAttributeNode( ariaHidden );
         
     }
     

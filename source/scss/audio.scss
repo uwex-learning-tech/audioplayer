@@ -59,6 +59,7 @@ html {
         margin: 0;
         font-family: $font;
         font-size: rem( 16px );
+        background-color: #EFEEE8;
         
         * {
             @include box-sizing( "border-box" );
@@ -83,6 +84,7 @@ html {
     position: relative;
     min-width: rem( 320px );
     height: 100%;
+    background-color: #ccc;
     
     .icon {
         display: inline-block;
