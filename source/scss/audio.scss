@@ -68,6 +68,15 @@ html {
     
 }
 
+/**** DEV ONLY ****/
+
+.devonly {
+    width: rem( 400px );
+    margin: 0 auto;
+}
+
+/**** END DEV ONLY ****/
+
 #ap-wrapper {
     
     @include nested-reset();
@@ -134,6 +143,7 @@ html {
         
         .msg {
             
+            color: #fff;
             text-align: center;
             padding: rem( $gutter );
             
@@ -150,8 +160,6 @@ html {
             }
             
             .body {
-                
-                color: #fff;
                 
                 a {
                     color: #fff;

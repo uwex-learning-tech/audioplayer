@@ -35,22 +35,22 @@ let el = {
     expandTracksBtn: '.track-list .expand-btn',
     spectrumDisplay: '.body .spectrum',
     captionDisplay: '.body .caption',
-    warningMsg: '.body .warning-msg',
-    errorMsg: '#ap-error'
+    warning: '.body .warning-msg',
+    error: '#ap-error'
 }
 
 function initAP() {
     
     if ( hasCoreFeaturesSupport() ) {
         
-        showErrorMsg('🙈', '', 'Your web browser does not support core audio player features.<br><a href="http://outdatedbrowser.com/en" target="_blank">Please update your web browser.</a>');
+        showError('🙈', '', 'Your web browser does not support core audio player features.<br><a href="http://outdatedbrowser.com/en" target="_blank">Please update your web browser.</a>');
         return;
         
     }
     
     if ( hasAppearanceIusses() ) {
         
-        showWarningMsg( 'For better viewing, try a different web browser.' );
+        showWarning( 'For better viewing, try a different web browser.' );
         
     }
     
@@ -79,6 +79,51 @@ function initAP() {
         }
         
     } );
+    
+    /************** DEV ONLY ********************/
+    
+    let errToggle = document.querySelector( '#dev-error-toggle' );
+    
+    errToggle.addEventListener('click', function(evt) {
+        
+        let errorDisplay = document.querySelector( el.error );
+        
+        if ( errorDisplay.style.display == '' || 
+            errorDisplay.style.display == 'none' ) {
+            showError('👾', 'Error Title', 'Error message goes here with <a href="#">link</a>.');      
+        } else {
+            hideError();
+        }
+        
+        evt.preventDefault();
+        
+    } );
+    
+    let warningToggle = document.querySelector( '#dev-warning-toggle' );
+    
+    warningToggle.addEventListener('click', function(evt) {
+        
+        showWarning( 'This is a warning messages. Will disappear on its own.' );
+        
+        evt.preventDefault();
+        
+    } );
+    
+    let splashToggle = document.querySelector( '#dev-splash-toggle' );
+    
+    splashToggle.addEventListener('click', function(evt) {
+        
+        if ( document.querySelector( el.splash ).classList.contains( 'hide-splash' ) ) {
+            document.querySelector( el.splash ).classList.remove('hide-splash');
+        } else {
+            hideSplash();
+        }
+        
+        evt.preventDefault();
+        
+    } );
+    
+    /************** END DEV ONLY ********************/
     
 }
 
@@ -115,6 +160,14 @@ function hasAppearanceIusses() {
     
 }
 
+function hideSplash() {
+    
+    let splash = document.querySelector( el.splash );
+    
+    splash.classList.add( 'hide-splash' );
+    
+}
+
 function marqueeEl( el ) {
     
     if ( el.offsetWidth < el.scrollWidth ) {
@@ -148,25 +201,26 @@ function marqueeEl( el ) {
     
 }
 
-function showWarningMsg( str ) {
+function showWarning( str ) {
     
-    let warningMsg = document.querySelector( el.warningMsg );
+    let warning = document.querySelector( el.warning );
     let hideTime = 6000;
     let delayTime = 1000;
     
-    warningMsg.innerHTML = str;
-    warningMsg.style.display = 'block';
-    warningMsg.classList.add( 'fadeIn' );
+    warning.innerHTML = str;
+    warning.style.display = 'block';
+    warning.classList.add( 'fadeIn' );
     
     window.setTimeout( function() {
         
-        warningMsg.classList.remove( 'fadeIn' );
-        warningMsg.classList.add( 'fadeOut' );
+        warning.classList.remove( 'fadeIn' );
+        warning.classList.add( 'fadeOut' );
         
         window.setTimeout( function() {
             
-            warningMsg.style.display = 'none';
-            warningMsg.innerHTML = '';
+            warning.style.display = 'none';
+            warning.classList.remove( 'fadeOut' );
+            warning.innerHTML = '';
             
         }, delayTime );
         
@@ -174,14 +228,14 @@ function showWarningMsg( str ) {
     
 }
 
-function showErrorMsg( iconStr, titleStr, bodyStr ) {
+function showError( iconStr, titleStr, bodyStr ) {
     
     let splash = document.querySelector( el.splash );
     let main = document.querySelector( el.main );
-    let errorMsg = document.querySelector( el.errorMsg );
-    let icon = errorMsg.querySelector( '.icon' );
-    let title = errorMsg.querySelector( '.title' );
-    let body = errorMsg.querySelector( '.body' );
+    let error = document.querySelector( el.error );
+    let icon = error.querySelector( '.icon' );
+    let title = error.querySelector( '.title' );
+    let body = error.querySelector( '.body' );
     
     icon.innerHTML = iconStr;
     title.innerHTML = titleStr;
@@ -190,7 +244,35 @@ function showErrorMsg( iconStr, titleStr, bodyStr ) {
     splash.style.display = 'none';
     main.style.display = 'none';
     
-    errorMsg.style.display = 'flex';
-    errorMsg.classList.add( 'fadeIn' );
+    error.style.display = 'flex';
+    error.classList.remove( 'fadeOut' );
+    error.classList.add( 'fadeIn' );
+    
+}
+
+function hideError() {
+    
+    let splash = document.querySelector( el.splash );
+    let main = document.querySelector( el.main );
+    let error = document.querySelector( el.error );
+    let icon = error.querySelector( '.icon' );
+    let title = error.querySelector( '.title' );
+    let body = error.querySelector( '.body' );
+    let delayTime = 1000;
+    
+    splash.style.display = '';
+    main.style.display = '';
+    
+    error.classList.remove( 'fadeIn' );
+    error.classList.add( 'fadeOut' );
+    
+    window.setTimeout( function() {
+            
+        error.style.display = 'none';
+        icon.innerHTML = '';
+        title.innerHTML = '';
+        body.innerHTML = '';
+        
+    }, delayTime );
     
 }

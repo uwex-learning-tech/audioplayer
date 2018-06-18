@@ -123,6 +123,12 @@ html {
       -webkit-box-sizing: border-box;
       box-sizing: border-box; }
 
+/**** DEV ONLY ****/
+.devonly {
+  width: 25rem;
+  margin: 0 auto; }
+
+/**** END DEV ONLY ****/
 #ap-wrapper {
   position: relative;
   min-width: 20rem;
@@ -215,6 +221,7 @@ html {
     background-color: #d43131;
     z-index: 10; }
     #ap-wrapper #ap-error .msg {
+      color: #fff;
       text-align: center;
       padding: 1rem; }
       #ap-wrapper #ap-error .msg .icon {
@@ -225,10 +232,8 @@ html {
       #ap-wrapper #ap-error .msg .title {
         font-weight: bold;
         font-size: 1.25rem; }
-      #ap-wrapper #ap-error .msg .body {
+      #ap-wrapper #ap-error .msg .body a {
         color: #fff; }
-        #ap-wrapper #ap-error .msg .body a {
-          color: #fff; }
   #ap-wrapper #ap-splash {
     display: -webkit-flex;
     display: flex;
