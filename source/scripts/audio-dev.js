@@ -126,7 +126,6 @@ class APlayer {
         let self = this;
         let warning = self._selector( self.el.warning );
         let hideTime = 6000;
-        let delayTime = 1000;
         
         warning.innerHTML = str;
         warning.style.display = 'block';
@@ -135,13 +134,12 @@ class APlayer {
         
         window.setTimeout( function() {
             
-            self._fadeOut( warning );
-            
-            window.setTimeout( function() {
+            self._fadeOut( warning, function() {
                 
                 warning.innerHTML = '';
+                warning.style.display = 'none';
                 
-            }, delayTime );
+            } );
             
         }, hideTime );
         
@@ -161,15 +159,27 @@ class APlayer {
             let minDisplay = self._selector( self.el.miniDisplay );
             
             if ( trackList.style.display == 'none' || trackList.style.display == '' ) {
+                
                 trackList.style.display = 'block';
                 minDisplay.style.display = 'none';
-                self._slideDown( expandTracksBtn.parentNode );
-                expandTracksBtn.classList.add( 'rotate' );
+                
+                self._slideDown( expandTracksBtn.parentNode, function() {
+                    
+                    expandTracksBtn.classList.add( 'rotate' );
+                    
+                } );
+                
             } else {
+                
                 trackList.style.display = 'none';
                 minDisplay.style.display = 'flex';
-                self._slideUp( expandTracksBtn.parentNode );
-                expandTracksBtn.classList.remove( 'rotate' );
+                
+                self._slideUp( expandTracksBtn.parentNode, function() {
+                    
+                    expandTracksBtn.classList.remove( 'rotate' );
+                    
+                } );
+                
             }
             
         } );
@@ -231,50 +241,124 @@ class APlayer {
         
     }
     
-    _fadeIn( el ) {
+    _fadeIn( el, callback ) {
         
         el.classList.remove( 'fadeOut' );
         el.classList.add( 'fadeIn' );
-        this._clearFade( el );
+        
+        let animationEvt = this._whichAnimationEvent();
+        
+        el.params = {
+            _event: animationEvt,
+            _callback: callback
+        };
+        
+        el.addEventListener( animationEvt, this._fadeCallback );
         
     }
     
-    _fadeOut( el ) {
-        
+    _fadeOut( el, callback ) {
+
         el.classList.remove( 'fadeIn' );
         el.classList.add( 'fadeOut' );
         
-        window.setTimeout( function() {
+        let animationEvt = this._whichAnimationEvent();
+        
+        el.params = {
+            _event: animationEvt,
+            _callback: callback
+        };
+        
+        el.addEventListener( animationEvt, this._fadeCallback );
+        
+    }
+    
+    _fadeCallback( evt ) {
+        
+        if ( evt.target.params._callback !== undefined ) {
+            
+            if ( typeof evt.target.params._callback === 'function' ) {
                 
-            el.style.display = 'none';
+                evt.target.params._callback();
+                
+            }
             
-        }, 1000 );
+        }
         
-        this._clearFade( el );
-    }
-    
-    _clearFade( el ) {
-        
-        window.setTimeout( function() {
-            
-            el.classList.remove( 'fadeIn' );
-            el.classList.remove( 'fadeOut' );
-            
-        }, 1000 );
+        evt.target.classList.remove( 'fadeIn' );
+        evt.target.classList.remove( 'fadeOut' );
+        evt.target.removeEventListener( evt.target.params._event, this._fadeCallback );
         
     }
     
-    _slideDown( el ) {
+    _slideDown( el, callback ) {
         
         el.classList.add( 'slideDown' );
         el.classList.remove( 'slideUp' );
         
+        let animationEvt = this._whichAnimationEvent();
+        
+        el.params = {
+            _event: animationEvt,
+            _callback: callback
+        };
+        
+        el.addEventListener( animationEvt, this._slideCallback );
+        
     }
     
-    _slideUp( el ) {
+    _slideUp( el, callback ) {
         
         el.classList.add( 'slideUp' );
         el.classList.remove( 'slideDown' );
+        
+        let animationEvt = this._whichAnimationEvent();
+        
+        el.params = {
+            _event: animationEvt,
+            _callback: callback
+        };
+        
+        el.addEventListener( animationEvt, this._slideCallback );
+        
+    }
+    
+    _slideCallback( evt ) {
+        
+        if ( evt.target.params._callback !== undefined ) {
+            
+            if ( typeof evt.target.params._callback === 'function' ) {
+                
+                evt.target.params._callback();
+                
+            }
+            
+        }
+        
+        evt.target.removeEventListener( evt.target.params._event, this._slideCallback );
+        
+    } 
+    
+    _whichAnimationEvent() {
+        
+        let ani;
+        let el = document.createElement( 'fakeelement' );
+        let animations = {
+            'animation': 'animationend',
+            'OAnimation': 'oAnimationEnd',
+            'MozAnimation': 'animationend',
+            'WebkitAnimation': 'webkitAnimationEnd'
+        }
+        
+        for ( ani in animations ) {
+            
+            if ( el.style[ani] !== undefined ) {
+                
+                return animations[ani];
+                
+            }
+            
+        }
         
     }
     
@@ -292,6 +376,7 @@ class APlayer {
                 errorDisplay.style.display == 'none' ) {
                 self.showError('👾', 'Error Title', 'Error message goes here with <a href="#">link</a>.');      
             } else {
+                
                 let splash = self._selector( self.el.splash );
                 let main = self._selector( self.el.main );
                 let icon = self._selector( self.el.errorIcon );
@@ -301,15 +386,15 @@ class APlayer {
                 splash.style.display = '';
                 main.style.display = '';
                 
-                self._fadeOut( errorDisplay );
-                
-                window.setTimeout( function() {
+                self._fadeOut( errorDisplay, function() {
                     
+                    errorDisplay.style.display = 'none';
                     icon.innerHTML = '';
                     title.innerHTML = '';
                     body.innerHTML = '';
                     
-                }, 1000 );
+                } );
+                
             }
             
             evt.preventDefault();
