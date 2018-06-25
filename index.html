@@ -67,7 +67,9 @@
             <div class="head">
                 
                 <div class="track-img">
-                    <img src="source/images/pic.jpg" alt="An Image of the Author" />
+                    <button id="show-profile" aria-label="Show author profile">
+                        <img src="source/images/pic.jpg" alt="An Image of the Author" />
+                    </button>
                 </div>
                 
                 <div class="track-info">
@@ -108,9 +110,28 @@
                     </button>
                 </div>
                 
-                <div class="spectrum"></div>
-                <div class="caption">This is a caption.</div>
+                <div class="cc-spec-display">
+                    <div class="spectrum">This is spectrum.</div>
+                    <div class="caption">This is a caption.</div>
+                </div>
+                
                 <div class="warning-msg"></div>
+                
+                <div class="controls">
+                    
+                    <button id="cc-toggle" aria-label="Closed Caption">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="source/fonts/symbol-defs.svg#icon-cc"></use>
+                        </svg>
+                    </button>
+                    
+                    <button id="spectrum-toggle" aria-label="Spectrum">
+                        <svg class="icon" aria-hidden="true">
+                                <use xlink:href="source/fonts/symbol-defs.svg#icon-wave"></use>
+                            </svg>
+                    </button>
+                    
+                </div>
                 
             </div>
             

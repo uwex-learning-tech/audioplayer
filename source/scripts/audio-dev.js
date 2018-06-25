@@ -19,12 +19,17 @@ class APlayer {
         this.el = {
             splash: '#ap-splash',
             main: '#ap-main',
+            showProfileBtn: '#show-profile',
             trackTitle: '.track-info .title-wrapper .title',
             miniDisplay: '.track-list .minimized-display',
             trackList: '.track-list .tracks',
             expandTracksBtn: '.track-list .expand-btn',
-            spectrumDisplay: '.body .spectrum',
-            captionDisplay: '.body .caption',
+            ccSpecDisplay: '.body .cc-spec-display',
+            spectrumDisplay: '.body .cc-spec-display .spectrum',
+            captionDisplay: '.body .cc-spec-display .caption',
+            bodyControls: '.body .controls',
+            ccToggle: '#cc-toggle',
+            spectrumToggle: '#spectrum-toggle',
             warning: '.body .warning-msg',
             error: '#ap-error',
             errorIcon: '#ap-error .icon',
@@ -148,10 +153,48 @@ class APlayer {
     setUIs() {
         
         let self = this;
-        let trackTitle = self._selector( self.el.trackTitle );
-        let expandTracksBtn = self._selector( self.el.expandTracksBtn );
+        let trackTitle = self._selector( this.el.trackTitle );
         
-        self._marqueeEl( trackTitle );
+        this._marqueeEl( trackTitle );
+        this._CCSpectrumDisplays();
+        this._expandTracksToggle();
+        this._setShowProfileListener()
+        
+    }
+    
+    hideSplash() {
+    
+        let splash = this._selector( this.el.splash );
+        let ariaHidden = document.createAttribute( 'aria-hidden' );
+        
+        ariaHidden.value = true;
+        
+        splash.classList.add( 'hide-splash' );
+        splash.setAttributeNode( ariaHidden );
+        
+    }
+    
+    showProfile() {
+        console.log('show profile');
+    }
+    
+    _setShowProfileListener() {
+        
+        let self = this;
+        let showProfileBtn = this._selector( this.el.showProfileBtn );
+        
+        showProfileBtn.addEventListener( 'click', function() {
+            
+            self.showProfile();
+            
+        } );
+        
+    }
+    
+    _expandTracksToggle() {
+        
+        let self = this;
+        let expandTracksBtn = self._selector( this.el.expandTracksBtn );
         
         expandTracksBtn.addEventListener( 'click', function() {
             
@@ -162,6 +205,8 @@ class APlayer {
                 
                 trackList.style.display = 'block';
                 minDisplay.style.display = 'none';
+                
+                self._hideCCSpectrum();
                 
                 self._slideDown( expandTracksBtn.parentNode, function() {
                     
@@ -177,6 +222,7 @@ class APlayer {
                 self._slideUp( expandTracksBtn.parentNode, function() {
                     
                     expandTracksBtn.classList.remove( 'rotate' );
+                    self._CCSpectrumDisplays();
                     
                 } );
                 
@@ -186,15 +232,72 @@ class APlayer {
         
     }
     
-    hideSplash() {
+    toggleCC() {
+        
+        let captionDisplay = this._selector( this.el.captionDisplay );
+        let spectrumDisplay = this._selector( this.el.spectrumDisplay );
+        let ccToggle = this._selector( this.el.ccToggle );
+        let spectrumToggle = this._selector( this.el.spectrumToggle );
+        
+        ccToggle.classList.add( 'disabled' );
+        spectrumToggle.classList.remove( 'disabled' );
+        
+        captionDisplay.classList.add( 'active' );
+        spectrumDisplay.classList.remove( 'active' );
+        
+    }
     
-        let splash = this._selector( this.el.splash );
-        let ariaHidden = document.createAttribute( 'aria-hidden' );
+    toggleSpectrum() {
         
-        ariaHidden.value = true;
+        let captionDisplay = this._selector( this.el.captionDisplay );
+        let spectrumDisplay = this._selector( this.el.spectrumDisplay );
+        let ccToggle = this._selector( this.el.ccToggle );
+        let spectrumToggle = this._selector( this.el.spectrumToggle );
         
-        splash.classList.add( 'hide-splash' );
-        splash.setAttributeNode( ariaHidden );
+        spectrumToggle.classList.add( 'disabled' );
+        ccToggle.classList.remove( 'disabled' );
+        
+        spectrumDisplay.classList.add( 'active' );
+        captionDisplay.classList.remove( 'active' );
+        
+    }
+    
+    _CCSpectrumDisplays() {
+        
+        let self = this;
+        let toggles = this._selector( this.el.bodyControls );
+        let displays = this._selector( this.el.ccSpecDisplay );
+        let ccToggle = this._selector( this.el.ccToggle );
+        let spectrumToggle = this._selector( this.el.spectrumToggle );
+        
+        if ( toggles.style.display === 'none' ) {
+            
+            toggles.style.display = '';
+            displays.style.display = '';
+            
+        } else {
+
+            self.toggleCC();
+            
+        }
+        
+        ccToggle.addEventListener( 'click', function() {
+            self.toggleCC();
+        } );
+        
+        spectrumToggle.addEventListener( 'click', function() {
+            self.toggleSpectrum();
+        } );
+        
+    }
+    
+    _hideCCSpectrum() {
+        
+        let displays = this._selector( this.el.ccSpecDisplay );
+        let toggles = this._selector( this.el.bodyControls );
+        
+        toggles.style.display = 'none';
+        displays.style.display = 'none';
         
     }
     

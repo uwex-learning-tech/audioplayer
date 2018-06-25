@@ -173,8 +173,8 @@ html {
     width: 1rem;
     height: 1rem;
     stroke-width: 0;
-    stroke: #0c3b6b;
-    fill: #0c3b6b;
+    stroke: inherit;
+    fill: inherit;
     vertical-align: baseline;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
@@ -299,7 +299,9 @@ html {
           height: 1.875rem; }
           #ap-wrapper #ap-splash .cover-info .actions .dropdown .download-btn .icon {
             width: 0.875rem;
-            height: 0.875rem; }
+            height: 0.875rem;
+            fill: #fff;
+            stroke: #fff; }
         #ap-wrapper #ap-splash .cover-info .actions .dropdown .dropdown-content {
           display: none;
           position: absolute;
@@ -349,11 +351,39 @@ html {
         height: 4.6875rem;
         background-color: #ccc;
         margin-right: 1rem; }
-        #ap-wrapper #ap-main .head .track-img img {
+        #ap-wrapper #ap-main .head .track-img button {
           display: block;
+          position: relative;
+          border: none;
+          background-color: transparent;
           width: 100%;
           height: 100%;
-          object-fix: cover; }
+          padding: 0;
+          cursor: pointer; }
+          #ap-wrapper #ap-main .head .track-img button img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fix: cover; }
+        #ap-wrapper #ap-main .head .track-img button:hover:after {
+          position: absolute;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-align-items: center;
+          align-items: center;
+          padding: 0.5rem;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          color: #fff;
+          font-size: 0.75rem;
+          text-align: center;
+          background-color: rgba(0, 0, 0, 0.5);
+          content: 'Show Profile';
+          -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
       #ap-wrapper #ap-main .head .track-info {
         width: calc( 100% - ( 91px ) );
         display: -webkit-flex;
@@ -498,20 +528,25 @@ html {
             -ms-transform: rotate(180deg);
             -webkit-transform: rotate(180deg);
             transform: rotate(180deg); }
-      #ap-wrapper #ap-main .body .spectrum {
-        display: none;
-        -webkit-align-items: center;
-        align-items: center;
-        -webkit-justify-content: center;
-        justify-content: center;
+      #ap-wrapper #ap-main .body .cc-spec-display {
         height: calc( 100% - 30px ); }
-      #ap-wrapper #ap-main .body .caption {
-        display: none;
-        -webkit-align-items: center;
-        align-items: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        height: calc( 100% - 30px ); }
+        #ap-wrapper #ap-main .body .cc-spec-display .spectrum {
+          display: none;
+          -webkit-align-items: center;
+          align-items: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          height: 100%; }
+        #ap-wrapper #ap-main .body .cc-spec-display .caption {
+          display: none;
+          -webkit-align-items: center;
+          align-items: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          height: 100%; }
+        #ap-wrapper #ap-main .body .cc-spec-display .active {
+          display: -webkit-flex;
+          display: flex; }
       #ap-wrapper #ap-main .body .warning-msg {
         display: none;
         position: absolute;
@@ -522,6 +557,46 @@ html {
         background-color: rgba(255, 242, 162, 0.9);
         bottom: 0;
         left: 0; }
+      #ap-wrapper #ap-main .body .controls {
+        position: absolute;
+        display: -webkit-flex;
+        display: flex;
+        top: 2.8125rem;
+        right: 1rem; }
+        #ap-wrapper #ap-main .body .controls button {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-align-items: center;
+          align-items: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          width: 2.5rem;
+          height: 1.875rem;
+          border: none;
+          padding: 0;
+          background-color: rgba(255, 255, 255, 0.75);
+          color: #000;
+          cursor: pointer; }
+          #ap-wrapper #ap-main .body .controls button .icon {
+            width: 1.375rem;
+            height: 1.375rem; }
+        #ap-wrapper #ap-main .body .controls .disabled {
+          filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=55);
+          opacity: 0.55;
+          cursor: default; }
+        #ap-wrapper #ap-main .body .controls #cc-toggle {
+          border-right: 0.0625rem solid #ccc;
+          -moz-border-radius: 0.33333rem 0 0 0.33333rem;
+          -webkit-border-radius: 0.33333rem;
+          border-radius: 0.33333rem 0 0 0.33333rem; }
+        #ap-wrapper #ap-main .body .controls #spectrum-toggle {
+          border-bottom: 0.0625rem solid #ccc;
+          -moz-border-radius: 0 0.33333rem 0.33333rem 0;
+          -webkit-border-radius: 0;
+          border-radius: 0 0.33333rem 0.33333rem 0; }
+          #ap-wrapper #ap-main .body .controls #spectrum-toggle .icon {
+            width: 1.25rem;
+            height: 1.25rem; }
     #ap-wrapper #ap-main .foot {
       -webkit-flex: 1 0 auto;
       flex: 1 0 auto;
@@ -589,11 +664,10 @@ html {
       #ap-wrapper #ap-main .body .track-list .minimized-display {
         height: 3.75rem;
         font-size: 1.75rem; }
-      #ap-wrapper #ap-main .body .spectrum {
+      #ap-wrapper #ap-main .body .cc-spec-display {
         height: calc( 100% - 60px ); }
-      #ap-wrapper #ap-main .body .caption {
-        height: calc( 100% - 60px );
-        font-size: 2rem; }
+        #ap-wrapper #ap-main .body .cc-spec-display .caption {
+          font-size: 2rem; }
       #ap-wrapper #ap-main .body .warning-msg {
         font-size: 1.5rem; }
     #ap-wrapper #ap-main .foot {
