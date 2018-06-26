@@ -20,6 +20,8 @@ class APlayer {
             splash: '#ap-splash',
             main: '#ap-main',
             showProfileBtn: '#show-profile',
+            closeProfileBtn: '#author-close-btn',
+            profileDisplay: '#author-overlay',
             trackTitle: '.track-info .title-wrapper .title',
             miniDisplay: '.track-list .minimized-display',
             trackList: '.track-list .tracks',
@@ -34,7 +36,9 @@ class APlayer {
             error: '#ap-error',
             errorIcon: '#ap-error .icon',
             errorTitle: '#ap-error .title',
-            errorBody: '#ap-error .body'
+            errorBody: '#ap-error .body',
+            playerId: '#player',
+            player: null
         }
         
     }
@@ -158,7 +162,8 @@ class APlayer {
         this._marqueeEl( trackTitle );
         this._CCSpectrumDisplays();
         this._expandTracksToggle();
-        this._setShowProfileListener()
+        this._setShowProfileListener();
+        this._setupAudioPlayer();
         
     }
     
@@ -175,7 +180,30 @@ class APlayer {
     }
     
     showProfile() {
-        console.log('show profile');
+        
+        let self = this;
+        let authorProfile = this._selector( this.el.profileDisplay );
+        let closeBtn = this._selector( this.el.closeProfileBtn );
+        
+        authorProfile.style.display = 'block';
+        this._fadeIn( authorProfile );
+        
+        closeBtn.addEventListener( 'click', function() {
+            self.closeProfile();
+        }, {once: true} );
+
+    }
+    
+    closeProfile() {
+        
+        let authorProfile = this._selector( this.el.profileDisplay );
+        
+        this._fadeOut( authorProfile, function() {
+            
+            authorProfile.style.display = '';
+            
+        } );
+
     }
     
     _setShowProfileListener() {
@@ -228,6 +256,23 @@ class APlayer {
                 
             }
             
+        } );
+        
+    }
+    
+    _setupAudioPlayer() {
+        // https://github.com/sampotts/plyr
+        this.el.player = new Plyr( this.el.playerId, {
+            
+            autoplay: true,
+            volume: 0.8,
+            clickToPlay: false,
+            fullscreen: {
+                enabled: false,
+                fallback: false,
+                iosNative: false
+            }
+                        
         } );
         
     }

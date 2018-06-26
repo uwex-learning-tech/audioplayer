@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Audio Player</title>
-    <link id="ap-manifest" href="sources/manifest.json" rel="manifest"/>
+    <link id="ap-manifest" href="source/manifest.json" rel="manifest"/>
+<!--     <link href="source/scripts/lib/plyr/plyr.css" rel="stylesheet" type="text/css" /> -->
     <link href="source/css/audio.css" rel="stylesheet" type="text/css" />
     <script src="source/script/lib/modernizr.js"></script>
+    <script src="source/scripts/lib/plyr/plyr.min.js"></script>
     <script src="source/script/audio.js"></script>
 </head>
 
@@ -137,9 +139,26 @@
             
             <div class="foot">
                 
-                <div class="controls">
+                <div class="audio-ui">
+                    
+                    <audio id="player">
+                        <source src="assets/audio/FasterRide.mp3" type="audio/mp3">
+                    </audio>
+                    
                 </div>
                 
+            </div>
+            
+            <div id="author-overlay">
+                <button id="author-close-btn" aria-label="Close Author Profile">&times;</button>
+                <div class="content">
+                    <h4>Author Name</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <ol>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                    </ol>
+                </div>
             </div>
             
         </div>

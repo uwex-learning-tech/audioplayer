@@ -188,15 +188,15 @@ html {
     overflow: hidden;
     padding: 0; }
   #ap-wrapper .fadeIn {
-    -moz-animation: fadeIn 1s linear 1;
-    -webkit-animation: fadeIn 1s linear 1;
-    animation: fadeIn 1s linear 1;
+    -moz-animation: fadeIn 0.5s linear 1;
+    -webkit-animation: fadeIn 0.5s linear 1;
+    animation: fadeIn 0.5s linear 1;
     filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
     opacity: 1; }
   #ap-wrapper .fadeOut {
-    -moz-animation: fadeOut 1s linear 1;
-    -webkit-animation: fadeOut 1s linear 1;
-    animation: fadeOut 1s linear 1;
+    -moz-animation: fadeOut 0.5s linear 1;
+    -webkit-animation: fadeOut 0.5s linear 1;
+    animation: fadeOut 0.5s linear 1;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0; }
   #ap-wrapper .slideDown {
@@ -597,6 +597,12 @@ html {
           #ap-wrapper #ap-main .body .controls #spectrum-toggle .icon {
             width: 1.25rem;
             height: 1.25rem; }
+    #ap-wrapper #ap-main .single .track-list {
+      display: none; }
+    #ap-wrapper #ap-main .single .cc-spec-display {
+      height: 100%; }
+    #ap-wrapper #ap-main .single .controls {
+      top: 1rem; }
     #ap-wrapper #ap-main .foot {
       -webkit-flex: 1 0 auto;
       flex: 1 0 auto;
@@ -605,6 +611,48 @@ html {
       width: 100%;
       height: 12.5rem;
       background-color: rgba(255, 255, 255, 0.75); }
+    #ap-wrapper #ap-main #author-overlay {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      padding: 2rem 0 1rem;
+      background-color: rgba(255, 255, 255, 0.95); }
+      #ap-wrapper #ap-main #author-overlay #author-close-btn {
+        position: absolute;
+        width: 1.875rem;
+        height: 1.875rem;
+        border: 0.0625rem solid #ccc;
+        top: 1rem;
+        right: 1rem;
+        padding: 0 0 0.21875rem 0.0625rem;
+        font-size: 1.5rem;
+        color: #a2a2a2;
+        line-height: 0;
+        text-align: center;
+        -moz-border-radius: 100%;
+        -webkit-border-radius: 100%;
+        border-radius: 100%;
+        cursor: pointer; }
+      #ap-wrapper #ap-main #author-overlay #author-close-btn:hover {
+        color: #000;
+        border-color: #a2a2a2; }
+      #ap-wrapper #ap-main #author-overlay .content {
+        height: 100%;
+        padding: 0 1rem;
+        font-size: 0.875rem;
+        line-height: 1.125rem;
+        overflow: auto; }
+        #ap-wrapper #ap-main #author-overlay .content h4, #ap-wrapper #ap-main #author-overlay .content p, #ap-wrapper #ap-main #author-overlay .content ul, #ap-wrapper #ap-main #author-overlay .content ol {
+          margin-bottom: 1rem; }
+        #ap-wrapper #ap-main #author-overlay .content h4 {
+          font-weight: bold;
+          font-size: 1.125rem;
+          line-height: 1.375rem; }
+        #ap-wrapper #ap-main #author-overlay .content ul, #ap-wrapper #ap-main #author-overlay .content ol {
+          padding-left: 2rem; }
   #ap-wrapper #ap-main:before {
     display: block;
     position: absolute;
