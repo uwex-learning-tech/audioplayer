@@ -262,17 +262,128 @@ class APlayer {
     
     _setupAudioPlayer() {
         // https://github.com/sampotts/plyr
-        this.el.player = new Plyr( this.el.playerId, {
+        
+        var self = this;
+        
+        const controls = `
+        <div class="plyr__controls">
             
-            autoplay: true,
+            <div class="top-controls">
+            
+                <div class="plyr__time plyr__time--current" aria-label="Current time">00:00</div>
+                
+                <div class="plyr__progress">
+                    <input id="plyr-seek-{id}" data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="Seek">
+                    <progress class="plyr__progress__buffer" min="0" max="100" value="0" role="presentation" aria-hidden="true">% buffered</progress>
+                    <span role="tooltip" class="plyr__tooltip">00:00</span>
+                </div>
+                
+                <div class="plyr__time plyr__time--duration" aria-label="Duration">00:00</div>
+            
+            </div>
+            
+            <div class="middle-controls">
+            
+                <button type="button" class="plyr__control" data-plyr="rewind">
+                    <svg role="presentation"><use xlink:href="#plyr-rewind"></use></svg>
+                    <span class="plyr__tooltip" role="tooltip">Rewind {seektime} secs</span>
+                </button>
+                
+                <button type="button" id="ap-playpause" class="plyr__control" aria-label="Play, {title}" data-plyr="play">
+                    <svg class="icon--pressed" role="presentation"><use xlink:href="source/fonts/symbol-defs.svg#icon-play"></use></svg>
+                    <svg class="icon--not-pressed" role="presentation"><use xlink:href="source/fonts/symbol-defs.svg#icon-pause"></use></svg>
+                    <span class="label--pressed plyr__tooltip" role="tooltip">Play</span>
+                    <span class="label--not-pressed plyr__tooltip" role="tooltip">Pause</span>
+                </button>
+                
+                <button type="button" class="plyr__control" data-plyr="fast-forward">
+                    <svg role="presentation"><use xlink:href="#plyr-fast-forward"></use></svg>
+                    <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
+                </button>
+            
+            </div>
+            
+            <div class="bottom-controls">
+            
+                <button type="button" id="ap-muteunmute" class="plyr__control" aria-label="Mute" data-plyr="mute">
+                    <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-muted"></use></svg>
+                    <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-volume"></use></svg>
+                    <span class="label--pressed plyr__tooltip" role="tooltip">Unmute</span>
+                    <span class="label--not-pressed plyr__tooltip" role="tooltip">Mute</span>
+                </button>
+                
+                <div class="plyr__volume">
+                    <input data-plyr="volume" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume">
+                </div>
+            
+            </div>
+            
+        </div>
+        `;
+        
+        self.el.player = new Plyr( this.el.playerId, {
+            
+            controls: controls,
+            autoplay: false,
             volume: 0.8,
             clickToPlay: false,
             fullscreen: {
                 enabled: false,
                 fallback: false,
                 iosNative: false
-            }
+            },
+            resetOnEnd: true
                         
+        } );
+        
+        self.el.player.on( 'ready', event => {
+            
+            
+            const instance = event.detail.plyr;
+            const playpauseBtn = self._selector( '#ap-playpause' );
+            const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
+            
+            instance.play();
+            instance.playing;
+            
+            instance.on( 'ended', function() {
+                
+                if ( !playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
+                
+                    playpauseBtn.classList.add( 'plyr__control--pressed' );
+                    
+                }
+                
+            } );
+            
+            playpauseBtn.addEventListener( 'click', function( evt ) {
+            
+                if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
+                    
+                    evt.target.classList.remove( 'plyr__control--pressed' );
+                    
+                } else {
+                    
+                    evt.target.classList.add( 'plyr__control--pressed' );
+                    
+                }
+                
+            } );
+            
+            muteUnmuteBtn.addEventListener( 'click', function( evt ) {
+                
+                if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
+                    
+                    evt.target.classList.remove( 'plyr__control--pressed' );
+                    
+                } else {
+                    
+                    evt.target.classList.add( 'plyr__control--pressed' );
+                    
+                }
+                
+            } );
+                
         } );
         
     }

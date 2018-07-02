@@ -522,6 +522,7 @@ html {
                     border-bottom-right-radius: rem( 30px );
                     background-color: rgba(226, 226, 226, 0.5);
                     cursor: pointer;
+                    z-index: 10;
                     
                     .icon {
                         width: rem( 12px );
@@ -656,6 +657,136 @@ html {
             height: rem( 200px );
             background-color: rgba( 255, 255, 255, 0.75 );
             
+            .audio-ui {
+                
+                height: 100%;
+                
+                .plyr--full-ui {
+                    height: 100%;
+                    
+                }
+                
+                .plyr--audio {
+                    
+                    .plyr__controls {
+                    
+                        @include display-flex();
+                        @include flex-flow( row wrap );
+                        @include align-items( flex-start );
+                        color: #333;
+                        background: transparent;
+                        height: 100%;
+                        padding: rem( $gutter );
+                        
+                        input[type="range"] {
+                            color: $accent;
+                        }
+                        
+                        .plyr__tooltip {
+                            padding: rem( $gutter / 3 );
+                            font-size: rem( 12px );
+                        }
+                        
+                        .plyr__control:hover {
+                            background: transparent;
+                            color: $accent;
+                        }
+                        
+                        .top-controls {
+                            
+                            @include display-flex();
+                            @include flex( 1 0 100% );
+                            
+                            .plyr__time--current {
+                                font-size: rem( 14px );
+                                margin-right: rem( $gutter / 2 );
+                            }
+                            
+                            .plyr__progress {
+                                
+                                left: unset;
+                                
+                                input[type="range"] {
+                                    width: 100%;
+                                    margin-left: unset;
+                                    margin-right: unset;
+                                }
+                                
+                                .plyr__progress__buffer {
+                                    width: 100%;
+                                    margin-left: unset;
+                                    margin-right: unset;
+                                }
+                                
+                            }
+                            
+                            .plyr__time--duration {
+                                font-size: rem( 14px );
+                                margin-left: rem( $gutter / 2 );
+                            }
+                            
+                        }
+                        
+                        .middle-controls {
+                            
+                            @include display-flex();
+                            @include flex( 1 0 100% );
+                            @include align-items( center );
+                            @include justify-content( space-around );
+                            height: calc( 100% - 52px );
+                            
+                            svg {
+                                width: rem( 25px );
+                                height: rem( 25px );
+                            }
+                            
+                            #ap-playpause {
+                                
+                                @include display-flex();
+                                @include align-items( center );
+                                @include justify-content( center );
+                                border: rem( 1px ) solid #333;
+                                @include border-radius( 50% );
+                                padding: rem( $gutter );
+                                width: rem( 80px );
+                                height: rem( 80px );
+                                
+                                svg {
+                                    width: rem( 40px );
+                                    height: rem( 40px );
+                                    margin-left: rem( 2px );
+                                }
+                                
+                                .icon--pressed {
+                                    margin-left: rem( 8px );
+                                }
+                                
+                                .plyr__tooltip {
+                                    @include transform( translate( -3%, 0 ) scale( 1 ) );
+                                }
+                                
+                            }
+                            
+                            #ap-playpause:hover {
+                                border-color: $accent;
+                            }
+                            
+                        }
+                        
+                        .bottom-controls {
+                            
+                            @include align-self( flex-end );
+                            @include display-flex();
+                            @include flex( 1 0 100% );
+                            @include align-items( center );
+                            @include justify-content( center );
+                            
+                        }
+                    }
+                }
+                
+            }
+            
         }
         
         #author-overlay {
@@ -668,6 +799,7 @@ html {
             left: 0;
             padding: rem( $gutter * 2 ) 0 rem( $gutter );
             background-color: rgba( 255, 255, 255, 0.95 );
+            z-index: 99;
             
             #author-close-btn {
                 position: absolute;

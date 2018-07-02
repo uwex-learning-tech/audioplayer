@@ -516,7 +516,8 @@ html {
           border-bottom-left-radius: 1.875rem;
           border-bottom-right-radius: 1.875rem;
           background-color: rgba(226, 226, 226, 0.5);
-          cursor: pointer; }
+          cursor: pointer;
+          z-index: 10; }
           #ap-wrapper #ap-main .body .track-list .expand-btn .icon {
             width: 0.75rem;
             height: 0.75rem; }
@@ -611,6 +612,101 @@ html {
       width: 100%;
       height: 12.5rem;
       background-color: rgba(255, 255, 255, 0.75); }
+      #ap-wrapper #ap-main .foot .audio-ui {
+        height: 100%; }
+        #ap-wrapper #ap-main .foot .audio-ui .plyr--full-ui {
+          height: 100%; }
+        #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-flow: row wrap;
+          flex-flow: row wrap;
+          -webkit-align-items: flex-start;
+          align-items: flex-start;
+          color: #333;
+          background: transparent;
+          height: 100%;
+          padding: 1rem; }
+          #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls input[type="range"] {
+            color: #0c3b6b; }
+          #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .plyr__tooltip {
+            padding: 0.33333rem;
+            font-size: 0.75rem; }
+          #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .plyr__control:hover {
+            background: transparent;
+            color: #0c3b6b; }
+          #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .top-controls {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex: 1 0 100%;
+            flex: 1 0 100%; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .top-controls .plyr__time--current {
+              font-size: 0.875rem;
+              margin-right: 0.5rem; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .top-controls .plyr__progress {
+              left: unset; }
+              #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .top-controls .plyr__progress input[type="range"] {
+                width: 100%;
+                margin-left: unset;
+                margin-right: unset; }
+              #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .top-controls .plyr__progress .plyr__progress__buffer {
+                width: 100%;
+                margin-left: unset;
+                margin-right: unset; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .top-controls .plyr__time--duration {
+              font-size: 0.875rem;
+              margin-left: 0.5rem; }
+          #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex: 1 0 100%;
+            flex: 1 0 100%;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: space-around;
+            justify-content: space-around;
+            height: calc( 100% - 52px ); }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls svg {
+              width: 1.5625rem;
+              height: 1.5625rem; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause {
+              display: -webkit-flex;
+              display: flex;
+              -webkit-align-items: center;
+              align-items: center;
+              -webkit-justify-content: center;
+              justify-content: center;
+              border: 0.0625rem solid #333;
+              -moz-border-radius: 50%;
+              -webkit-border-radius: 50%;
+              border-radius: 50%;
+              padding: 1rem;
+              width: 5rem;
+              height: 5rem; }
+              #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause svg {
+                width: 2.5rem;
+                height: 2.5rem;
+                margin-left: 0.125rem; }
+              #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause .icon--pressed {
+                margin-left: 0.5rem; }
+              #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause .plyr__tooltip {
+                -moz-transform: translate(-3%, 0) scale(1);
+                -ms-transform: translate(-3%, 0) scale(1);
+                -webkit-transform: translate(-3%, 0) scale(1);
+                transform: translate(-3%, 0) scale(1); }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause:hover {
+              border-color: #0c3b6b; }
+          #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls {
+            -webkit-align-self: flex-end;
+            align-self: flex-end;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex: 1 0 100%;
+            flex: 1 0 100%;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            justify-content: center; }
     #ap-wrapper #ap-main #author-overlay {
       display: none;
       position: absolute;
@@ -619,7 +715,8 @@ html {
       top: 0;
       left: 0;
       padding: 2rem 0 1rem;
-      background-color: rgba(255, 255, 255, 0.95); }
+      background-color: rgba(255, 255, 255, 0.95);
+      z-index: 99; }
       #ap-wrapper #ap-main #author-overlay #author-close-btn {
         position: absolute;
         width: 1.875rem;
