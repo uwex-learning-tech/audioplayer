@@ -732,7 +732,7 @@ html {
                             @include display-flex();
                             @include flex( 1 0 100% );
                             @include align-items( center );
-                            @include justify-content( space-around );
+                            @include justify-content( space-between );
                             height: calc( 100% - 52px );
                             
                             svg {
@@ -779,7 +779,20 @@ html {
                             @include display-flex();
                             @include flex( 1 0 100% );
                             @include align-items( center );
-                            @include justify-content( center );
+                            @include justify-content( space-around );
+                            
+                            #ap-playbackRate {
+                                font-weight: bold;
+                                font-size: rem( 15px );
+                                padding-top: 0;
+                                padding-bottom: 0;
+                            }
+                            
+                            .ap-volcontrols {
+                                @include display-flex();
+                                @include align-items( center );
+                                @include justify-content( center );
+                            }
                             
                         }
                     }

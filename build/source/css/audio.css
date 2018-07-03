@@ -663,8 +663,8 @@ html {
             flex: 1 0 100%;
             -webkit-align-items: center;
             align-items: center;
-            -webkit-justify-content: space-around;
-            justify-content: space-around;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
             height: calc( 100% - 52px ); }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls svg {
               width: 1.5625rem;
@@ -705,8 +705,20 @@ html {
             flex: 1 0 100%;
             -webkit-align-items: center;
             align-items: center;
-            -webkit-justify-content: center;
-            justify-content: center; }
+            -webkit-justify-content: space-around;
+            justify-content: space-around; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls #ap-playbackRate {
+              font-weight: bold;
+              font-size: 0.9375rem;
+              padding-top: 0;
+              padding-bottom: 0; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls .ap-volcontrols {
+              display: -webkit-flex;
+              display: flex;
+              -webkit-align-items: center;
+              align-items: center;
+              -webkit-justify-content: center;
+              justify-content: center; }
     #ap-wrapper #ap-main #author-overlay {
       display: none;
       position: absolute;
