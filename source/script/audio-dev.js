@@ -290,8 +290,8 @@ class APlayer {
                 </button>
                 
                 <button type="button" id="ap-playpause" class="plyr__control" aria-label="Play, {title}" data-plyr="play">
-                    <svg class="icon--pressed" role="presentation"><use xlink:href="source/fonts/symbol-defs.svg#icon-play"></use></svg>
-                    <svg class="icon--not-pressed" role="presentation"><use xlink:href="source/fonts/symbol-defs.svg#icon-pause"></use></svg>
+                    <svg class="icon--pressed" role="presentation"><use xlink:href="source/images/icons.svg#icon-play"></use></svg>
+                    <svg class="icon--not-pressed" role="presentation"><use xlink:href="source/images/icons.svg#icon-pause"></use></svg>
                     <span class="label--pressed plyr__tooltip" role="tooltip">Play</span>
                     <span class="label--not-pressed plyr__tooltip" role="tooltip">Pause</span>
                 </button>
