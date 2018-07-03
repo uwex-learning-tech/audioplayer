@@ -123,6 +123,13 @@ html {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box; }
+    html body .program-theme {
+      display: none; }
+      html body .program-theme span {
+        display: block;
+        width: 100%;
+        height: 1.25rem;
+        background-color: #0c3b6b; }
     html body .copyright {
       display: none;
       font-size: 0.75rem;
@@ -812,6 +819,9 @@ html {
     height: unset; }
     html body {
       height: unset; }
+    html .program-theme {
+      display: -webkit-flex !important;
+      display: flex !important; }
     html .copyright {
       display: block !important; }
 

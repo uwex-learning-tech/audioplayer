@@ -66,6 +66,19 @@ html {
             @include box-sizing( "border-box" );
         }
         
+        .program-theme {
+            
+            display: none;
+            
+            span {
+                display: block;
+                width: 100%;
+                height: rem( 20px );
+                background-color: $accent;
+            }
+            
+        }
+        
         .copyright {
             display: none;
             font-size: rem( 12px );
@@ -939,6 +952,10 @@ html {
         
         body {
             height: unset;
+        }
+        
+        .program-theme {
+            @include display-flex( flex !important );
         }
         
         .copyright {

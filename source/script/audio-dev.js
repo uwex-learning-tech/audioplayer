@@ -44,6 +44,11 @@ class APlayer {
         
         this.manifest ={};
         this.album = {};
+        this.program = {};
+        this.reference = {
+            names: window.location.href,
+            params: new URLSearchParams( window.location.search )
+        };
         
     }
          
@@ -191,6 +196,42 @@ class APlayer {
         
     }
     
+    _setProgram() {
+        
+        let self = this;
+        
+        if ( self.manifest.ap_custom_themes ) {
+    
+            self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+                
+                return obj.name === self.reference.names[3];
+                
+            } );
+            
+            if ( self.program === undefined ) {
+                
+                self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+                    
+                    return obj.name === self.manifest.ap_logo_default;
+                    
+                } );
+                
+            }
+            
+        }
+        
+        let decorationBar = self._selector( '.program-theme' );
+    
+        self.program.colors.forEach( function( hex ) {
+                        
+            let span = document.createElement( 'span' );
+            span.style.backgroundColor = hex;
+            decorationBar.appendChild( span );
+            
+        } );
+        
+    }
+    
     setUIs() {
         
         let self = this;
@@ -207,6 +248,7 @@ class APlayer {
             
         }
         
+        this._setProgram();
         this._marqueeEl( trackTitle );
         this._CCSpectrumDisplays();
         this._expandTracksToggle();
