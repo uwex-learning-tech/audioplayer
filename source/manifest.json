@@ -2,7 +2,7 @@
     "lang": "en",
     "dir": "ltr",
     "name": "Audio Player",
-    "description": "A generic audio player version 2.",
+    "description": "Audio player version 2.",
     "short_name": "AP",
     "display": "browser",
     "orientation": "portrait",

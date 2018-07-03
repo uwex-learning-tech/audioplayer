@@ -123,13 +123,13 @@ html {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box; }
+    html body .copyright {
+      display: none;
+      font-size: 0.75rem;
+      text-align: center;
+      width: 20rem;
+      margin: 0 auto; }
 
-/**** DEV ONLY ****/
-.devonly {
-  width: 25rem;
-  margin: 0 auto; }
-
-/**** END DEV ONLY ****/
 #ap-wrapper {
   position: relative;
   min-width: 20rem;
@@ -703,9 +703,9 @@ html {
               #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause svg {
                 width: 2.5rem;
                 height: 2.5rem;
-                margin-left: 0.125rem; }
-              #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause .icon--pressed {
                 margin-left: 0.5rem; }
+              #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause .icon--pressed {
+                margin-left: 0.125rem; }
               #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause .plyr__tooltip {
                 -moz-transform: translate(-3%, 0) scale(1);
                 -ms-transform: translate(-3%, 0) scale(1);
@@ -812,6 +812,8 @@ html {
     height: unset; }
     html body {
       height: unset; }
+    html .copyright {
+      display: block !important; }
 
   #ap-wrapper {
     max-width: 20rem;

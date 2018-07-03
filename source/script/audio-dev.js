@@ -38,8 +38,12 @@ class APlayer {
             errorTitle: '#ap-error .title',
             errorBody: '#ap-error .body',
             playerId: '#player',
+            copyright: '.copyright p',
             player: null
-        }
+        };
+        
+        this.manifest ={};
+        this.album = {};
         
     }
          
@@ -60,13 +64,7 @@ class APlayer {
             
         }
         
-        self.setUIs();
-        
-        /************ DEV ONLY (remove later) ***********/
-        
-        self.devOnly();
-        
-        /************** END DEV ONLY ********************/
+        self.getManifest();
         
     }
     
@@ -154,10 +152,60 @@ class APlayer {
         
     }
     
+    getManifest() {
+        
+        let self = this;
+        let manifestUrl = self._selector( '#ap-manifest' ).getAttribute( 'href' );
+        let request = new XMLHttpRequest();
+        
+        request.open( 'GET', manifestUrl, true );
+        
+        request.onload = function() {
+            
+            if ( this.status >= 200 && this.status < 400 ) {
+                
+                self.manifest = JSON.parse( this.response );
+                self.getAlbum();
+                
+            } else {
+                
+                self.showError( '🤔', this.status, 'Something went wrong while loading manifest.' );
+                
+            }
+            
+        };
+        
+        request.onerror = function() {
+            
+            self.showError( '', 'Connection Error', 'Check your network.' );
+            
+        };
+        
+        request.send();
+        
+    }
+    
+    getAlbum() {
+        
+        this.setUIs();
+        
+    }
+    
     setUIs() {
         
         let self = this;
-        let trackTitle = self._selector( this.el.trackTitle );
+        let trackTitle = self._selector( self.el.trackTitle );
+        let copyright = self._selector( self.el.copyright );
+        let date = new Date();
+        let year = date.getFullYear();
+        
+        copyright.innerHTML += '&copy; ' + year + '. ' + self.manifest.ap_copyright;
+        
+        if ( self.manifest.ap_root_directory.length === 0 ) {
+            
+            self.manifest.ap_root_directory = 'source/';
+            
+        }
         
         this._marqueeEl( trackTitle );
         this._CCSpectrumDisplays();
@@ -261,7 +309,6 @@ class APlayer {
     }
     
     _setupAudioPlayer() {
-        // https://github.com/sampotts/plyr
         
         var self = this;
         
@@ -285,29 +332,29 @@ class APlayer {
             <div class="middle-controls">
                 
                 <button type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="source/images/icons.svg#icon-previous"></use></svg>
+                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-previous"></use></svg>
                     <span class="plyr__tooltip" role="tooltip">Previous</span>
                 </button>
                 
                 <button type="button" class="plyr__control" data-plyr="rewind">
-                    <svg role="presentation"><use xlink:href="source/images/icons.svg#icon-backward"></use></svg>
+                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-backward"></use></svg>
                     <span class="plyr__tooltip" role="tooltip">Rewind {seektime} secs</span>
                 </button>
                 
                 <button type="button" id="ap-playpause" class="plyr__control" aria-label="Play, {title}" data-plyr="play">
-                    <svg class="icon--pressed" role="presentation"><use xlink:href="source/images/icons.svg#icon-play"></use></svg>
-                    <svg class="icon--not-pressed" role="presentation"><use xlink:href="source/images/icons.svg#icon-pause"></use></svg>
-                    <span class="label--pressed plyr__tooltip" role="tooltip">Play</span>
-                    <span class="label--not-pressed plyr__tooltip" role="tooltip">Pause</span>
+                    <svg class="icon--pressed" role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-pause"></use></svg>
+                    <svg class="icon--not-pressed" role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-play"></use></svg>
+                    <span class="label--pressed plyr__tooltip" role="tooltip">Pause</span>
+                    <span class="label--not-pressed plyr__tooltip" role="tooltip">Play</span>
                 </button>
                 
                 <button type="button" class="plyr__control" data-plyr="fast-forward">
-                    <svg role="presentation"><use xlink:href="source/images/icons.svg#icon-forward"></use></svg>
+                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-forward"></use></svg>
                     <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
                 </button>
                 
                 <button type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="source/images/icons.svg#icon-next"></use></svg>
+                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-next"></use></svg>
                     <span class="plyr__tooltip" role="tooltip">Next</span>
                 </button>
             
@@ -316,7 +363,7 @@ class APlayer {
             <div class="bottom-controls">
                 
                 <button id="ap-loop" type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="source/images/icons.svg#icon-loop"></use></svg>
+                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-loop"></use></svg>
                     <span class="plyr__tooltip" role="tooltip">Loop</span>
                 </button>
                 
@@ -343,7 +390,7 @@ class APlayer {
                 </div>
                 
                 <button type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="source/images/icons.svg#icon-download"></use></svg>
+                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-download"></use></svg>
                     <span class="plyr__tooltip" role="tooltip">Download</span>
                 </button>
             
@@ -368,14 +415,20 @@ class APlayer {
         
         self.el.player.on( 'ready', event => {
             
-            
             const instance = event.detail.plyr;
             const playpauseBtn = self._selector( '#ap-playpause' );
             const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
             const loopBtn = self._selector( '#ap-loop' );
             const playbackRateBtn = self._selector( '#ap-playbackRate' );
             
-            instance.play();
+            // play the audio
+            // instance.play();
+            
+            if ( instance.playing === true ) {
+                
+                playpauseBtn.classList.add( 'plyr__control--pressed' );
+                
+            }
             
             // check playback rate and update playback rate select element
             for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
@@ -389,11 +442,12 @@ class APlayer {
                 
             }
             
+            // on playback end
             instance.on( 'ended', function() {
                 
                 if ( instance.loop === false ) {
                     
-                    if ( !playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
+                    if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
                 
                         playpauseBtn.classList.add( 'plyr__control--pressed' );
                         
@@ -405,6 +459,7 @@ class APlayer {
                 
             } );
             
+            // toogle loop button state
             loopBtn.addEventListener( 'click', function() {
 
                 if ( instance.loop === false ) {
@@ -421,12 +476,14 @@ class APlayer {
                 
             } );
             
+            // change playback rate
             playbackRateBtn.addEventListener( 'change', function( evt ) {
                 
                 instance.speed = Number( evt.target.options[evt.target.selectedIndex].value );
                 
             } );
             
+            // toggle play/pause state
             playpauseBtn.addEventListener( 'click', function( evt ) {
             
                 if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
@@ -441,6 +498,7 @@ class APlayer {
                 
             } );
             
+            // toglle mute/unmute state
             muteUnmuteBtn.addEventListener( 'click', function( evt ) {
                 
                 if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
@@ -455,9 +513,9 @@ class APlayer {
                 
             } );
                 
-        } );
+        } ); // end player ready event
         
-    }
+    } // end _setupAudioPlayer
     
     toggleCC() {
         
@@ -691,71 +749,6 @@ class APlayer {
         }
         
     }
-    
-    /*** DEV ONLY (remove later) ***/
-    devOnly() {
-        
-        let self = this;
-        let errToggle = self._selector( '#dev-error-toggle' );
-        
-        errToggle.addEventListener('click', function(evt) {
-            
-            let errorDisplay = self._selector( self.el.error );
-            
-            if ( errorDisplay.style.display == '' || 
-                errorDisplay.style.display == 'none' ) {
-                self.showError('👾', 'Error Title', 'Error message goes here with <a href="#">link</a>.');      
-            } else {
-                
-                let splash = self._selector( self.el.splash );
-                let main = self._selector( self.el.main );
-                let icon = self._selector( self.el.errorIcon );
-                let title = self._selector( self.el.errorTitle );
-                let body = self._selector( self.el.errorBody );
-                
-                splash.style.display = '';
-                main.style.display = '';
-                
-                self._fadeOut( errorDisplay, function() {
-                    
-                    errorDisplay.style.display = 'none';
-                    icon.innerHTML = '';
-                    title.innerHTML = '';
-                    body.innerHTML = '';
-                    
-                } );
-                
-            }
-            
-            evt.preventDefault();
-            
-        } );
-        
-        let warningToggle = self._selector( '#dev-warning-toggle' );
-        
-        warningToggle.addEventListener('click', function(evt) {
-            
-            self.showWarning( 'This is a warning message. Will disappear on its own.' );
-            
-            evt.preventDefault();
-            
-        } );
-        
-        let splashToggle = self._selector( '#dev-splash-toggle' );
-        
-        splashToggle.addEventListener('click', function(evt) {
-            
-            if ( self._selector( self.el.splash ).classList.contains( 'hide-splash' ) ) {
-                self._selector( self.el.splash ).classList.remove('hide-splash');
-            } else {
-                self.hideSplash();
-            }
-            
-            evt.preventDefault();
-            
-        } );
-        
-    } /*** DEV ONLY ***/
     
 } // end APlayer class
 

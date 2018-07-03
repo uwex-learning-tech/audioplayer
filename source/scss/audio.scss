@@ -66,18 +66,17 @@ html {
             @include box-sizing( "border-box" );
         }
         
+        .copyright {
+            display: none;
+            font-size: rem( 12px );
+            text-align: center;
+            width: rem( 320px );
+            margin: 0 auto;
+        }
+        
     }
     
 }
-
-/**** DEV ONLY ****/
-
-.devonly {
-    width: rem( 400px );
-    margin: 0 auto;
-}
-
-/**** END DEV ONLY ****/
 
 #ap-wrapper {
     
@@ -788,11 +787,11 @@ html {
                                 svg {
                                     width: rem( 40px );
                                     height: rem( 40px );
-                                    margin-left: rem( 2px );
+                                    margin-left: rem( 8px );
                                 }
                                 
                                 .icon--pressed {
-                                    margin-left: rem( 8px );
+                                    margin-left: rem( 2px );
                                 }
                                 
                                 .plyr__tooltip {
@@ -940,6 +939,10 @@ html {
         
         body {
             height: unset;
+        }
+        
+        .copyright {
+            display: block !important;
         }
         
     }
