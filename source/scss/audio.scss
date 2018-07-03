@@ -493,6 +493,7 @@ html {
                         font-size: rem( 14px );
                         
                         a {
+                            
                             @include display-flex();
                             @include align-items( center );
                             width: 100%;
@@ -500,6 +501,39 @@ html {
                             padding: rem( $gutter / 4 ) rem( $gutter );
                             color: #000;
                             text-decoration: none;
+                            border-bottom: rem( 1px ) solid rgba(226, 226, 226, 0.9);
+                            
+                            .track-img {
+                                display: block;
+                                width: auto;
+                                height: 100%;
+                                margin-right: rem( $gutter / 2 );
+                            }
+                            
+                            .track-title {
+                                @include flex( 2 0 auto );
+                            }
+                            
+                            .track-download {
+                                
+                                background-color: transparent;
+                                border: none;
+                                cursor: pointer;
+                                
+                                svg {
+                                    fill: #444;
+                                }
+                                
+                            }
+                            
+                            .track-download:hover {
+                                
+                                svg {
+                                    fill: $accent;
+                                }
+                                
+                            }
+                            
                         }
                         
                     }
@@ -673,7 +707,7 @@ html {
                         @include display-flex();
                         @include flex-flow( row wrap );
                         @include align-items( flex-start );
-                        color: #333;
+                        color: #444;
                         background: transparent;
                         height: 100%;
                         padding: rem( $gutter );
@@ -745,7 +779,7 @@ html {
                                 @include display-flex();
                                 @include align-items( center );
                                 @include justify-content( center );
-                                border: rem( 1px ) solid #333;
+                                border: rem( 1px ) solid #444;
                                 @include border-radius( 50% );
                                 padding: rem( $gutter );
                                 width: rem( 80px );
@@ -779,19 +813,36 @@ html {
                             @include display-flex();
                             @include flex( 1 0 100% );
                             @include align-items( center );
-                            @include justify-content( space-around );
+                            @include justify-content( space-between );
                             
                             #ap-playbackRate {
                                 font-weight: bold;
                                 font-size: rem( 15px );
                                 padding-top: 0;
                                 padding-bottom: 0;
+                                text-align: center;
+                                -webkit-appearance: none; 
+                                -moz-appearance: none;
+                                appearance: none;
+                                border: none;
+                                background-color: transparent;
+                                color: #444;
+                                outline: none;
+                                width: rem( 32px );
+                            }
+                            
+                            #ap-loop.active {
+                                color: $accent;
                             }
                             
                             .ap-volcontrols {
                                 @include display-flex();
                                 @include align-items( center );
                                 @include justify-content( center );
+                            }
+                            
+                            input[type="range"] {
+                                color: #444;
                             }
                             
                         }

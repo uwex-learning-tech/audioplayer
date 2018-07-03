@@ -315,12 +315,17 @@ class APlayer {
             
             <div class="bottom-controls">
                 
-                <button type="button" class="plyr__control">
+                <button id="ap-loop" type="button" class="plyr__control">
                     <svg role="presentation"><use xlink:href="source/images/icons.svg#icon-loop"></use></svg>
                     <span class="plyr__tooltip" role="tooltip">Loop</span>
                 </button>
                 
-                <button id="ap-playbackRate" type="button" class="plyr__control">1x</button>
+                 <select id="ap-playbackRate" name="playback">
+                  <option value="1">1x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2x</option>
+                  <option value="2.5">2.5x</option>
+                </select> 
                 
                 <div class="ap-volcontrols">
                 
@@ -357,8 +362,7 @@ class APlayer {
                 enabled: false,
                 fallback: false,
                 iosNative: false
-            },
-            resetOnEnd: true
+            }
                         
         } );
         
@@ -368,17 +372,58 @@ class APlayer {
             const instance = event.detail.plyr;
             const playpauseBtn = self._selector( '#ap-playpause' );
             const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
+            const loopBtn = self._selector( '#ap-loop' );
+            const playbackRateBtn = self._selector( '#ap-playbackRate' );
             
             instance.play();
-            instance.playing;
+            
+            // check playback rate and update playback rate select element
+            for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
+
+                if ( Number( playbackRateBtn.options[i].value ) === instance.speed ) {
+                    
+                    playbackRateBtn.selectedIndex = i;
+                    break;
+                    
+                }
+                
+            }
             
             instance.on( 'ended', function() {
                 
-                if ( !playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
+                if ( instance.loop === false ) {
+                    
+                    if ( !playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
                 
-                    playpauseBtn.classList.add( 'plyr__control--pressed' );
+                        playpauseBtn.classList.add( 'plyr__control--pressed' );
+                        
+                    }
+                    
+                    instance.restart();
                     
                 }
+                
+            } );
+            
+            loopBtn.addEventListener( 'click', function() {
+
+                if ( instance.loop === false ) {
+                    
+                    instance.loop = true;
+                    loopBtn.classList.add( 'active' );
+                    
+                } else {
+                    
+                    instance.loop = false;
+                    loopBtn.classList.remove( 'active' );
+                    
+                }
+                
+            } );
+            
+            playbackRateBtn.addEventListener( 'change', function( evt ) {
+                
+                instance.speed = Number( evt.target.options[evt.target.selectedIndex].value );
                 
             } );
             

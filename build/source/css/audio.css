@@ -503,7 +503,24 @@ html {
               height: 2.5rem;
               padding: 0.25rem 1rem;
               color: #000;
-              text-decoration: none; }
+              text-decoration: none;
+              border-bottom: 0.0625rem solid rgba(226, 226, 226, 0.9); }
+              #ap-wrapper #ap-main .body .track-list .tracks li a .track-img {
+                display: block;
+                width: auto;
+                height: 100%;
+                margin-right: 0.5rem; }
+              #ap-wrapper #ap-main .body .track-list .tracks li a .track-title {
+                -webkit-flex: 2 0 auto;
+                flex: 2 0 auto; }
+              #ap-wrapper #ap-main .body .track-list .tracks li a .track-download {
+                background-color: transparent;
+                border: none;
+                cursor: pointer; }
+                #ap-wrapper #ap-main .body .track-list .tracks li a .track-download svg {
+                  fill: #444; }
+              #ap-wrapper #ap-main .body .track-list .tracks li a .track-download:hover svg {
+                fill: #0c3b6b; }
           #ap-wrapper #ap-main .body .track-list .tracks li:hover {
             background-color: rgba(226, 226, 226, 0.5); }
         #ap-wrapper #ap-main .body .track-list .expand-btn {
@@ -623,7 +640,7 @@ html {
           flex-flow: row wrap;
           -webkit-align-items: flex-start;
           align-items: flex-start;
-          color: #333;
+          color: #444;
           background: transparent;
           height: 100%;
           padding: 1rem; }
@@ -676,7 +693,7 @@ html {
               align-items: center;
               -webkit-justify-content: center;
               justify-content: center;
-              border: 0.0625rem solid #333;
+              border: 0.0625rem solid #444;
               -moz-border-radius: 50%;
               -webkit-border-radius: 50%;
               border-radius: 50%;
@@ -705,13 +722,24 @@ html {
             flex: 1 0 100%;
             -webkit-align-items: center;
             align-items: center;
-            -webkit-justify-content: space-around;
-            justify-content: space-around; }
+            -webkit-justify-content: space-between;
+            justify-content: space-between; }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls #ap-playbackRate {
               font-weight: bold;
               font-size: 0.9375rem;
               padding-top: 0;
-              padding-bottom: 0; }
+              padding-bottom: 0;
+              text-align: center;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              border: none;
+              background-color: transparent;
+              color: #444;
+              outline: none;
+              width: 2rem; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls #ap-loop.active {
+              color: #0c3b6b; }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls .ap-volcontrols {
               display: -webkit-flex;
               display: flex;
@@ -719,6 +747,8 @@ html {
               align-items: center;
               -webkit-justify-content: center;
               justify-content: center; }
+            #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls input[type="range"] {
+              color: #444; }
     #ap-wrapper #ap-main #author-overlay {
       display: none;
       position: absolute;
