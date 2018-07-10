@@ -66,6 +66,19 @@ html {
             @include box-sizing( "border-box" );
         }
         
+        .error {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            font-size: rem( 14px );
+            text-align: center;
+            color: #fff;
+            background-color: #d43131;
+            z-index: 99;
+            padding: rem( 5px) 0;
+        }
+        
         .program-theme {
             
             display: none;

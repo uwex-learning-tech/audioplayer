@@ -78,10 +78,10 @@ class APlayer {
         let self = this;
         let manifestUrl = self._selector( '#ap-manifest' ).getAttribute( 'href' );
         
-        self._requestFile( manifestUrl, 'Something went wrong while loading manifest.', function( response ) {
+        self._requestFile( manifestUrl, function( response ) {
             
             self.manifest = JSON.parse( response );
-                
+            
             if ( self.manifest.ap_root_directory.length === 0 ) {
         
                 self.manifest.ap_root_directory = 'source/';
@@ -99,12 +99,12 @@ class APlayer {
         let self = this;
         let templateUrl = self.manifest.ap_root_directory + 'script/templates/apui.tpl';
         
-        self._requestFile( templateUrl, 'Something went wrong while loading template.', function( response ) {
+        self._requestFile( templateUrl, function( response ) {
             
             let body = self._selector( 'body' );
             const res = response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
             
-            body.innerHTML = res;
+            body.innerHTML += res;
             
             self.getAlbum();
             self._CCSpectrumDisplays();
@@ -141,7 +141,7 @@ class APlayer {
         let self = this;
         let plyrControlsUrl = self.manifest.ap_root_directory + 'script/templates/custom_plyr_controls.tpl';
         
-        self._requestFile( plyrControlsUrl, 'Something went wrong while loading player template.', function( response ) {
+        self._requestFile( plyrControlsUrl, function( response ) {
             
             const controls = response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
                 
@@ -553,8 +553,10 @@ class APlayer {
         return document.querySelector( str );
     }
     
-    _requestFile( url, errMsg, callback ) {
+    _requestFile( url, callback ) {
         
+        let self = this;
+        let body = self._selector( 'body' );
         let request = new XMLHttpRequest();
         
         request.open( 'GET', url, true );
@@ -567,15 +569,17 @@ class APlayer {
                 
             } else {
                 
-                self.showError( '🤔', this.status, errMsg );
+                body.innerHTML += '<div class="error">Error ' + this.status + ' while loading <code>' + url + '</code></div>';
                 
             }
+            
+            request.abort();
             
         };
         
         request.onerror = function() {
             
-            self.showError( '', 'Connection Error', 'Check your network.' );
+            body.innerHTML += '<div class="error">Connection Error. Check your network.</div>';
             
         };
         
