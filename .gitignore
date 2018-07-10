@@ -12,3 +12,5 @@ bower_components/
 
 #ignore dev directory
 dev/
+
+**/.DS_Store
