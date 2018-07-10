@@ -69,7 +69,6 @@ class APlayer {
             
         }
         
-        self.setUIs();
         self.getManifest();
         
     }
@@ -78,32 +77,41 @@ class APlayer {
         
         let self = this;
         let manifestUrl = self._selector( '#ap-manifest' ).getAttribute( 'href' );
-        let request = new XMLHttpRequest();
         
-        request.open( 'GET', manifestUrl, true );
-        
-        request.onload = function() {
+        self._requestFile( manifestUrl, 'Something went wrong while loading manifest.', function( response ) {
             
-            if ( this.status >= 200 && this.status < 400 ) {
+            self.manifest = JSON.parse( response );
                 
-                self.manifest = JSON.parse( this.response );
-                self.getAlbum();
-                
-            } else {
-                
-                self.showError( '🤔', this.status, 'Something went wrong while loading manifest.' );
+            if ( self.manifest.ap_root_directory.length === 0 ) {
+        
+                self.manifest.ap_root_directory = 'source/';
                 
             }
             
-        };
-        
-        request.onerror = function() {
+            self.setUIs();
             
-            self.showError( '', 'Connection Error', 'Check your network.' );
-            
-        };
+        } );
         
-        request.send();
+    }
+    
+    setUIs() {
+        
+        let self = this;
+        let templateUrl = self.manifest.ap_root_directory + 'script/templates/apui.tpl';
+        
+        self._requestFile( templateUrl, 'Something went wrong while loading template.', function( response ) {
+            
+            let body = self._selector( 'body' );
+            const res = response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
+            
+            body.innerHTML = res;
+            
+            self.getAlbum();
+            self._CCSpectrumDisplays();
+            self._expandTracksToggle();
+            self._setShowProfileListener();
+            
+        } );
         
     }
     
@@ -114,29 +122,14 @@ class APlayer {
         
     }
     
-    setUIs() {
-        
-        this._CCSpectrumDisplays();
-        this._expandTracksToggle();
-        this._setShowProfileListener();
-        
-    }
-    
     setData() {
         
-        let self = this;
-        let trackTitle = self._selector( self.el.trackTitle );
-        let copyright = self._selector( self.el.copyright );
+        let trackTitle = this._selector( this.el.trackTitle );
+        let copyright = this._selector( this.el.copyright );
         let date = new Date();
         let year = date.getFullYear();
         
-        copyright.innerHTML += '&copy; ' + year + '. ' + self.manifest.ap_copyright;
-        
-        if ( self.manifest.ap_root_directory.length === 0 ) {
-            
-            self.manifest.ap_root_directory = 'source/';
-            
-        }
+        copyright.innerHTML += '&copy; ' + year + '. ' + this.manifest.ap_copyright;
         
         this.setProgram();
         this._marqueeEl( trackTitle );
@@ -145,210 +138,130 @@ class APlayer {
     
     _setupAudioPlayer() {
         
-        var self = this;
+        let self = this;
+        let plyrControlsUrl = self.manifest.ap_root_directory + 'script/templates/custom_plyr_controls.tpl';
         
-        const controls = `
-        <div class="plyr__controls">
+        self._requestFile( plyrControlsUrl, 'Something went wrong while loading player template.', function( response ) {
             
-            <div class="top-controls">
+            const controls = response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
+                
+            self.el.player = new Plyr( self.el.playerId, {
+        
+                controls: controls,
+                autoplay: false,
+                volume: 0.8,
+                clickToPlay: false,
+                fullscreen: {
+                    enabled: false,
+                    fallback: false,
+                    iosNative: false
+                }
+                            
+            } );
             
-                <div class="plyr__time plyr__time--current" aria-label="Current time">00:00</div>
+            self.el.player.on( 'ready', event => {
                 
-                <div class="plyr__progress">
-                    <input id="plyr-seek-{id}" data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="Seek">
-                    <progress class="plyr__progress__buffer" min="0" max="100" value="0" role="presentation" aria-hidden="true">% buffered</progress>
-                    <span role="tooltip" class="plyr__tooltip">00:00</span>
-                </div>
+                const instance = event.detail.plyr;
+                const playpauseBtn = self._selector( '#ap-playpause' );
+                const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
+                const loopBtn = self._selector( '#ap-loop' );
+                const playbackRateBtn = self._selector( '#ap-playbackRate' );
                 
-                <div class="plyr__time plyr__time--duration" aria-label="Duration">00:00</div>
-            
-            </div>
-            
-            <div class="middle-controls">
+                // play the audio
+                // instance.play();
                 
-                <button type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-previous"></use></svg>
-                    <span class="plyr__tooltip" role="tooltip">Previous</span>
-                </button>
-                
-                <button type="button" class="plyr__control" data-plyr="rewind">
-                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-backward"></use></svg>
-                    <span class="plyr__tooltip" role="tooltip">Rewind {seektime} secs</span>
-                </button>
-                
-                <button type="button" id="ap-playpause" class="plyr__control" aria-label="Play, {title}" data-plyr="play">
-                    <svg class="icon--pressed" role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-pause"></use></svg>
-                    <svg class="icon--not-pressed" role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-play"></use></svg>
-                    <span class="label--pressed plyr__tooltip" role="tooltip">Pause</span>
-                    <span class="label--not-pressed plyr__tooltip" role="tooltip">Play</span>
-                </button>
-                
-                <button type="button" class="plyr__control" data-plyr="fast-forward">
-                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-forward"></use></svg>
-                    <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
-                </button>
-                
-                <button type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-next"></use></svg>
-                    <span class="plyr__tooltip" role="tooltip">Next</span>
-                </button>
-            
-            </div>
-            
-            <div class="bottom-controls">
-                
-                <button id="ap-loop" type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-loop"></use></svg>
-                    <span class="plyr__tooltip" role="tooltip">Loop</span>
-                </button>
-                
-                 <select id="ap-playbackRate" name="playback">
-                  <option value="1">1x</option>
-                  <option value="1.5">1.5x</option>
-                  <option value="2">2x</option>
-                  <option value="2.5">2.5x</option>
-                </select> 
-                
-                <div class="ap-volcontrols">
-                
-                    <button type="button" id="ap-muteunmute" class="plyr__control" aria-label="Mute" data-plyr="mute">
-                        <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-muted"></use></svg>
-                        <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-volume"></use></svg>
-                        <span class="label--pressed plyr__tooltip" role="tooltip">Unmute</span>
-                        <span class="label--not-pressed plyr__tooltip" role="tooltip">Mute</span>
-                    </button>
+                if ( instance.playing === true ) {
                     
-                    <div class="plyr__volume">
-                        <input data-plyr="volume" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume">
-                    </div>
-                
-                </div>
-                
-                <button type="button" class="plyr__control">
-                    <svg role="presentation"><use xlink:href="` + self.manifest.ap_root_directory + `images/icons.svg#icon-download"></use></svg>
-                    <span class="plyr__tooltip" role="tooltip">Download</span>
-                </button>
-            
-            </div>
-            
-        </div>
-        `;
-        
-        self.el.player = new Plyr( this.el.playerId, {
-            
-            controls: controls,
-            autoplay: false,
-            volume: 0.8,
-            clickToPlay: false,
-            fullscreen: {
-                enabled: false,
-                fallback: false,
-                iosNative: false
-            }
-                        
-        } );
-        
-        self.el.player.on( 'ready', event => {
-            
-            const instance = event.detail.plyr;
-            const playpauseBtn = self._selector( '#ap-playpause' );
-            const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
-            const loopBtn = self._selector( '#ap-loop' );
-            const playbackRateBtn = self._selector( '#ap-playbackRate' );
-            
-            // play the audio
-            // instance.play();
-            
-            if ( instance.playing === true ) {
-                
-                playpauseBtn.classList.add( 'plyr__control--pressed' );
-                
-            }
-            
-            // check playback rate and update playback rate select element
-            for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
-
-                if ( Number( playbackRateBtn.options[i].value ) === instance.speed ) {
-                    
-                    playbackRateBtn.selectedIndex = i;
-                    break;
+                    playpauseBtn.classList.add( 'plyr__control--pressed' );
                     
                 }
                 
-            }
-            
-            // on playback end
-            instance.on( 'ended', function() {
-                
-                if ( instance.loop === false ) {
-                    
-                    if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
-                
-                        playpauseBtn.classList.add( 'plyr__control--pressed' );
+                // check playback rate and update playback rate select element
+                for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
+    
+                    if ( Number( playbackRateBtn.options[i].value ) === instance.speed ) {
+                        
+                        playbackRateBtn.selectedIndex = i;
+                        break;
                         
                     }
                     
-                    instance.restart();
-                    
                 }
                 
-            } );
+                // on playback end
+                instance.on( 'ended', function() {
+                    
+                    if ( instance.loop === false ) {
+                        
+                        if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
+                    
+                            playpauseBtn.classList.add( 'plyr__control--pressed' );
+                            
+                        }
+                        
+                        instance.restart();
+                        
+                    }
+                    
+                } );
+                
+                // toogle loop button state
+                loopBtn.addEventListener( 'click', function() {
+    
+                    if ( instance.loop === false ) {
+                        
+                        instance.loop = true;
+                        loopBtn.classList.add( 'active' );
+                        
+                    } else {
+                        
+                        instance.loop = false;
+                        loopBtn.classList.remove( 'active' );
+                        
+                    }
+                    
+                } );
+                
+                // change playback rate
+                playbackRateBtn.addEventListener( 'change', function( evt ) {
+                    
+                    instance.speed = Number( evt.target.options[evt.target.selectedIndex].value );
+                    
+                } );
+                
+                // toggle play/pause state
+                playpauseBtn.addEventListener( 'click', function( evt ) {
+                
+                    if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
+                        
+                        evt.target.classList.remove( 'plyr__control--pressed' );
+                        
+                    } else {
+                        
+                        evt.target.classList.add( 'plyr__control--pressed' );
+                        
+                    }
+                    
+                } );
+                
+                // toglle mute/unmute state
+                muteUnmuteBtn.addEventListener( 'click', function( evt ) {
+                    
+                    if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
+                        
+                        evt.target.classList.remove( 'plyr__control--pressed' );
+                        
+                    } else {
+                        
+                        evt.target.classList.add( 'plyr__control--pressed' );
+                        
+                    }
+                    
+                } );
+                    
+            } ); // end player ready event
             
-            // toogle loop button state
-            loopBtn.addEventListener( 'click', function() {
-
-                if ( instance.loop === false ) {
-                    
-                    instance.loop = true;
-                    loopBtn.classList.add( 'active' );
-                    
-                } else {
-                    
-                    instance.loop = false;
-                    loopBtn.classList.remove( 'active' );
-                    
-                }
-                
-            } );
-            
-            // change playback rate
-            playbackRateBtn.addEventListener( 'change', function( evt ) {
-                
-                instance.speed = Number( evt.target.options[evt.target.selectedIndex].value );
-                
-            } );
-            
-            // toggle play/pause state
-            playpauseBtn.addEventListener( 'click', function( evt ) {
-            
-                if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
-                    
-                    evt.target.classList.remove( 'plyr__control--pressed' );
-                    
-                } else {
-                    
-                    evt.target.classList.add( 'plyr__control--pressed' );
-                    
-                }
-                
-            } );
-            
-            // toglle mute/unmute state
-            muteUnmuteBtn.addEventListener( 'click', function( evt ) {
-                
-                if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
-                    
-                    evt.target.classList.remove( 'plyr__control--pressed' );
-                    
-                } else {
-                    
-                    evt.target.classList.add( 'plyr__control--pressed' );
-                    
-                }
-                
-            } );
-                
-        } ); // end player ready event
+        } );
         
     } // end _setupAudioPlayer
     
@@ -638,6 +551,36 @@ class APlayer {
     
     _selector( str ) {
         return document.querySelector( str );
+    }
+    
+    _requestFile( url, errMsg, callback ) {
+        
+        let request = new XMLHttpRequest();
+        
+        request.open( 'GET', url, true );
+        
+        request.onload = function() {
+            
+            if ( this.status >= 200 && this.status < 400 ) {
+                
+                callback( this.response );
+                
+            } else {
+                
+                self.showError( '🤔', this.status, errMsg );
+                
+            }
+            
+        };
+        
+        request.onerror = function() {
+            
+            self.showError( '', 'Connection Error', 'Check your network.' );
+            
+        };
+        
+        request.send();
+        
     }
     
     /*** ANIMATION METHODS ***/
