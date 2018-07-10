@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <album accent="#7b3009" splashImgFormat="svg" imgFormat="jpg" analytics="off" xmlVersion="2">
 
-	<settings program="" course="">
+	<setup program="" course="">
 		<name>HTML5 Audio Player Demo</name>
 		<author name="Ethan Lin"></author>
 		<length />
-	</settings>
+	</setup>
 
 	<!-- single track only need one track element -->
 

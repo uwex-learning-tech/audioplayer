@@ -16,6 +16,13 @@
 		"oAP": "\/build\/.gitignore",
 		"oF": 1
 		},
+	"\/album.xml": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/build\/assets\/album.xml",
+		"oF": 3
+		},
 	"\/build": {
 		"ft": 65536,
 		"oA": 1,
@@ -172,13 +179,6 @@
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
-		},
-	"\/tracks.xml": {
-		"cB": 0,
-		"ft": 8192,
-		"oA": 0,
-		"oAP": "\/build\/assets\/tracks.xml",
-		"oF": 2
 		}
 	},
 "hooks": [

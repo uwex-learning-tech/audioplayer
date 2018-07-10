@@ -43,7 +43,9 @@ class APlayer {
         };
         
         this.manifest ={};
-        this.album = {};
+        this.album = {
+            url: 'assets/album.xml'
+        };
         this.program = {};
         this.reference = {
             names: window.location.href,
@@ -78,9 +80,9 @@ class APlayer {
         let self = this;
         let manifestUrl = self._selector( '#ap-manifest' ).getAttribute( 'href' );
         
-        self._requestFile( manifestUrl, function( response ) {
+        self._requestFile( manifestUrl, function( xhr ) {
             
-            self.manifest = JSON.parse( response );
+            self.manifest = JSON.parse( xhr.response );
             
             if ( self.manifest.ap_root_directory.length === 0 ) {
         
@@ -99,10 +101,10 @@ class APlayer {
         let self = this;
         let templateUrl = self.manifest.ap_root_directory + 'script/templates/apui.tpl';
         
-        self._requestFile( templateUrl, function( response ) {
+        self._requestFile( templateUrl, function( xhr ) {
             
             let body = self._selector( 'body' );
-            const res = response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
+            const res = xhr.response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
             
             body.innerHTML += res;
             
@@ -117,8 +119,80 @@ class APlayer {
     
     getAlbum() {
         
-        this.setData();
-        this._setupAudioPlayer();
+        let self = this;
+        
+        self._requestFile( self.album.url, function( xhr ) {
+            
+            const xml = xhr.responseXML;
+            const xmlSettings = self._xmlSelector( xml, 'album' );
+            const xmlSetup = self._xmlSelector( xml, 'setup' );
+            const xmlTracks = self._xmlSelector( xml, 'track', true );
+            
+            // settings
+            self.album.settings = {};
+            self.album.settings.accent = xmlSettings.getAttribute( 'accent' );
+            self.album.settings.splashFormat = xmlSettings.getAttribute( 'splashImgFormat' );
+            self.album.settings.imgFormat = xmlSettings.getAttribute( 'imgFormat' );
+            self.album.settings.analytics = xmlSettings.getAttribute( 'analytics' );
+            self.album.settings.version = xmlSettings.getAttribute( 'xmlVersion' );
+            
+            // setup
+            self.album.name = self._xmlSelector( xmlSetup, 'name' ).textContent;
+            self.album.author = self._xmlSelector( xmlSetup, 'author' ).getAttribute( 'name' );
+            self.album.authorProfile = self._xmlSelector( xmlSetup, 'author' ).textContent;
+            self.album.length = self._xmlSelector( xmlSetup, 'length' ).textContent;
+            
+            // set program
+            if ( self._isEmpty( xmlSettings.getAttribute( 'program' ) ) ) {
+                
+                self.reference.names.split( '?' );
+                self.reference.names = self.reference.names[0];
+                
+                if ( self.reference.names.lastIndexOf( '/' ) !== self.reference.names.length - 1 ) {
+            		self.reference.names += '/';
+            	}
+            	
+            	self.reference.names = self.cleanArray( self.reference.names.split( '/' ) );
+                
+                if ( self.reference.names[3] !== undefined ) {
+                    self.program.name = self.reference.names[3]
+                }
+                
+            } else {
+                
+                self.program.name = xmlSettings.getAttribute( 'program' );
+                
+            }
+            
+            // set course
+            if ( !self._isEmpty( xmlSettings.getAttribute( 'course' ) ) ) {
+                
+                self.program.course = xmlSettings.getAttribute( 'course' );
+                
+            }
+            
+            // track(s)
+            self.album.tracks = [];
+            
+            Array.prototype.forEach.call( xmlTracks, function( el) {
+                
+                let obj = {};
+            
+                obj.img = el.getAttribute( 'img' );
+                obj.src = el.getAttribute( 'src' );
+                obj.title = el.querySelector( 'title' ).innerHTML;
+                obj.author = el.querySelector( 'author' ).innerHTML;
+                
+                self.album.tracks.push( obj );
+                
+            } );
+            
+            console.log( self.album );
+            
+            self.setData();
+            self._setupAudioPlayer();
+            
+        } );
         
     }
     
@@ -141,9 +215,9 @@ class APlayer {
         let self = this;
         let plyrControlsUrl = self.manifest.ap_root_directory + 'script/templates/custom_plyr_controls.tpl';
         
-        self._requestFile( plyrControlsUrl, function( response ) {
+        self._requestFile( plyrControlsUrl, function( xhr ) {
             
-            const controls = response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
+            const controls = xhr.response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
                 
             self.el.player = new Plyr( self.el.playerId, {
         
@@ -270,10 +344,10 @@ class APlayer {
         let self = this;
         
         if ( self.manifest.ap_custom_themes ) {
-    
+            
             self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
                 
-                return obj.name === self.reference.names[3];
+                return obj.name === self.program.name;
                 
             } );
             
@@ -553,6 +627,26 @@ class APlayer {
         return document.querySelector( str );
     }
     
+    _xmlSelector( xml, str, all ) {
+        
+        all = typeof all === 'boolean' ? all : false;
+        
+        if ( all ) {
+            
+            return xml.querySelectorAll( str );
+            
+        } else {
+            
+            return xml.querySelector( str );
+            
+        }
+        
+    }
+    
+    _isEmpty( str ) {
+        return str === '' || undefined || null;
+    }
+    
     _requestFile( url, callback ) {
         
         let self = this;
@@ -565,7 +659,7 @@ class APlayer {
             
             if ( this.status >= 200 && this.status < 400 ) {
                 
-                callback( this.response );
+                callback( this );
                 
             } else {
                 
@@ -584,6 +678,24 @@ class APlayer {
         };
         
         request.send();
+        
+    }
+    
+    cleanArray( arr ) {
+    
+        arr.forEach( function( value, index ) {
+            
+            if ( value === '' ) {
+                arr.splice( index, 1 );
+            }
+            
+        } );
+        
+        if ( ( /(\w*|(\w*\-\w*)*)\.\w*/ig ).test( arr[arr.length-1] ) ) {
+            arr.pop();
+        }
+        
+        return arr;
         
     }
     
