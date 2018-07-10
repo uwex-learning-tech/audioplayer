@@ -69,91 +69,8 @@ class APlayer {
             
         }
         
+        self.setUIs();
         self.getManifest();
-        
-    }
-    
-    hasCoreFeaturesSupport() {
-    
-        if ( !Modernizr.audio && Modernizr.json && Modernizr.svg
-             && Modernizr.csscalc && Modernizr.flexbox ) {
-            return true;
-        }
-        
-        return false;
-        
-    }
-    
-    hasAppearanceIusses() {
-    
-        if ( !Modernizr.canvas ) {
-            return true;
-        }
-        
-        if ( !Modernizr.cssanimations ) {
-            return true;
-        }
-        
-        if ( !Modernizr.bgsizecover ) {
-            return true
-        }
-        
-        if ( !Modernizr.objectfit ) {
-            return true
-        }
-        
-        return false;
-        
-    }
-    
-    showError( iconStr, titleStr, bodyStr ) {
-    
-        let splash = this._selector( this.el.splash );
-        let main = this._selector( this.el.main );
-        let error = this._selector( this.el.error );
-        let icon = this._selector( this.el.errorIcon );
-        let title = this._selector( this.el.errorTitle );
-        let body = this._selector( this.el.errorBody );
-        
-        let ariaHidden = document.createAttribute( 'aria-hidden' );
-        
-        ariaHidden.value = false;
-        
-        icon.innerHTML = iconStr;
-        title.innerHTML = titleStr;
-        body.innerHTML = bodyStr;
-        
-        splash.style.display = 'none';
-        main.style.display = 'none';
-        
-        error.style.display = 'flex';
-        error.setAttributeNode( ariaHidden );
-        
-        this._fadeIn( error );
-        
-    }
-    
-    showWarning( str ) {
-    
-        let self = this;
-        let warning = self._selector( self.el.warning );
-        let hideTime = 6000;
-        
-        warning.innerHTML = str;
-        warning.style.display = 'block';
-        
-        self._fadeIn( warning );
-        
-        window.setTimeout( function() {
-            
-            self._fadeOut( warning, function() {
-                
-                warning.innerHTML = '';
-                warning.style.display = 'none';
-                
-            } );
-            
-        }, hideTime );
         
     }
     
@@ -192,47 +109,20 @@ class APlayer {
     
     getAlbum() {
         
-        this.setUIs();
-        
-    }
-    
-    _setProgram() {
-        
-        let self = this;
-        
-        if ( self.manifest.ap_custom_themes ) {
-    
-            self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
-                
-                return obj.name === self.reference.names[3];
-                
-            } );
-            
-            if ( self.program === undefined ) {
-                
-                self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
-                    
-                    return obj.name === self.manifest.ap_logo_default;
-                    
-                } );
-                
-            }
-            
-        }
-        
-        let decorationBar = self._selector( '.program-theme' );
-    
-        self.program.colors.forEach( function( hex ) {
-                        
-            let span = document.createElement( 'span' );
-            span.style.backgroundColor = hex;
-            decorationBar.appendChild( span );
-            
-        } );
+        this.setData();
+        this._setupAudioPlayer();
         
     }
     
     setUIs() {
+        
+        this._CCSpectrumDisplays();
+        this._expandTracksToggle();
+        this._setShowProfileListener();
+        
+    }
+    
+    setData() {
         
         let self = this;
         let trackTitle = self._selector( self.el.trackTitle );
@@ -248,105 +138,8 @@ class APlayer {
             
         }
         
-        this._setProgram();
+        this.setProgram();
         this._marqueeEl( trackTitle );
-        this._CCSpectrumDisplays();
-        this._expandTracksToggle();
-        this._setShowProfileListener();
-        this._setupAudioPlayer();
-        
-    }
-    
-    hideSplash() {
-    
-        let splash = this._selector( this.el.splash );
-        let ariaHidden = document.createAttribute( 'aria-hidden' );
-        
-        ariaHidden.value = true;
-        
-        splash.classList.add( 'hide-splash' );
-        splash.setAttributeNode( ariaHidden );
-        
-    }
-    
-    showProfile() {
-        
-        let self = this;
-        let authorProfile = this._selector( this.el.profileDisplay );
-        let closeBtn = this._selector( this.el.closeProfileBtn );
-        
-        authorProfile.style.display = 'block';
-        this._fadeIn( authorProfile );
-        
-        closeBtn.addEventListener( 'click', function() {
-            self.closeProfile();
-        }, {once: true} );
-
-    }
-    
-    closeProfile() {
-        
-        let authorProfile = this._selector( this.el.profileDisplay );
-        
-        this._fadeOut( authorProfile, function() {
-            
-            authorProfile.style.display = '';
-            
-        } );
-
-    }
-    
-    _setShowProfileListener() {
-        
-        let self = this;
-        let showProfileBtn = this._selector( this.el.showProfileBtn );
-        
-        showProfileBtn.addEventListener( 'click', function() {
-            
-            self.showProfile();
-            
-        } );
-        
-    }
-    
-    _expandTracksToggle() {
-        
-        let self = this;
-        let expandTracksBtn = self._selector( this.el.expandTracksBtn );
-        
-        expandTracksBtn.addEventListener( 'click', function() {
-            
-            let trackList = self._selector( self.el.trackList );
-            let minDisplay = self._selector( self.el.miniDisplay );
-            
-            if ( trackList.style.display == 'none' || trackList.style.display == '' ) {
-                
-                trackList.style.display = 'block';
-                minDisplay.style.display = 'none';
-                
-                self._hideCCSpectrum();
-                
-                self._slideDown( expandTracksBtn.parentNode, function() {
-                    
-                    expandTracksBtn.classList.add( 'rotate' );
-                    
-                } );
-                
-            } else {
-                
-                trackList.style.display = 'none';
-                minDisplay.style.display = 'flex';
-                
-                self._slideUp( expandTracksBtn.parentNode, function() {
-                    
-                    expandTracksBtn.classList.remove( 'rotate' );
-                    self._CCSpectrumDisplays();
-                    
-                } );
-                
-            }
-            
-        } );
         
     }
     
@@ -558,6 +351,219 @@ class APlayer {
         } ); // end player ready event
         
     } // end _setupAudioPlayer
+    
+    setProgram() {
+        
+        let self = this;
+        
+        if ( self.manifest.ap_custom_themes ) {
+    
+            self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+                
+                return obj.name === self.reference.names[3];
+                
+            } );
+            
+            if ( self.program === undefined ) {
+                
+                self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+                    
+                    return obj.name === self.manifest.ap_logo_default;
+                    
+                } );
+                
+            }
+            
+        }
+        
+        let decorationBar = self._selector( '.program-theme' );
+    
+        self.program.colors.forEach( function( hex ) {
+                        
+            let span = document.createElement( 'span' );
+            span.style.backgroundColor = hex;
+            decorationBar.appendChild( span );
+            
+        } );
+        
+    }
+    
+    hasCoreFeaturesSupport() {
+    
+        if ( !Modernizr.audio && Modernizr.json && Modernizr.svg
+             && Modernizr.csscalc && Modernizr.flexbox ) {
+            return true;
+        }
+        
+        return false;
+        
+    }
+    
+    hasAppearanceIusses() {
+    
+        if ( !Modernizr.canvas ) {
+            return true;
+        }
+        
+        if ( !Modernizr.cssanimations ) {
+            return true;
+        }
+        
+        if ( !Modernizr.bgsizecover ) {
+            return true
+        }
+        
+        if ( !Modernizr.objectfit ) {
+            return true
+        }
+        
+        return false;
+        
+    }
+    
+    showError( iconStr, titleStr, bodyStr ) {
+    
+        let splash = this._selector( this.el.splash );
+        let main = this._selector( this.el.main );
+        let error = this._selector( this.el.error );
+        let icon = this._selector( this.el.errorIcon );
+        let title = this._selector( this.el.errorTitle );
+        let body = this._selector( this.el.errorBody );
+        
+        let ariaHidden = document.createAttribute( 'aria-hidden' );
+        
+        ariaHidden.value = false;
+        
+        icon.innerHTML = iconStr;
+        title.innerHTML = titleStr;
+        body.innerHTML = bodyStr;
+        
+        splash.style.display = 'none';
+        main.style.display = 'none';
+        
+        error.style.display = 'flex';
+        error.setAttributeNode( ariaHidden );
+        
+        this._fadeIn( error );
+        
+    }
+    
+    showWarning( str ) {
+    
+        let self = this;
+        let warning = self._selector( self.el.warning );
+        let hideTime = 6000;
+        
+        warning.innerHTML = str;
+        warning.style.display = 'block';
+        
+        self._fadeIn( warning );
+        
+        window.setTimeout( function() {
+            
+            self._fadeOut( warning, function() {
+                
+                warning.innerHTML = '';
+                warning.style.display = 'none';
+                
+            } );
+            
+        }, hideTime );
+        
+    }
+    
+    hideSplash() {
+    
+        let splash = this._selector( this.el.splash );
+        let ariaHidden = document.createAttribute( 'aria-hidden' );
+        
+        ariaHidden.value = true;
+        
+        splash.classList.add( 'hide-splash' );
+        splash.setAttributeNode( ariaHidden );
+        
+    }
+    
+    showProfile() {
+        
+        let self = this;
+        let authorProfile = this._selector( this.el.profileDisplay );
+        let closeBtn = this._selector( this.el.closeProfileBtn );
+        
+        authorProfile.style.display = 'block';
+        this._fadeIn( authorProfile );
+        
+        closeBtn.addEventListener( 'click', function() {
+            self.closeProfile();
+        }, {once: true} );
+
+    }
+    
+    closeProfile() {
+        
+        let authorProfile = this._selector( this.el.profileDisplay );
+        
+        this._fadeOut( authorProfile, function() {
+            
+            authorProfile.style.display = '';
+            
+        } );
+
+    }
+    
+    _setShowProfileListener() {
+        
+        let self = this;
+        let showProfileBtn = this._selector( this.el.showProfileBtn );
+        
+        showProfileBtn.addEventListener( 'click', function() {
+            
+            self.showProfile();
+            
+        } );
+        
+    }
+    
+    _expandTracksToggle() {
+        
+        let self = this;
+        let expandTracksBtn = self._selector( this.el.expandTracksBtn );
+        
+        expandTracksBtn.addEventListener( 'click', function() {
+            
+            let trackList = self._selector( self.el.trackList );
+            let minDisplay = self._selector( self.el.miniDisplay );
+            
+            if ( trackList.style.display == 'none' || trackList.style.display == '' ) {
+                
+                trackList.style.display = 'block';
+                minDisplay.style.display = 'none';
+                
+                self._hideCCSpectrum();
+                
+                self._slideDown( expandTracksBtn.parentNode, function() {
+                    
+                    expandTracksBtn.classList.add( 'rotate' );
+                    
+                } );
+                
+            } else {
+                
+                trackList.style.display = 'none';
+                minDisplay.style.display = 'flex';
+                
+                self._slideUp( expandTracksBtn.parentNode, function() {
+                    
+                    expandTracksBtn.classList.remove( 'rotate' );
+                    self._CCSpectrumDisplays();
+                    
+                } );
+                
+            }
+            
+        } );
+        
+    }
     
     toggleCC() {
         
