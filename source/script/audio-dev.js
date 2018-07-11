@@ -18,6 +18,14 @@ class APlayer {
         
         this.el = {
             splash: '#ap-splash',
+            splashTitle: '#ap-splash .cover-info .title',
+            splashSubtitle: '#ap-splash .cover-info .subtitle',
+            splashAuthor: '#ap-splash .cover-info .author',
+            splashLength: '#ap-splash .cover-info .length',
+            startBtn: '#ap-start-btn',
+            resumeBtn: '#ap-resume-btn',
+            dwnldBtn: '#ap-dwnld-btn',
+            dwnldBtnMenu: '#ap-dwnld-btn .dropdown-content',
             main: '#ap-main',
             showProfileBtn: '#show-profile',
             closeProfileBtn: '#author-close-btn',
@@ -44,34 +52,16 @@ class APlayer {
         
         this.manifest ={};
         this.album = {
-            url: 'assets/album.xml'
+            url: 'assets/album.xml',
+            program: {}
         };
-        this.program = {};
+        this.player = null;
         this.reference = {
-            names: window.location.href,
+            names: this._parseUri( window.location.href ),
             params: new URLSearchParams( window.location.search )
         };
         
-    }
-         
-    go() {
-        
-        let self = this;
-        
-        if ( self.hasCoreFeaturesSupport() ) {
-        
-            self.showError( '🙈', '', 'Your web browser does not support core audio player features.<br><a href="http://outdatedbrowser.com/en" target="_blank">Please update your web browser.</a>' );
-            return;
-            
-        }
-        
-        if ( self.hasAppearanceIusses() ) {
-        
-            self.showWarning( 'For better viewing, try a different web browser.' );
-            
-        }
-        
-        self.getManifest();
+        this.getManifest();
         
     }
     
@@ -109,9 +99,41 @@ class APlayer {
             body.innerHTML += res;
             
             self.getAlbum();
+            
+            self._checkSupport();
+            self._setStartResumeListeners();
             self._CCSpectrumDisplays();
             self._expandTracksToggle();
             self._setShowProfileListener();
+            
+        } );
+        
+    }
+    
+    _setStartResumeListeners() {
+        
+        let self = this;
+        
+        let startBtn = self._selector( self.el.startBtn );
+        let resumeBtn = self._selector( self.el.resumeBtn );
+        
+        startBtn.addEventListener( 'click', function() {
+            
+            self.hideSplash();
+            
+            self._marqueeEl( self._selector( self.el.trackTitle ) );
+            
+            if ( self.player.ready && !self._isEmpty( self.player.source ) ) {
+                
+                self.player.play();
+                
+            }
+            
+        } );
+        
+        resumeBtn.addEventListener( 'click', function() {
+            
+            self.hideSplash();
             
         } );
         
@@ -137,37 +159,31 @@ class APlayer {
             self.album.settings.version = xmlSettings.getAttribute( 'xmlVersion' );
             
             // setup
-            self.album.name = self._xmlSelector( xmlSetup, 'name' ).textContent;
+            self.album.title = self._xmlSelector( xmlSetup, 'title' ).textContent;
+            self.album.subtitle = self._xmlSelector( xmlSetup, 'subtitle' ).textContent;
             self.album.author = self._xmlSelector( xmlSetup, 'author' ).getAttribute( 'name' );
             self.album.authorProfile = self._xmlSelector( xmlSetup, 'author' ).textContent;
             self.album.length = self._xmlSelector( xmlSetup, 'length' ).textContent;
             
             // set program
-            if ( self._isEmpty( xmlSettings.getAttribute( 'program' ) ) ) {
-                
-                self.reference.names.split( '?' );
-                self.reference.names = self.reference.names[0];
-                
-                if ( self.reference.names.lastIndexOf( '/' ) !== self.reference.names.length - 1 ) {
-            		self.reference.names += '/';
-            	}
-            	
-            	self.reference.names = self.cleanArray( self.reference.names.split( '/' ) );
+            if ( self._isEmpty( xmlSetup.getAttribute( 'program' ) ) ) {
                 
                 if ( self.reference.names[3] !== undefined ) {
-                    self.program.name = self.reference.names[3]
+                    
+                    self.album.program.name = self.reference.names[3];
+                    
                 }
                 
             } else {
                 
-                self.program.name = xmlSettings.getAttribute( 'program' );
+                self.album.program.name = xmlSetup.getAttribute( 'program' );
                 
             }
             
             // set course
             if ( !self._isEmpty( xmlSettings.getAttribute( 'course' ) ) ) {
                 
-                self.program.course = xmlSettings.getAttribute( 'course' );
+                self.album.program.course = xmlSettings.getAttribute( 'course' );
                 
             }
             
@@ -198,15 +214,59 @@ class APlayer {
     
     setData() {
         
-        let trackTitle = this._selector( this.el.trackTitle );
+        let self = this;
+        
+        // page title
+        let pageTitle = this._selector( 'title' );
+        
+        pageTitle.innerHTML = this.album.title;
+        
+        // splash screen
+        let title = this._selector( this.el.splashTitle );
+        let subtitle = this._selector( this.el.splashSubtitle );
+        let author = this._selector( this.el.splashAuthor );
+        let length = this._selector( this.el.splashLength );
+        
+        title.innerHTML = this.album.title;
+        subtitle.innerHTML = this.album.subtitle;
+        author.innerHTML = this.album.author;
+        length.innerHTML = this.album.length;
+        
+        // splash download menu list
+        let dwnldMenu = this._selector( this.el.dwnldBtnMenu );
+        let fileName = self.reference.names;
+        
+        if ( fileName.length === 0 ) {
+            
+            fileName = 'album';
+            
+        } else {
+            
+            fileName = self.reference.names[self.reference.names.length - 1];
+            
+        }
+        
+        Array.prototype.forEach.call( this.manifest.ap_download_files, function( el ) {
+            
+            let link = document.createElement( 'a' );
+            
+            link.href = fileName + '.' + el.format;
+            link.setAttribute( 'download', true );
+            link.setAttribute( 'role', 'menuitem' );
+            link.innerHTML = el.label;
+            
+            dwnldMenu.appendChild( link );
+            
+        } );
+        
+        // copyright
         let copyright = this._selector( this.el.copyright );
         let date = new Date();
         let year = date.getFullYear();
         
         copyright.innerHTML += '&copy; ' + year + '. ' + this.manifest.ap_copyright;
         
-        this.setProgram();
-        this._marqueeEl( trackTitle );
+        this._setProgram();
         
     }
     
@@ -235,16 +295,13 @@ class APlayer {
             
             self.el.player.on( 'ready', event => {
                 
-                const instance = event.detail.plyr;
+                self.player = event.detail.plyr;
                 const playpauseBtn = self._selector( '#ap-playpause' );
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
                 const loopBtn = self._selector( '#ap-loop' );
                 const playbackRateBtn = self._selector( '#ap-playbackRate' );
                 
-                // play the audio
-                // instance.play();
-                
-                if ( instance.playing === true ) {
+                if ( self.player.playing === true ) {
                     
                     playpauseBtn.classList.add( 'plyr__control--pressed' );
                     
@@ -253,7 +310,7 @@ class APlayer {
                 // check playback rate and update playback rate select element
                 for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
     
-                    if ( Number( playbackRateBtn.options[i].value ) === instance.speed ) {
+                    if ( Number( playbackRateBtn.options[i].value ) === self.player.speed ) {
                         
                         playbackRateBtn.selectedIndex = i;
                         break;
@@ -263,9 +320,9 @@ class APlayer {
                 }
                 
                 // on playback end
-                instance.on( 'ended', function() {
+                self.player.on( 'ended', function() {
                     
-                    if ( instance.loop === false ) {
+                    if ( self.player.loop === false ) {
                         
                         if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
                     
@@ -273,7 +330,7 @@ class APlayer {
                             
                         }
                         
-                        instance.restart();
+                        self.player.restart();
                         
                     }
                     
@@ -282,14 +339,14 @@ class APlayer {
                 // toogle loop button state
                 loopBtn.addEventListener( 'click', function() {
     
-                    if ( instance.loop === false ) {
+                    if ( self.player.loop === false ) {
                         
-                        instance.loop = true;
+                        self.player.loop = true;
                         loopBtn.classList.add( 'active' );
                         
                     } else {
                         
-                        instance.loop = false;
+                        self.player.loop = false;
                         loopBtn.classList.remove( 'active' );
                         
                     }
@@ -299,7 +356,7 @@ class APlayer {
                 // change playback rate
                 playbackRateBtn.addEventListener( 'change', function( evt ) {
                     
-                    instance.speed = Number( evt.target.options[evt.target.selectedIndex].value );
+                    self.player.speed = Number( evt.target.options[evt.target.selectedIndex].value );
                     
                 } );
                 
@@ -339,21 +396,21 @@ class APlayer {
         
     } // end _setupAudioPlayer
     
-    setProgram() {
+    _setProgram() {
         
         let self = this;
         
         if ( self.manifest.ap_custom_themes ) {
             
-            self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+            self.album.program = self.manifest.ap_custom_themes.find( function ( obj ) {
                 
-                return obj.name === self.program.name;
+                return obj.name === self.album.program.name;
                 
             } );
             
-            if ( self.program === undefined ) {
+            if ( self.album.program === undefined ) {
                 
-                self.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+                self.album.program = self.manifest.ap_custom_themes.find( function ( obj ) {
                     
                     return obj.name === self.manifest.ap_logo_default;
                     
@@ -365,13 +422,30 @@ class APlayer {
         
         let decorationBar = self._selector( '.program-theme' );
     
-        self.program.colors.forEach( function( hex ) {
+        self.album.program.colors.forEach( function( hex ) {
                         
             let span = document.createElement( 'span' );
             span.style.backgroundColor = hex;
             decorationBar.appendChild( span );
             
         } );
+        
+    }
+    
+    _checkSupport() {
+        
+        if ( this.hasCoreFeaturesSupport() ) {
+        
+            this.showError( '🙈', '', 'Your web browser does not support core audio player features.<br><a href="http://outdatedbrowser.com/en" target="_blank">Please update your web browser.</a>' );
+            return;
+            
+        }
+        
+        if ( this.hasAppearanceIusses() ) {
+        
+            this.showWarning( 'For better viewing, try a different web browser.' );
+            
+        }
         
     }
     
@@ -681,7 +755,7 @@ class APlayer {
         
     }
     
-    cleanArray( arr ) {
+    _cleanArray( arr ) {
     
         arr.forEach( function( value, index ) {
             
@@ -695,7 +769,24 @@ class APlayer {
             arr.pop();
         }
         
+        if ( ( /(\w*|(\w*\-\w*)*)\:/ig ).test( arr[arr.length-1] ) ) {
+            arr.pop();
+        }
+        
         return arr;
+        
+    }
+    
+    _parseUri( str ) {
+        
+        let parts =  str.split( '?' );
+        let target = parts[0];
+        
+        if ( target.lastIndexOf( '/' ) !== target.length - 1 ) {
+    		target += '/';
+    	}
+    	
+    	return this._cleanArray( target.split( '/' ) );
         
     }
     
@@ -859,8 +950,6 @@ class APlayer {
     
 } // end APlayer class
 
-let AP = null;
-
 /**** ON DOM READY ****/
 ( function ready( fn ) {
     
@@ -876,7 +965,6 @@ let AP = null;
     
 } )( function() {
     
-    AP = new APlayer();
-    AP.go();
+    new APlayer();
     
 } );

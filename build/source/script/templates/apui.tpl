@@ -12,7 +12,7 @@
             
         </div>
         
-        <div id="ap-splash" class="hide-splash" aria-hidden="false">
+        <div id="ap-splash" aria-hidden="false">
             
             <div class="cover-info">
                 
@@ -22,19 +22,19 @@
                 <p class="length"></p>
                 <div class="actions">
                     
-                    <button id="ap_start_btn" class="btn">Start</button>
-                    <button id="ap_resume_btn" class="btn">Resume</button>
+                    <button id="ap-start-btn" class="btn">Start</button>
+                    <button id="ap-resume-btn" class="btn">Resume</button>
                 
-                    <div class="dropdown" role="menu">
+                    <div id="ap-dwnld-btn" class="dropdown" role="menu">
                         <button id="dwnld-btn" class="btn download-btn" aria-haspopup="true" aria-expanded="false">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="{source}images/icons.svg#icon-download"></use>
                             </svg> Downloads
                         </button>
                         <div class="dropdown-content" aria-expanded="false" aria-labelledby="dwnld-btn">
-                            <a href="#" role="menuitem" download>Transcript</a>
+                            <!--<a href="#" role="menuitem" download>Transcript</a>
                             <a href="#" role="menuitem" download>Audio</a>
-                            <a href="#" role="menuitem" download>Supplement</a>
+                            <a href="#" role="menuitem" download>Supplement</a> -->
                         </div>
                     </div>
                     

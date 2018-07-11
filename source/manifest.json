@@ -16,18 +16,13 @@
     "ap_download_files": [ 
         
         {
-            "label": "Video",
-            "format": "mp4"
+            "label": "Transcript",
+            "format": "pdf"
         },
         
         {
             "label": "Audio",
             "format": "mp3"
-        },
-        
-        {
-            "label": "Transcript",
-            "format": "pdf"
         },
         
         {

@@ -2,9 +2,10 @@
 <album accent="#7b3009" splashImgFormat="svg" imgFormat="jpg" analytics="off" xmlVersion="2">
 
 	<setup program="" course="">
-		<name>HTML5 Audio Player Demo</name>
+		<title>HTML5 Audio Player</title>
+		<subtitle>Version 2 Demo</subtitle>
 		<author name="Ethan Lin"></author>
-		<length />
+		<length>15 Minutes</length>
 	</setup>
 
 	<!-- single track only need one track element -->
