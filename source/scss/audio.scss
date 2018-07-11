@@ -10,7 +10,7 @@
 
 $font: 'Open Sans', sans-serif;
 $font-size: 16px;
-$accent: #0c3b6b;
+$accent: #0a4a89;
 $gutter: 16px;
 $border-color: #ccc;
 
@@ -212,6 +212,7 @@ html {
         background-position: top center;
         background-repeat: no-repeat;
         background-size: cover;
+        background-color: $border-color;
         z-index: 2;
         
         .cover-info {

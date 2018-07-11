@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<album accent="#7b3009" splashImgFormat="svg" imgFormat="jpg" analytics="off" xmlVersion="2">
+<album accent="" splashImgFormat="svg" imgFormat="jpg" analytics="off" xmlVersion="2">
 
 	<setup program="" course="">
 		<title>HTML5 Audio Player</title>

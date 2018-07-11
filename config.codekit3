@@ -93,8 +93,8 @@
 		"ft": 2097152,
 		"miP": 0,
 		"oA": 2,
-		"oAP": "\/build\/source\/images\/splash.svg",
-		"oF": 2,
+		"oAP": "\/build\/images\/splash.svg",
+		"oF": 0,
 		"opt": 0,
 		"plM": 3758088159,
 		"prP": 0
@@ -152,6 +152,13 @@
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/build\/source\/script\/lib\/plyr\/plyr.min.js.map",
+		"oF": 3
+		},
+	"\/source\/script\/templates\/accent_css.tpl": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/build\/source\/script\/templates\/accent_css.tpl",
 		"oF": 3
 		},
 	"\/source\/script\/templates\/apui.tpl": {

@@ -9,6 +9,7 @@
     
     "ap_google_tracking_id": "",
     "ap_root_directory": "",
+    "ap_splash_directory": "https://media.uwex.edu/content/media/storybook_support/splash/",
     "ap_logo_directory": "https://media.uwex.edu/content/media/storybook_support/logo/",
     "ap_logo_default": "ceoel",
     

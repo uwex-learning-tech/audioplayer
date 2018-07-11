@@ -181,9 +181,9 @@ class APlayer {
             }
             
             // set course
-            if ( !self._isEmpty( xmlSettings.getAttribute( 'course' ) ) ) {
+            if ( !self._isEmpty( xmlSetup.getAttribute( 'course' ) ) ) {
                 
-                self.album.program.course = xmlSettings.getAttribute( 'course' );
+                self.album.program.course = xmlSetup.getAttribute( 'course' );
                 
             }
             
@@ -216,7 +216,7 @@ class APlayer {
         
         let self = this;
         
-        // page title
+        // DOM head elements
         let pageTitle = this._selector( 'title' );
         
         pageTitle.innerHTML = this.album.title;
@@ -259,6 +259,52 @@ class APlayer {
             
         } );
         
+        // splash background image
+        if ( !this._isEmpty( this.album.program.name ) ) {
+            
+            let splashBg = this._selector( this.el.splash );
+            let head = this._selector( 'head' );
+            
+            let bgImg = 'url("' + this.manifest.ap_splash_directory + this.album.program.name + '/default.' + this.album.settings.splashFormat + '")';
+            
+            if ( !this._isEmpty( self.album.program.course ) ) {
+                
+                bgImg = 'url("' + this.manifest.ap_splash_directory + this.album.program.name + '/' + this.album.program.course + '.' + this.album.settings.splashFormat + '")';
+                
+            }
+            
+            splashBg.style.backgroundImage = bgImg;
+            
+            // change the bg in the ap-main:before as well
+            let style = document.createElement( 'style' );
+            
+            style.setAttribute( 'type', 'text/css' );
+            style.innerHTML = '#ap-main:before{background-image: ' + bgImg + ' !important;}';
+            
+            head.appendChild( style );
+            
+        }
+        
+        // load accent
+        if ( !this._isEmpty( self.album.settings.accent ) ) {
+            
+            let accentUrl = this.manifest.ap_root_directory + 'script/templates/accent_css.tpl';
+            this._requestFile( accentUrl, function( xhr ) {
+                
+                const accentStyle = xhr.response.replace( /\{([accent)]+)\}/ig, self.album.settings.accent );
+                
+                let head = self._selector( 'head' );
+                let style = document.createElement( 'style' );
+                
+                style.setAttribute( 'type', 'text/css' );
+                style.innerHTML = accentStyle;
+                
+                head.appendChild( style );
+                
+            } );
+            
+        }
+    
         // copyright
         let copyright = this._selector( this.el.copyright );
         let date = new Date();
@@ -718,7 +764,21 @@ class APlayer {
     }
     
     _isEmpty( str ) {
-        return str === '' || undefined || null;
+        
+        if ( str === '' ) {
+            return true;
+        }
+        
+        if ( str === undefined ) {
+            return true;
+        }
+        
+        if ( str ===  null ) {
+            return true;
+        }
+        
+        return false;
+        
     }
     
     _requestFile( url, callback ) {

@@ -140,7 +140,7 @@ html {
         display: block;
         width: 100%;
         height: 1.25rem;
-        background-color: #0c3b6b; }
+        background-color: #0a4a89; }
     html body .copyright {
       display: none;
       font-size: 0.75rem;
@@ -270,6 +270,7 @@ html {
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: #ccc;
     z-index: 2; }
     #ap-wrapper #ap-splash .cover-info {
       position: relative;
@@ -297,7 +298,7 @@ html {
         display: block;
         border: none;
         cursor: pointer;
-        background-color: #0c3b6b;
+        background-color: #0a4a89;
         color: #fff;
         width: 100%;
         margin-top: 0.5rem;
@@ -331,7 +332,7 @@ html {
           #ap-wrapper #ap-splash .cover-info .actions .dropdown .dropdown-content a {
             display: block;
             font-size: 0.875rem;
-            color: #0c3b6b;
+            color: #0a4a89;
             text-decoration: none;
             padding: 0.5rem 1rem; }
           #ap-wrapper #ap-splash .cover-info .actions .dropdown .dropdown-content a:hover {
@@ -538,7 +539,7 @@ html {
                 #ap-wrapper #ap-main .body .track-list .tracks li a .track-download svg {
                   fill: #444; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-download:hover svg {
-                fill: #0c3b6b; }
+                fill: #0a4a89; }
           #ap-wrapper #ap-main .body .track-list .tracks li:hover {
             background-color: rgba(226, 226, 226, 0.5); }
         #ap-wrapper #ap-main .body .track-list .expand-btn {
@@ -663,13 +664,13 @@ html {
           height: 100%;
           padding: 1rem; }
           #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls input[type="range"] {
-            color: #0c3b6b; }
+            color: #0a4a89; }
           #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .plyr__tooltip {
             padding: 0.33333rem;
             font-size: 0.75rem; }
           #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .plyr__control:hover {
             background: transparent;
-            color: #0c3b6b; }
+            color: #0a4a89; }
           #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .top-controls {
             display: -webkit-flex;
             display: flex;
@@ -730,7 +731,7 @@ html {
                 -webkit-transform: translate(-3%, 0) scale(1);
                 transform: translate(-3%, 0) scale(1); }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .middle-controls #ap-playpause:hover {
-              border-color: #0c3b6b; }
+              border-color: #0a4a89; }
           #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls {
             -webkit-align-self: flex-end;
             align-self: flex-end;
@@ -757,7 +758,7 @@ html {
               outline: none;
               width: 2rem; }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls #ap-loop.active {
-              color: #0c3b6b; }
+              color: #0a4a89; }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls .ap-volcontrols {
               display: -webkit-flex;
               display: flex;
