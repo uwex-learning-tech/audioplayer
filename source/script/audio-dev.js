@@ -27,10 +27,15 @@ class APlayer {
             dwnldBtn: '#ap-dwnld-btn',
             dwnldBtnMenu: '#ap-dwnld-btn .dropdown-content',
             main: '#ap-main',
+            mainBody: '#ap-main .body',
             showProfileBtn: '#show-profile',
             closeProfileBtn: '#author-close-btn',
             profileDisplay: '#author-overlay',
             trackTitle: '.track-info .title-wrapper .title',
+            trackAuthor: '.track-info .author',
+            currentDuration: '.track-info .meta .duration',
+            currentTrackNum: '.track-info .meta .current',
+            totalTracks: '.track-info .meta .total',
             miniDisplay: '.track-list .minimized-display',
             trackList: '.track-list .tracks',
             expandTracksBtn: '.track-list .expand-btn',
@@ -53,7 +58,8 @@ class APlayer {
         this.manifest ={};
         this.album = {
             url: 'assets/album.xml',
-            program: {}
+            program: {},
+            downloads: []
         };
         this.player = null;
         this.reference = {
@@ -102,9 +108,34 @@ class APlayer {
             
             self._checkSupport();
             self._setStartResumeListeners();
+            self._expandDownloadBtnMenu();
             self._CCSpectrumDisplays();
             self._expandTracksToggle();
             self._setShowProfileListener();
+            
+        } );
+        
+    }
+    
+    _expandDownloadBtnMenu() {
+        
+        let self = this;
+        
+        let dwnldBtn = self._selector( self.el.dwnldBtn );
+        let btn = dwnldBtn.querySelector( 'button' );
+        let menu = self._selector( self.el.dwnldBtnMenu );
+        
+        dwnldBtn.addEventListener( 'mouseenter', function() {
+            
+            btn.setAttribute( 'aria-expanded', true );
+            menu.setAttribute( 'aria-expanded', true );
+            
+        } );
+        
+        dwnldBtn.addEventListener( 'mouseleave', function() {
+            
+            btn.setAttribute( 'aria-expanded', false );
+            menu.setAttribute( 'aria-expanded', false );
             
         } );
         
@@ -121,13 +152,66 @@ class APlayer {
             
             self.hideSplash();
             
-            self._marqueeEl( self._selector( self.el.trackTitle ) );
+            let currentTitle = self._selector( self.el.trackTitle );
             
-            if ( self.player.ready && !self._isEmpty( self.player.source ) ) {
+            currentTitle.innerHTML = self.album.tracks[0].title;
+            
+            let currentAuthor = self._selector( self.el.trackAuthor );
+            
+            if ( self._isEmpty( self.album.tracks[0].author) ) {
                 
-                self.player.play();
+                currentAuthor.innerHTML = self.album.author;
+                
+            } else {
+                
+                currentAuthor.innerHTML = self.album.tracks[0].author;
                 
             }
+            
+            if ( self.album.tracks.length > 1 ) {
+                
+                let currentTrack = self._selector( self.el.currentTrackNum );
+                currentTrack.innerHTML = 1;
+                
+                let totalTracks = self._selector( self.el.totalTracks );
+                totalTracks.innerHTML = self.album.tracks.length;
+                
+            }
+            
+            if ( self.player.ready ) {
+                
+                self.player.source = {
+                    
+                    type: 'audio',
+                    title: self.album.tracks[0].title,
+                    sources: [
+                        
+                        {
+                            
+                            src: 'assets/audio/' + self.album.tracks[0].src,
+                            type: 'audio/mp3'
+                            
+                        }
+                        
+                    ]
+                    
+                }
+                    
+                self.player.once( 'canplay', function() {
+                    
+                    if ( self.album.tracks.length > 1 ) {
+                    
+                        self._selector( self.el.currentDuration ).innerHTML = self.player.duration;
+                    
+                    }
+                    
+                    //self.player.togglePlay();
+                    
+                } );
+                
+            }
+            
+            self._marqueeEl( currentTitle );
             
         } );
         
@@ -233,7 +317,6 @@ class APlayer {
         length.innerHTML = this.album.length;
         
         // splash download menu list
-        let dwnldMenu = this._selector( this.el.dwnldBtnMenu );
         let fileName = self.reference.names;
         
         if ( fileName.length === 0 ) {
@@ -248,14 +331,36 @@ class APlayer {
         
         Array.prototype.forEach.call( this.manifest.ap_download_files, function( el ) {
             
-            let link = document.createElement( 'a' );
+            let file = fileName + '.' + el.format;
             
-            link.href = fileName + '.' + el.format;
-            link.setAttribute( 'download', true );
-            link.setAttribute( 'role', 'menuitem' );
-            link.innerHTML = el.label;
+            self._fileExists( file, function( exist ) {
+                
+                if ( exist ) {
+                    
+                    let link = document.createElement( 'a' );
             
-            dwnldMenu.appendChild( link );
+                    link.href = file;
+                    link.setAttribute( 'download', file );
+                    link.setAttribute( 'role', 'menuitem' );
+                    link.innerHTML = el.label;
+                    
+                    let dwnldMenu = self._selector( self.el.dwnldBtnMenu );
+                    dwnldMenu.appendChild( link );
+                    
+                    let dwnldBtn = self._selector( self.el.dwnldBtn );
+                    dwnldBtn.setAttribute( 'aria-hidden', false );
+                    dwnldBtn.style.display = 'block';
+                    
+                    let dwnldFile = {
+                        name: el.label,
+                        url: file
+                    };
+                    
+                    self.album.downloads.push( dwnldFile );
+                    
+                }
+                
+            } );
             
         } );
         
@@ -304,6 +409,52 @@ class APlayer {
             } );
             
         }
+        
+        // set tracks
+        if ( this.album.tracks.length > 1 ) {
+            
+            let trackListDisplay = this._selector( this.el.trackList );
+            
+            Array.prototype.forEach.call( this.album.tracks, function( el, indx ) {
+                
+                let li = document.createElement( 'li' );
+                let a = document.createElement( 'a' );
+                
+                a.href = 'javascript:void(0);';
+                a.setAttribute( 'data-src', el.src );
+                a.setAttribute( 'data-author', el.author );
+                a.setAttribute( 'data-img', el.img );
+                
+                let numSpan = document.createElement( 'span' );
+                
+                numSpan.classList.add( 'track-num' );
+                numSpan.innerHTML = indx + 1 + '. ';
+                
+                let titleWrprSpan = document.createElement( 'span' );
+                
+                titleWrprSpan.classList.add( 'track-title-wrapper' );
+                
+                let titleSpan = document.createElement( 'span' );
+                
+                titleSpan.classList.add( 'track-title' );
+                titleSpan.innerHTML = el.title;
+                
+                titleWrprSpan.appendChild( titleSpan );
+                
+                a.appendChild( numSpan );
+                a.appendChild( titleWrprSpan );
+                
+                li.appendChild( a );
+                
+                trackListDisplay.appendChild( li );
+                
+            } );
+            
+        } else {
+            
+            this._selector( this.el.main ).classList.add( 'single' );
+            
+        }
     
         // copyright
         let copyright = this._selector( this.el.copyright );
@@ -312,6 +463,7 @@ class APlayer {
         
         copyright.innerHTML += '&copy; ' + year + '. ' + this.manifest.ap_copyright;
         
+        // program theme
         this._setProgram();
         
     }
@@ -319,7 +471,14 @@ class APlayer {
     _setupAudioPlayer() {
         
         let self = this;
-        let plyrControlsUrl = self.manifest.ap_root_directory + 'script/templates/custom_plyr_controls.tpl';
+        
+        let plyrControlsUrl = self.manifest.ap_root_directory + 'script/templates/single_plyr_controls.tpl';
+        
+        if ( self.album.tracks.length > 1 ) {
+            
+            plyrControlsUrl = self.manifest.ap_root_directory + 'script/templates/full_plyr_controls.tpl';
+            
+        }
         
         self._requestFile( plyrControlsUrl, function( xhr ) {
             
@@ -342,16 +501,11 @@ class APlayer {
             self.el.player.on( 'ready', event => {
                 
                 self.player = event.detail.plyr;
+                
                 const playpauseBtn = self._selector( '#ap-playpause' );
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
                 const loopBtn = self._selector( '#ap-loop' );
                 const playbackRateBtn = self._selector( '#ap-playbackRate' );
-                
-                if ( self.player.playing === true ) {
-                    
-                    playpauseBtn.classList.add( 'plyr__control--pressed' );
-                    
-                }
                 
                 // check playback rate and update playback rate select element
                 for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
@@ -364,6 +518,18 @@ class APlayer {
                     }
                     
                 }
+                
+                self.player.on( 'playing', function() {
+                    
+                    playpauseBtn.classList.add( 'plyr__control--pressed' );
+                    
+                } );
+                
+                self.player.on( 'pause', function() {
+                    
+                    playpauseBtn.classList.remove( 'plyr__control--pressed' );
+                    
+                } );
                 
                 // on playback end
                 self.player.on( 'ended', function() {
@@ -403,21 +569,6 @@ class APlayer {
                 playbackRateBtn.addEventListener( 'change', function( evt ) {
                     
                     self.player.speed = Number( evt.target.options[evt.target.selectedIndex].value );
-                    
-                } );
-                
-                // toggle play/pause state
-                playpauseBtn.addEventListener( 'click', function( evt ) {
-                
-                    if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
-                        
-                        evt.target.classList.remove( 'plyr__control--pressed' );
-                        
-                    } else {
-                        
-                        evt.target.classList.add( 'plyr__control--pressed' );
-                        
-                    }
                     
                 } );
                 
@@ -654,6 +805,14 @@ class APlayer {
                     
                 } );
                 
+                let tracks = document.querySelectorAll( self.el.trackList + ' .track-title-wrapper .track-title' );
+                
+                Array.prototype.forEach.call( tracks, function( el ) {
+                    
+                    self._marqueeEl( el );
+                    
+                } );
+                
             } else {
                 
                 trackList.style.display = 'none';
@@ -808,6 +967,33 @@ class APlayer {
         request.onerror = function() {
             
             body.innerHTML += '<div class="error">Connection Error. Check your network.</div>';
+            
+        };
+        
+        request.send();
+        
+    }
+    
+    _fileExists( url, callback ) {
+        
+        let request = new XMLHttpRequest();
+        let found = false;
+        
+        request.open( 'HEAD', url, true );
+        
+        request.onload = function() {
+            
+            if ( this.status >= 200 && this.status < 400 ) {
+                
+                found = true;
+                
+            } else {
+                
+                found = false;
+                
+            }
+            
+            callback( found );
             
         };
         

@@ -16,10 +16,7 @@
     
     <div class="middle-controls">
         
-        <button type="button" class="plyr__control">
-            <svg role="presentation"><use xlink:href="{source}images/icons.svg#icon-previous"></use></svg>
-            <span class="plyr__tooltip" role="tooltip">Previous</span>
-        </button>
+        <button disabled="true" type="button" aria-hidden="true" class="blank"></button>
         
         <button type="button" class="plyr__control" data-plyr="rewind">
             <svg role="presentation"><use xlink:href="{source}images/icons.svg#icon-backward"></use></svg>
@@ -38,10 +35,7 @@
             <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
         </button>
         
-        <button type="button" class="plyr__control">
-            <svg role="presentation"><use xlink:href="{source}images/icons.svg#icon-next"></use></svg>
-            <span class="plyr__tooltip" role="tooltip">Next</span>
-        </button>
+        <button class="blank" disabled="true" type="button" aria-hidden="true"></button>
     
     </div>
     

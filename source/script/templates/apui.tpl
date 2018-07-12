@@ -25,17 +25,13 @@
                     <button id="ap-start-btn" class="btn">Start</button>
                     <button id="ap-resume-btn" class="btn">Resume</button>
                 
-                    <div id="ap-dwnld-btn" class="dropdown" role="menu">
+                    <div id="ap-dwnld-btn" class="dropdown" role="menu" aria-hidden="true">
                         <button id="dwnld-btn" class="btn download-btn" aria-haspopup="true" aria-expanded="false">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="{source}images/icons.svg#icon-download"></use>
                             </svg> Downloads
                         </button>
-                        <div class="dropdown-content" aria-expanded="false" aria-labelledby="dwnld-btn">
-                            <!--<a href="#" role="menuitem" download>Transcript</a>
-                            <a href="#" role="menuitem" download>Audio</a>
-                            <a href="#" role="menuitem" download>Supplement</a> -->
-                        </div>
+                        <div class="dropdown-content" aria-expanded="false" aria-labelledby="dwnld-btn"></div>
                     </div>
                     
                 </div>
@@ -60,7 +56,7 @@
                     </div>
                     <p class="author"></p>
                     <p class="meta">
-                        <span class="duration"></span> &bull; 
+                        <span class="duration">--:--</span> &bull; 
                         Track <span class="current"></span> of 
                         <span class="total"></span>
                     </p>

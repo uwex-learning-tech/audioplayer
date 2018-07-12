@@ -311,6 +311,9 @@ html {
         border-radius: 0.33333rem; }
       #ap-wrapper #ap-splash .cover-info .actions .btn:first-child {
         margin-top: 1rem; }
+      #ap-wrapper #ap-splash .cover-info .actions #ap-dwnld-btn,
+      #ap-wrapper #ap-splash .cover-info .actions #ap-resume-btn {
+        display: none; }
       #ap-wrapper #ap-splash .cover-info .actions .dropdown {
         position: relative; }
         #ap-wrapper #ap-splash .cover-info .actions .dropdown .download-btn {
@@ -412,7 +415,18 @@ html {
         -webkit-align-items: flex-start;
         align-items: flex-start;
         -webkit-flex: 1 0 auto;
-        flex: 1 0 auto; }
+        flex: 1 0 auto;
+        /*
+                        .marquee:before {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: rem( 10px );
+                            height: 100%;
+                            content: ' ';
+                            z-index: 2;
+                        }
+        */ }
         #ap-wrapper #ap-main .head .track-info .title-wrapper {
           width: 100%;
           -webkit-flex: 1 0 auto;
@@ -445,14 +459,6 @@ html {
             -moz-animation: marquee 15s linear 1;
             -webkit-animation: marquee 15s linear 1;
             animation: marquee 15s linear 1; }
-        #ap-wrapper #ap-main .head .track-info .marquee:before {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 0.625rem;
-          height: 100%;
-          content: ' ';
-          z-index: 2; }
         #ap-wrapper #ap-main .head .track-info .author {
           -webkit-flex: 1 0 100%;
           flex: 1 0 100%;
@@ -529,9 +535,40 @@ html {
                 width: auto;
                 height: 100%;
                 margin-right: 0.5rem; }
-              #ap-wrapper #ap-main .body .track-list .tracks li a .track-title {
-                -webkit-flex: 2 0 auto;
-                flex: 2 0 auto; }
+              #ap-wrapper #ap-main .body .track-list .tracks li a .track-num {
+                display: block;
+                width: 1.25rem;
+                text-align: right;
+                margin-right: 0.33333rem; }
+              #ap-wrapper #ap-main .body .track-list .tracks li a .track-title-wrapper {
+                display: -webkit-flex;
+                display: flex;
+                -webkit-align-items: center;
+                align-items: center;
+                -webkit-flex: 2 1 auto;
+                flex: 2 1 auto;
+                overflow: hidden; }
+                #ap-wrapper #ap-main .body .track-list .tracks li a .track-title-wrapper .track-title {
+                  display: block;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap; }
+              #ap-wrapper #ap-main .body .track-list .tracks li a .marquee {
+                position: relative;
+                height: 2.5rem;
+                -webkit-flex: 1 0 auto;
+                flex: 1 0 auto; }
+                #ap-wrapper #ap-main .body .track-list .tracks li a .marquee .track-title {
+                  position: absolute;
+                  overflow: unset;
+                  text-overflow: unset;
+                  -moz-transform: translateX(100%);
+                  -ms-transform: translateX(100%);
+                  -webkit-transform: translateX(100%);
+                  transform: translateX(100%);
+                  -moz-animation: marquee 15s linear 1;
+                  -webkit-animation: marquee 15s linear 1;
+                  animation: marquee 15s linear 1; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-download {
                 background-color: transparent;
                 border: none;
@@ -634,12 +671,6 @@ html {
           #ap-wrapper #ap-main .body .controls #spectrum-toggle .icon {
             width: 1.25rem;
             height: 1.25rem; }
-    #ap-wrapper #ap-main .single .track-list {
-      display: none; }
-    #ap-wrapper #ap-main .single .cc-spec-display {
-      height: 100%; }
-    #ap-wrapper #ap-main .single .controls {
-      top: 1rem; }
     #ap-wrapper #ap-main .foot {
       -webkit-flex: 1 0 auto;
       flex: 1 0 auto;
@@ -756,7 +787,8 @@ html {
               background-color: transparent;
               color: #444;
               outline: none;
-              width: 2rem; }
+              width: 2.25rem;
+              cursor: pointer; }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls #ap-loop.active {
               color: #0a4a89; }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls .bottom-controls .ap-volcontrols {
@@ -825,6 +857,21 @@ html {
     filter: blur(0.5rem);
     content: ' ';
     z-index: -1; }
+  #ap-wrapper .single .head .track-info {
+    display: block !important; }
+    #ap-wrapper .single .head .track-info .author {
+      line-height: normal !important; }
+  #ap-wrapper .single .head .meta {
+    display: none; }
+  #ap-wrapper .single .body .track-list {
+    display: none !important; }
+  #ap-wrapper .single .body .cc-spec-display {
+    height: 100% !important; }
+  #ap-wrapper .single .body .controls {
+    top: 1rem !important; }
+  #ap-wrapper .single .foot .blank {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0; }
 
 @media only screen and (min-width: 768px) {
   html {

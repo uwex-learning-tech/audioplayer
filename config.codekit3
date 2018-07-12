@@ -30,8 +30,7 @@
 		"oF": 0
 		},
 	"\/config.rb": {
-		"cB": 0,
-		"ft": 8192,
+		"ft": 131072,
 		"oA": 0,
 		"oAP": "\/config.rb",
 		"oF": 0
@@ -168,11 +167,18 @@
 		"oAP": "\/build\/source\/script\/templates\/apui.tpl",
 		"oF": 3
 		},
-	"\/source\/script\/templates\/custom_plyr_controls.tpl": {
+	"\/source\/script\/templates\/full_plyr_controls.tpl": {
 		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
-		"oAP": "\/build\/source\/script\/templates\/custom_plyr_controls.tpl",
+		"oAP": "\/build\/source\/script\/templates\/full_plyr_controls.tpl",
+		"oF": 3
+		},
+	"\/source\/script\/templates\/single_plyr_controls.tpl": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/build\/source\/script\/templates\/single_plyr_controls.tpl",
 		"oF": 3
 		},
 	"\/source\/scss\/audio.scss": {

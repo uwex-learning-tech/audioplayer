@@ -264,6 +264,11 @@ html {
                     margin-top: rem( $gutter );
                 }
                 
+                #ap-dwnld-btn,
+                #ap-resume-btn {
+                    display: none;
+                }
+                
                 .dropdown {
                     
                     position: relative;
@@ -440,6 +445,7 @@ html {
                     
                 }
                 
+/*
                 .marquee:before {
                     position: absolute;
                     top: 0;
@@ -449,6 +455,7 @@ html {
                     content: ' ';
                     z-index: 2;
                 }
+*/
                 
                 .author {
                     @include flex( 1 0 100% );
@@ -536,8 +543,43 @@ html {
                                 margin-right: rem( $gutter / 2 );
                             }
                             
-                            .track-title {
-                                @include flex( 2 0 auto );
+                            .track-num {
+                                display: block;
+                                width: rem( 20px );
+                                text-align: right;
+                                margin-right: rem( $gutter / 3 );
+                            }
+                            
+                            .track-title-wrapper {
+                                
+                                @include display-flex();
+                                @include align-items( center );
+                                @include flex( 2 1 auto );
+                                overflow: hidden;
+                                
+                                .track-title {
+                                    display: block;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }
+                                
+                            }
+                            
+                            .marquee {
+                    
+                                position: relative;
+                                height: rem( 40px );
+                                @include flex( 1 0 auto );
+                                
+                                .track-title {
+                                    position: absolute;
+                                    overflow: unset;
+                                    text-overflow: unset;
+                                    @include translateX( 100% );
+                                    @include animation( marquee 15s linear 1 );
+                                }
+                                
                             }
                             
                             .track-download {
@@ -693,22 +735,6 @@ html {
             
         }
         
-        .single {
-            
-            .track-list {
-                display: none;
-            }
-            
-            .cc-spec-display {
-                height: 100%;
-            }
-            
-            .controls {
-                top: rem( $gutter );
-            }
-            
-        }
-        
         .foot {
             
             @include flex( 1 0 auto );
@@ -854,7 +880,8 @@ html {
                                 background-color: transparent;
                                 color: #444;
                                 outline: none;
-                                width: rem( 32px );
+                                width: rem( 36px );
+                                cursor: pointer;
                             }
                             
                             #ap-loop.active {
@@ -954,6 +981,53 @@ html {
         filter: blur( rem( 8px ) );
         content: ' ';
         z-index: -1;
+    }
+    
+    .single {
+        
+        .head {
+            
+            .track-info {
+                
+                display: block !important;
+                
+                .author {
+                    line-height: normal !important;
+                }
+                
+            }
+            
+            .meta {
+                display: none;
+            }
+            
+        }
+        
+        .body {
+            
+            .track-list {
+                display: none !important;
+            }
+            
+            .cc-spec-display {
+                height: 100% !important;
+            }
+            
+            .controls {
+                top: rem( $gutter ) !important;
+            }
+            
+        }
+        
+        .foot {
+            
+            .blank {
+                @include opacity( 0 );
+            }
+            
+        }
+        
+        
     }
     
 }
