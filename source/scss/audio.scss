@@ -475,6 +475,13 @@ html {
                     
                 }
                 
+                .stop-marquee {
+                    -webkit-animation-play-state: paused;
+                    -moz-animation-play-state: paused;
+                    -o-animation-play-state: paused; 
+                    animation-play-state: paused;
+                }
+                
 /*
                 .marquee:before {
                     position: absolute;
@@ -582,6 +589,7 @@ html {
                                 display: block;
                                 width: rem( 30px );
                                 height: rem( 30px );
+                                margin-right: rem( 5px );
                                 object-fit: cover;
                                 background-color: #ccc;
                             }
@@ -793,6 +801,21 @@ html {
                 
                 .plyr--full-ui {
                     height: 100%;
+                    
+                }
+                
+                .disabled {
+                    @include opacity( 0.55 );
+                    cursor: default;       
+                }
+                
+                .disabled:hover {
+                    
+                    color: unset !important;
+                    
+                    .plyr__tooltip {
+                        display: none;
+                    }
                     
                 }
                 

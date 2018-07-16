@@ -48,6 +48,8 @@ class APlayer {
             bodyControls: '.body .controls',
             ccToggle: '#cc-toggle',
             spectrumToggle: '#spectrum-toggle',
+            next: '#ap-next',
+            previous: '#ap-previous',
             warning: '.body .warning-msg',
             error: '#ap-error',
             errorIcon: '#ap-error .icon',
@@ -62,12 +64,17 @@ class APlayer {
         this.album = {
             url: 'assets/album.xml',
             program: {},
-            downloads: []
+            downloads: [],
+            currentTrack: 0
         };
         this.player = null;
         this.reference = {
             names: this._parseUri( window.location.href ),
             params: new URLSearchParams( window.location.search )
+        };
+        this.marquee ={
+            start: null,
+            stop: null
         };
         
         this.getManifest();
@@ -147,7 +154,6 @@ class APlayer {
     _setStartResumeListeners() {
         
         let self = this;
-        let trackNumToPlay = 0;
         
         let startBtn = self._selector( self.el.startBtn );
         let resumeBtn = self._selector( self.el.resumeBtn );
@@ -155,15 +161,14 @@ class APlayer {
         startBtn.addEventListener( 'click', function() {
             
             self.hideSplash();
-            self.setTrack( trackNumToPlay );
-            
+            self.setTrack( self.album.currentTrack );
             
         } );
         
         resumeBtn.addEventListener( 'click', function() {
             
             self.hideSplash();
-            self.setTrack( trackNumToPlay );
+            self.setTrack( self.album.currentTrack );
             
         } );
         
@@ -245,7 +250,6 @@ class APlayer {
     setTrack( num ) {
         
         let self = this;
-        
         let currentTitle = self._selector( self.el.trackTitle );
             
         currentTitle.innerHTML = self.album.tracks[num].title;
@@ -284,6 +288,7 @@ class APlayer {
             
         }
         
+        currentPic.innerHTML = '';
         currentPic.appendChild( authorPic );
         
         if ( self.album.tracks.length > 1 ) {
@@ -298,7 +303,7 @@ class APlayer {
         
         let upNextTrackTitle = self._selector( self.el.upNextTrack );
         
-        if ( self.album.tracks.length > 1 && num < self.album.tracks.length ) {
+        if ( self.album.tracks.length > 1 && num < self.album.tracks.length - 1 ) {
             
             upNextTrackTitle.innerHTML = self.album.tracks[num + 1].title;
             
@@ -314,7 +319,7 @@ class APlayer {
                     
                     {
                         
-                        src: 'assets/audio/' + self.album.tracks[0].src,
+                        src: 'assets/audio/' + self.album.tracks[num].src,
                         type: 'audio/mp3'
                         
                     }
@@ -331,6 +336,7 @@ class APlayer {
             
         }
         
+        self._stopMarquee( currentTitle );
         self._marqueeEl( currentTitle );
         
     }
@@ -469,9 +475,6 @@ class APlayer {
                 let a = document.createElement( 'a' );
                 
                 a.href = 'javascript:void(0);';
-                a.setAttribute( 'data-src', el.src );
-                a.setAttribute( 'data-author', el.author );
-                a.setAttribute( 'data-img', el.img );
                 
                 let numSpan = document.createElement( 'span' );
                 
@@ -564,6 +567,9 @@ class APlayer {
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
                 const loopBtn = self._selector( '#ap-loop' );
                 const playbackRateBtn = self._selector( '#ap-playbackRate' );
+                const nextBtn = self._selector( self.el.next );
+                const prevBtn = self._selector( self.el.previous );
+                const totalTracks = self.album.tracks.length - 1;
                 
                 // check playback rate and update playback rate select element
                 for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
@@ -576,6 +582,42 @@ class APlayer {
                     }
                     
                 }
+                
+                if ( self.album.currentTrack <= 0 ) {
+                    
+                    prevBtn.setAttribute( 'disabled', true );
+                    prevBtn.classList.add( 'disabled' );
+                }
+                
+                if ( self.album.currentTrack >= totalTracks ) {
+                            
+                    nextBtn.setAttribute( 'disabled', true );
+                    nextBtn.classList.add( 'disabled' );
+                    
+                }
+                
+                nextBtn.addEventListener( 'click', function() {
+                    
+                    
+                    if ( self.album.currentTrack < totalTracks ) {
+                        
+                        self.album.currentTrack++;
+                        self.setTrack( self.album.currentTrack );
+                        
+                    }
+                    
+                } );
+                
+                prevBtn.addEventListener( 'click', function() {
+                    
+                    if ( self.album.currentTrack > 0 ) {
+                        
+                        self.album.currentTrack--;
+                        self.setTrack( self.album.currentTrack );
+                        
+                    }
+                    
+                } );
                 
                 self.player.on( 'playing', function() {
                     
@@ -1214,28 +1256,44 @@ class APlayer {
             let runTime = 15500;
             let startTime = 5000;
             
-            let start = window.setInterval( function() {
+            self.marquee.start = window.setInterval( function() {
                 
+                el.parentNode.classList.remove( 'stop-marquee' );
                 el.parentNode.classList.add( 'marquee' );
                 
                 el.style.width = el.scrollWidth + 'px';
                 
-                window.clearInterval( start );
+                window.clearInterval( self.marquee.start );
                 
-                let stop = window.setTimeout( function() {
-                    
+                self.marquee.stop = window.setTimeout( function() {
+                     
                     el.style.width = 'initial';
+                    el.parentNode.classList.remove( 'marquee' );
+                    window.clearTimeout( self.marquee.stop );
                     
                     self._fadeIn( el );
-                    
-                    el.parentNode.classList.remove( 'marquee' );
-                    window.clearTimeout( stop );
                     self._marqueeEl( el );
                     
                 }, runTime );
                 
             }, startTime );
             
+        }
+        
+    }
+    
+    _stopMarquee( el ) {
+        
+        el.style.width = '';
+        el.parentNode.classList.remove( 'marquee' );
+        el.parentNode.classList.add( 'stop-marquee' );
+        
+        if ( this.marquee.stop !== null ) {
+            window.clearTimeout( this.marquee.stop );
+        }
+        
+        if ( this.marquee.start !== null ) {
+            window.clearInterval( this.marquee.start );
         }
         
     }

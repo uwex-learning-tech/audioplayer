@@ -506,6 +506,11 @@ html {
             -moz-animation: marquee 15s linear 1;
             -webkit-animation: marquee 15s linear 1;
             animation: marquee 15s linear 1; }
+        #ap-wrapper #ap-main .head .track-info .stop-marquee {
+          -webkit-animation-play-state: paused;
+          -moz-animation-play-state: paused;
+          -o-animation-play-state: paused;
+          animation-play-state: paused; }
         #ap-wrapper #ap-main .head .track-info .author {
           -webkit-flex: 1 0 100%;
           flex: 1 0 100%;
@@ -589,6 +594,7 @@ html {
                 display: block;
                 width: 1.875rem;
                 height: 1.875rem;
+                margin-right: 0.3125rem;
                 object-fit: cover;
                 background-color: #ccc; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-num {
@@ -740,6 +746,14 @@ html {
         height: 100%; }
         #ap-wrapper #ap-main .foot .audio-ui .plyr--full-ui {
           height: 100%; }
+        #ap-wrapper #ap-main .foot .audio-ui .disabled {
+          filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=55);
+          opacity: 0.55;
+          cursor: default; }
+        #ap-wrapper #ap-main .foot .audio-ui .disabled:hover {
+          color: unset !important; }
+          #ap-wrapper #ap-main .foot .audio-ui .disabled:hover .plyr__tooltip {
+            display: none; }
         #ap-wrapper #ap-main .foot .audio-ui .plyr--audio .plyr__controls {
           display: -webkit-flex;
           display: flex;
