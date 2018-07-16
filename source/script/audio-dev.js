@@ -476,7 +476,7 @@ class APlayer {
                 let numSpan = document.createElement( 'span' );
                 
                 numSpan.classList.add( 'track-num' );
-                numSpan.innerHTML = indx + 1 + '. ';
+                numSpan.innerHTML = indx + 1 + '.';
                 
                 let titleWrprSpan = document.createElement( 'span' );
                 
@@ -488,6 +488,16 @@ class APlayer {
                 titleSpan.innerHTML = el.title;
                 
                 titleWrprSpan.appendChild( titleSpan );
+                
+                if ( !self._isEmpty( el.img ) ) {
+                    
+                    let img = document.createElement( 'img' );
+                    
+                    img.classList.add( 'track-img' );
+                    img.src = 'assets/images/' + el.img;
+                    a.appendChild( img );
+                    
+                }
                 
                 a.appendChild( numSpan );
                 a.appendChild( titleWrprSpan );

@@ -587,12 +587,14 @@ html {
               border-bottom: 0.0625rem solid rgba(226, 226, 226, 0.9); }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-img {
                 display: block;
-                width: auto;
-                height: 100%;
-                margin-right: 0.5rem; }
+                width: 1.875rem;
+                height: 1.875rem;
+                object-fit: cover;
+                background-color: #ccc; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-num {
                 display: block;
                 width: 1.25rem;
+                min-width: 1.25rem;
                 text-align: right;
                 margin-right: 0.33333rem; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-title-wrapper {
@@ -645,7 +647,7 @@ html {
           border-bottom-right-radius: 1.875rem;
           background-color: rgba(226, 226, 226, 0.5);
           cursor: pointer;
-          z-index: 10; }
+          z-index: 1; }
           #ap-wrapper #ap-main .body .track-list .expand-btn .icon {
             width: 0.75rem;
             height: 0.75rem; }
