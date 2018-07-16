@@ -226,7 +226,8 @@ class APlayer {
                 obj.img = el.getAttribute( 'img' );
                 obj.src = el.getAttribute( 'src' );
                 obj.title = el.querySelector( 'title' ).innerHTML;
-                obj.author = el.querySelector( 'author' ).innerHTML;
+                obj.author = el.querySelector( 'author' ).getAttribute( 'name' );
+                obj.authorProfile = el.querySelector( 'author' ).innerHTML;
                 
                 self.album.tracks.push( obj );
                 
@@ -324,7 +325,7 @@ class APlayer {
                 
             self.player.once( 'canplay', function() {
                 
-                //self.player.togglePlay();
+                self.player.togglePlay();
                 
             } );
             
@@ -794,9 +795,18 @@ class APlayer {
         let self = this;
         let authorProfileDisplay = this._selector( this.el.profileDisplay );
         let closeBtn = this._selector( this.el.closeProfileBtn );
-        let currentAuthor = self._selector( self.el.trackAuthor ).innerHTML;
+        let currentAuthor = self.album.author;
+        let currentProfile = self.album.authorProfile;
+        let index = Number( self._selector( self.el.currentTrackNum ).innerHTML ) - 1;
         
-        if ( self._isEmpty( self.album.authorProfile ) ) {
+        if ( !self._isEmpty( self.album.tracks[index].author) ) {
+            
+            currentAuthor = self.album.tracks[index].author;
+            currentProfile = self.album.tracks[index].authorProfile;
+            
+        }
+        
+        if ( self._isEmpty( currentProfile ) ) {
             
             let profileUrl = self.manifest.ap_author_directory + self._sanitize( currentAuthor ) + '.json?callback=author';
         
@@ -848,7 +858,7 @@ class APlayer {
                 },
                 onTimeout: function() {
                     
-                    self._setProfile( currentAuthor, self.album.authorProfile );
+                    self._setProfile( currentAuthor, currentProfile );
                     
                 },
                 timeout: 5
@@ -857,7 +867,7 @@ class APlayer {
             
         } else {
             
-            self._setProfile( currentAuthor, self.album.authorProfile );
+            self._setProfile( currentAuthor, currentProfile );
             
         }
         

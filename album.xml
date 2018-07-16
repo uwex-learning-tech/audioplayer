@@ -12,29 +12,29 @@
 
 	<track img="cartel.jpg" src="FasterRide.mp3" >
 		<title>Faster Ride</title>
-		<author>Cartel</author>
+		<author name=""></author>
 	</track>
 
 	<!-- for multiple tracks, add more track elements -->
 	
 	<track img="falloutboy.jpg" src="MySongsKnowWhatYouDidInTheDark.mp3" >
 		<title>My Songs Know What You Did In The Dark</title>
-		<author>Fall Out Boy</author>
+		<author name="Fall Out Boy"></author>
 	</track>
 	
 	<track img="psy.jpg" src="Gentleman.mp3" >
 		<title>Gentleman</title>
-		<author>Psy</author>
+		<author name="Psy"></author>
 	</track>
 	
 	<track img="me.jpg" src="YesToLove.mp3" >
 		<title>Yes To Love</title>
-		<author>Stefano</author>
+		<author name="Stefano"></author>
 	</track>
 	
 	<track img="me.jpg" src="HeresToNeverGrowingUp.mp3" >
 		<title>Here's To Never Growing Up</title>
-		<author>Avril Lavigne</author>
+		<author name="Avril Lavigne"></author>
 	</track>
 
 </album>
