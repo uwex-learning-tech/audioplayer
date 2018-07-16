@@ -12,11 +12,12 @@
 
 	<track img="cartel.jpg" src="FasterRide.mp3" >
 		<title>Faster Ride</title>
-		<author name=""></author>
+		<author name="Cartel"></author>
 	</track>
 
 	<!-- for multiple tracks, add more track elements -->
 	
+<!--
 	<track img="falloutboy.jpg" src="MySongsKnowWhatYouDidInTheDark.mp3" >
 		<title>My Songs Know What You Did In The Dark</title>
 		<author name="Fall Out Boy"></author>
@@ -36,5 +37,6 @@
 		<title>Here's To Never Growing Up</title>
 		<author name="Avril Lavigne"></author>
 	</track>
+-->
 
 </album>

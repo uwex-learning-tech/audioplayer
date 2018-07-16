@@ -298,7 +298,7 @@ class APlayer {
         
         let upNextTrackTitle = self._selector( self.el.upNextTrack );
         
-        if ( num < self.album.tracks.length ) {
+        if ( self.album.tracks.length > 1 && num < self.album.tracks.length ) {
             
             upNextTrackTitle.innerHTML = self.album.tracks[num + 1].title;
             
@@ -798,6 +798,10 @@ class APlayer {
         let currentAuthor = self.album.author;
         let currentProfile = self.album.authorProfile;
         let index = Number( self._selector( self.el.currentTrackNum ).innerHTML ) - 1;
+        
+        if ( self.album.tracks.length <= 1 ) {
+            index = 0;
+        }
         
         if ( !self._isEmpty( self.album.tracks[index].author) ) {
             
