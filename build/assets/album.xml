@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<album accent="" splashImgFormat="svg" imgFormat="jpg" analytics="off" xmlVersion="2">
+<album accent="" splashImgFormat="svg" analytics="off" xmlVersion="2">
 
 	<setup program="" course="">
 		<title>HTML5 Audio Player</title>
@@ -17,14 +17,14 @@
 
 	<!-- for multiple tracks, add more track elements -->
 	
-	<track img="psy.jpg" src="Gentleman.mp3" >
-		<title>Gentleman</title>
-		<author>Psy</author>
-	</track>
-	
 	<track img="falloutboy.jpg" src="MySongsKnowWhatYouDidInTheDark.mp3" >
 		<title>My Songs Know What You Did In The Dark</title>
 		<author>Fall Out Boy</author>
+	</track>
+	
+	<track img="psy.jpg" src="Gentleman.mp3" >
+		<title>Gentleman</title>
+		<author>Psy</author>
 	</track>
 	
 	<track img="me.jpg" src="YesToLove.mp3" >

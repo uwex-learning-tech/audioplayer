@@ -45,9 +45,7 @@
             <div class="head">
                 
                 <div class="track-img">
-                    <button id="show-profile" aria-label="Show author profile">
-                        <img src="{source}images/pic.jpg" alt="An Image of the Author" />
-                    </button>
+                    <button id="show-profile" aria-label="Show author profile"></button>
                 </div>
                 
                 <div class="track-info">
@@ -56,7 +54,6 @@
                     </div>
                     <p class="author"></p>
                     <p class="meta">
-                        <span class="duration">--:--</span> &bull; 
                         Track <span class="current"></span> of 
                         <span class="total"></span>
                     </p>
@@ -150,6 +147,11 @@
             <div id="author-overlay">
                 <button id="author-close-btn" aria-label="Close Author Profile">&times;</button>
                 <div class="content"></div>
+                <div class="spinner" aria-hidden="true">
+                    <svg viewBox="0 0 30 30">
+                        <use xlink:href="{source}images/icons.svg#icon-spinner"></use>
+                    </svg>
+                </div>
             </div>
             
         </div>

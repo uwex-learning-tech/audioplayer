@@ -48,6 +48,11 @@ $border-color: #ccc;
     100% { height: rem( 30px ); }
 }
 
+@include keyframes( spin ) {
+    0% { @include rotate( 0deg ); }
+    100% { @include rotate( 360deg ); }
+}
+
 html {
     
     height: 100%;
@@ -88,6 +93,26 @@ html {
                 width: 100%;
                 height: rem( 20px );
                 background-color: $accent;
+            }
+            
+        }
+        
+        .spinner {
+            
+            display: none;
+            @include align-items( center );
+            @include justify-content( center );
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            
+            svg {
+                width: rem( 36px );
+                height: rem( 36px );
+                fill: $border-color;
             }
             
         }
@@ -153,6 +178,11 @@ html {
     .slideUp {
         @include animation( slideUp 0.25s linear 1 );
         height: rem( 30px );
+    }
+    
+    .spin {
+        @include display-flex();
+        @include animation( spin 1s linear infinite );
     }
     
     #ap-error {
@@ -486,15 +516,27 @@ html {
                 @include align-items( flex-start );
                 @include justify-content( center );
                 position: relative;
-                background-color: rgba(226, 226, 226, 0.5);
+                background-color: rgba(225, 225, 225, 0.65);
                 
                 .minimized-display {
+                    
                     @include display-flex();
                     @include align-items( center );
                     @include justify-content( center );
                     width: 100%;
                     height: rem( 30px );
-                    font-size: rem( 14px );
+                    font-size: rem( 12px );
+                    padding: 0 rem( $gutter );
+                    
+                    span {
+                        display: inline-block;
+                        max-width: 81%;
+                        margin-left: rem( $gutter / 3 );
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    
                 }
                 
                 .tracks {
@@ -505,7 +547,7 @@ html {
                     margin: 0;
                     list-style: none;
                     height: 100%;
-                    overflow-y: auto;
+                    overflow-y: hidden;
                     overflow-x: hidden;
                     
                     .label {
@@ -961,6 +1003,18 @@ html {
                     padding-left: rem( $gutter * 2 );
                 }
                 
+                strong {
+                    font-weight: bold;
+                }
+                
+                em {
+                    font-style: italic;
+                }
+                
+                small {
+                    font-size: 75%;
+                }
+                
             }
             
         } // end overlay
@@ -1132,8 +1186,10 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
                 .track-list {
                     
                     .minimized-display {
+                        
                         height: rem( 60px );
                         font-size: rem( 28px );
+                        
                     }
                     
                 }

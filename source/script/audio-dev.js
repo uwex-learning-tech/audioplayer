@@ -31,12 +31,15 @@ class APlayer {
             showProfileBtn: '#show-profile',
             closeProfileBtn: '#author-close-btn',
             profileDisplay: '#author-overlay',
+            profileDisplayContent: '#author-overlay .content',
+            profileDisplaySpinner: '#author-overlay .spinner',
+            currentPic: '.head .track-img button',
             trackTitle: '.track-info .title-wrapper .title',
             trackAuthor: '.track-info .author',
-            currentDuration: '.track-info .meta .duration',
             currentTrackNum: '.track-info .meta .current',
             totalTracks: '.track-info .meta .total',
             miniDisplay: '.track-list .minimized-display',
+            upNextTrack: '.track-list .minimized-display .ap_up_next_title',
             trackList: '.track-list .tracks',
             expandTracksBtn: '.track-list .expand-btn',
             ccSpecDisplay: '.body .cc-spec-display',
@@ -144,6 +147,7 @@ class APlayer {
     _setStartResumeListeners() {
         
         let self = this;
+        let trackNumToPlay = 0;
         
         let startBtn = self._selector( self.el.startBtn );
         let resumeBtn = self._selector( self.el.resumeBtn );
@@ -151,73 +155,15 @@ class APlayer {
         startBtn.addEventListener( 'click', function() {
             
             self.hideSplash();
+            self.setTrack( trackNumToPlay );
             
-            let currentTitle = self._selector( self.el.trackTitle );
-            
-            currentTitle.innerHTML = self.album.tracks[0].title;
-            
-            let currentAuthor = self._selector( self.el.trackAuthor );
-            
-            if ( self._isEmpty( self.album.tracks[0].author) ) {
-                
-                currentAuthor.innerHTML = self.album.author;
-                
-            } else {
-                
-                currentAuthor.innerHTML = self.album.tracks[0].author;
-                
-            }
-            
-            if ( self.album.tracks.length > 1 ) {
-                
-                let currentTrack = self._selector( self.el.currentTrackNum );
-                currentTrack.innerHTML = 1;
-                
-                let totalTracks = self._selector( self.el.totalTracks );
-                totalTracks.innerHTML = self.album.tracks.length;
-                
-            }
-            
-            if ( self.player.ready ) {
-                
-                self.player.source = {
-                    
-                    type: 'audio',
-                    title: self.album.tracks[0].title,
-                    sources: [
-                        
-                        {
-                            
-                            src: 'assets/audio/' + self.album.tracks[0].src,
-                            type: 'audio/mp3'
-                            
-                        }
-                        
-                    ]
-                    
-                }
-                    
-                self.player.once( 'canplay', function() {
-                    
-                    if ( self.album.tracks.length > 1 ) {
-                    
-                        self._selector( self.el.currentDuration ).innerHTML = self.player.duration;
-                    
-                    }
-                    
-                    //self.player.togglePlay();
-                    
-                } );
-                
-            }
-            
-            self._marqueeEl( currentTitle );
             
         } );
         
         resumeBtn.addEventListener( 'click', function() {
             
             self.hideSplash();
+            self.setTrack( trackNumToPlay );
             
         } );
         
@@ -238,7 +184,6 @@ class APlayer {
             self.album.settings = {};
             self.album.settings.accent = xmlSettings.getAttribute( 'accent' );
             self.album.settings.splashFormat = xmlSettings.getAttribute( 'splashImgFormat' );
-            self.album.settings.imgFormat = xmlSettings.getAttribute( 'imgFormat' );
             self.album.settings.analytics = xmlSettings.getAttribute( 'analytics' );
             self.album.settings.version = xmlSettings.getAttribute( 'xmlVersion' );
             
@@ -293,6 +238,99 @@ class APlayer {
             self._setupAudioPlayer();
             
         } );
+        
+    }
+    
+    setTrack( num ) {
+        
+        let self = this;
+        
+        let currentTitle = self._selector( self.el.trackTitle );
+            
+        currentTitle.innerHTML = self.album.tracks[num].title;
+        
+        let currentAuthor = self._selector( self.el.trackAuthor );
+        
+        if ( self._isEmpty( self.album.tracks[num].author) ) {
+            
+            currentAuthor.innerHTML = self.album.author;
+            
+        } else {
+            
+            currentAuthor.innerHTML = self.album.tracks[num].author;
+            
+        }
+        
+        let currentPic = self._selector( self.el.currentPic );
+        let centralPicUrl = self.manifest.ap_author_directory + self._sanitize( currentAuthor.innerHTML ) + '.jpg';
+        let authorPic = new Image();
+        
+        authorPic.src = self.manifest.ap_root_directory + 'images/pic.png';
+        
+        self._fileExists( centralPicUrl, function( exist ) {
+            
+            if ( exist ) {
+                
+                authorPic.src = centralPicUrl;
+                
+            }
+            
+        } );
+        
+        if ( !self._isEmpty( self.album.tracks[num].img ) ) {
+            
+            authorPic.src = 'assets/images/' + self.album.tracks[num].img;
+            
+        }
+        
+        currentPic.appendChild( authorPic );
+        
+        if ( self.album.tracks.length > 1 ) {
+            
+            let currentTrack = self._selector( self.el.currentTrackNum );
+            currentTrack.innerHTML = num + 1;
+            
+            let totalTracks = self._selector( self.el.totalTracks );
+            totalTracks.innerHTML = self.album.tracks.length;
+            
+        }
+        
+        let upNextTrackTitle = self._selector( self.el.upNextTrack );
+        
+        if ( num < self.album.tracks.length ) {
+            
+            upNextTrackTitle.innerHTML = self.album.tracks[num + 1].title;
+            
+        }
+        
+        if ( self.player.ready ) {
+            
+            self.player.source = {
+                
+                type: 'audio',
+                title: self.album.tracks[num].title,
+                sources: [
+                    
+                    {
+                        
+                        src: 'assets/audio/' + self.album.tracks[0].src,
+                        type: 'audio/mp3'
+                        
+                    }
+                    
+                ]
+                
+            }
+                
+            self.player.once( 'canplay', function() {
+                
+                //self.player.togglePlay();
+                
+            } );
+            
+        }
+        
+        self._marqueeEl( currentTitle );
         
     }
     
@@ -367,26 +405,35 @@ class APlayer {
         // splash background image
         if ( !this._isEmpty( this.album.program.name ) ) {
             
-            let splashBg = this._selector( this.el.splash );
-            let head = this._selector( 'head' );
-            
-            let bgImg = 'url("' + this.manifest.ap_splash_directory + this.album.program.name + '/default.' + this.album.settings.splashFormat + '")';
+            let bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/default.' + this.album.settings.splashFormat;
             
             if ( !this._isEmpty( self.album.program.course ) ) {
                 
-                bgImg = 'url("' + this.manifest.ap_splash_directory + this.album.program.name + '/' + this.album.program.course + '.' + this.album.settings.splashFormat + '")';
+                bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/' + this.album.program.course + '.' + this.album.settings.splashFormat;
                 
             }
             
-            splashBg.style.backgroundImage = bgImg;
+            this._fileExists( bgUrl, function( exist ) {
+                
+                if ( exist ) {
+                    
+                    let splashBg = self._selector( self.el.splash );
+                    let head = self._selector( 'head' );
+                    let bgImg = 'url("' + bgUrl + '")';
+                    
+                    splashBg.style.backgroundImage = bgImg;
             
-            // change the bg in the ap-main:before as well
-            let style = document.createElement( 'style' );
-            
-            style.setAttribute( 'type', 'text/css' );
-            style.innerHTML = '#ap-main:before{background-image: ' + bgImg + ' !important;}';
-            
-            head.appendChild( style );
+                    // change the bg in the ap-main:before as well
+                    let style = document.createElement( 'style' );
+                    
+                    style.setAttribute( 'type', 'text/css' );
+                    style.innerHTML = '#ap-main:before{background-image: ' + bgImg + ' !important;}';
+                    
+                    head.appendChild( style );
+                    
+                }
+                
+            } );
             
         }
         
@@ -745,11 +792,77 @@ class APlayer {
     showProfile() {
         
         let self = this;
-        let authorProfile = this._selector( this.el.profileDisplay );
+        let authorProfileDisplay = this._selector( this.el.profileDisplay );
         let closeBtn = this._selector( this.el.closeProfileBtn );
+        let currentAuthor = self._selector( self.el.trackAuthor ).innerHTML;
         
-        authorProfile.style.display = 'block';
-        this._fadeIn( authorProfile );
+        if ( self._isEmpty( self.album.authorProfile ) ) {
+            
+            let profileUrl = self.manifest.ap_author_directory + self._sanitize( currentAuthor ) + '.json?callback=author';
+        
+            let $jsonp = ( function() {
+                
+                let that = {};
+                let spinner = self._selector( self.el.profileDisplaySpinner );
+                
+                that.send = function( src, options ) {
+            
+                    spinner.classList.add( 'spin' );
+                    
+                    let callback_name = options.callbackName || 'callback',
+                        on_success = options.onSuccess || function() {},
+                        on_timeout = options.onTimeout || function() {},
+                        timeout = options.timeout || 10; // sec
+                
+                    let timeout_trigger = window.setTimeout( function() {
+                        window[callback_name] = function() {};
+                        spinner.classList.remove( 'spin' );
+                        on_timeout();
+                    }, timeout * 1000);
+                    
+                    window[callback_name] = function( data ) {
+                        window.clearTimeout( timeout_trigger );
+                        spinner.classList.remove( 'spin' );
+                        on_success( data );
+                    }
+                    
+                    let script = document.createElement( 'script' );
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.src = src;
+                    
+                    document.getElementsByTagName( 'head' )[0].appendChild( script );
+                
+                }
+                
+                return that;
+                
+            } )();
+            
+            $jsonp.send( profileUrl, {
+                
+                callbackName: 'author',
+                onSuccess: function( json ) {
+                    
+                    self._setProfile( json.name, json.profile );
+                },
+                onTimeout: function() {
+                    
+                    self._setProfile( currentAuthor, self.album.authorProfile );
+                    
+                },
+                timeout: 5
+                
+            } );
+            
+        } else {
+            
+            self._setProfile( currentAuthor, self.album.authorProfile );
+            
+        }
+        
+        authorProfileDisplay.style.display = 'block';
+        this._fadeIn( authorProfileDisplay );
         
         closeBtn.addEventListener( 'click', function() {
             self.closeProfile();
@@ -757,13 +870,33 @@ class APlayer {
 
     }
     
+    _setProfile( author, bio ) {
+        
+        let authorProfileDisplayContent = this._selector( this.el.profileDisplayContent );
+        
+        let name = document.createElement( 'h4' );
+                    
+        name.innerHTML = author;
+                        
+        let profile = document.createElement( 'div' );
+        
+        profile.innerHTML = bio;
+        
+        authorProfileDisplayContent.appendChild( name );
+        authorProfileDisplayContent.appendChild( profile );
+        
+    }
+    
     closeProfile() {
         
-        let authorProfile = this._selector( this.el.profileDisplay );
+        let authorProfileDisplay = this._selector( this.el.profileDisplay );
+        let authorProfileDisplayContent = this._selector( this.el.profileDisplayContent );
         
-        this._fadeOut( authorProfile, function() {
+        this._fadeOut( authorProfileDisplay, function() {
             
-            authorProfile.style.display = '';
+            authorProfileDisplay.style.display = '';
+            
+            authorProfileDisplayContent.innerHTML = '';
             
         } );
 
@@ -802,6 +935,7 @@ class APlayer {
                 self._slideDown( expandTracksBtn.parentNode, function() {
                     
                     expandTracksBtn.classList.add( 'rotate' );
+                    trackList.style.setProperty( 'overflow-y', 'auto' );
                     
                 } );
                 
@@ -813,9 +947,12 @@ class APlayer {
                     
                 } );
                 
+                
+                
             } else {
                 
                 trackList.style.display = 'none';
+                trackList.style.setProperty( 'overflow-y', 'hidden' );
                 minDisplay.style.display = 'flex';
                 
                 self._slideUp( expandTracksBtn.parentNode, function() {
@@ -922,9 +1059,15 @@ class APlayer {
         
     }
     
+    _sanitize( str ) {
+        
+        return str.replace(/[^\w]/gi, '').toLowerCase();
+    
+    }
+    
     _isEmpty( str ) {
         
-        if ( str === '' ) {
+        if ( typeof str === 'string' && str.trim() === '' ) {
             return true;
         }
         

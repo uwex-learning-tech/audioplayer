@@ -109,6 +109,31 @@
     height: 100%; }
   100% {
     height: 1.875rem; } }
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
 html {
   height: 100%;
   font-size: 16px; }
@@ -141,6 +166,22 @@ html {
         width: 100%;
         height: 1.25rem;
         background-color: #0a4a89; }
+    html body .spinner {
+      display: none;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 10; }
+      html body .spinner svg {
+        width: 2.25rem;
+        height: 2.25rem;
+        fill: #ccc; }
     html body .copyright {
       display: none;
       font-size: 0.75rem;
@@ -227,6 +268,12 @@ html {
     -webkit-animation: slideUp 0.25s linear 1;
     animation: slideUp 0.25s linear 1;
     height: 1.875rem; }
+  #ap-wrapper .spin {
+    display: -webkit-flex;
+    display: flex;
+    -moz-animation: spin 1s linear infinite;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite; }
   #ap-wrapper #ap-error {
     display: none;
     -webkit-align-items: center;
@@ -484,7 +531,7 @@ html {
         -webkit-justify-content: center;
         justify-content: center;
         position: relative;
-        background-color: rgba(226, 226, 226, 0.5); }
+        background-color: rgba(225, 225, 225, 0.65); }
         #ap-wrapper #ap-main .body .track-list .minimized-display {
           display: -webkit-flex;
           display: flex;
@@ -494,7 +541,15 @@ html {
           justify-content: center;
           width: 100%;
           height: 1.875rem;
-          font-size: 0.875rem; }
+          font-size: 0.75rem;
+          padding: 0 1rem; }
+          #ap-wrapper #ap-main .body .track-list .minimized-display span {
+            display: inline-block;
+            max-width: 81%;
+            margin-left: 0.33333rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap; }
         #ap-wrapper #ap-main .body .track-list .tracks {
           display: none;
           position: relative;
@@ -502,7 +557,7 @@ html {
           margin: 0;
           list-style: none;
           height: 100%;
-          overflow-y: auto;
+          overflow-y: hidden;
           overflow-x: hidden; }
           #ap-wrapper #ap-main .body .track-list .tracks .label {
             display: -webkit-flex;
@@ -843,6 +898,12 @@ html {
           line-height: 1.375rem; }
         #ap-wrapper #ap-main #author-overlay .content ul, #ap-wrapper #ap-main #author-overlay .content ol {
           padding-left: 2rem; }
+        #ap-wrapper #ap-main #author-overlay .content strong {
+          font-weight: bold; }
+        #ap-wrapper #ap-main #author-overlay .content em {
+          font-style: italic; }
+        #ap-wrapper #ap-main #author-overlay .content small {
+          font-size: 75%; }
   #ap-wrapper #ap-main:before {
     display: block;
     position: absolute;
