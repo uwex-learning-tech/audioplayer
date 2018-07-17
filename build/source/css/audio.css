@@ -462,18 +462,7 @@ html {
         -webkit-align-items: flex-start;
         align-items: flex-start;
         -webkit-flex: 1 0 auto;
-        flex: 1 0 auto;
-        /*
-                        .marquee:before {
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            width: rem( 10px );
-                            height: 100%;
-                            content: ' ';
-                            z-index: 2;
-                        }
-        */ }
+        flex: 1 0 auto; }
         #ap-wrapper #ap-main .head .track-info .title-wrapper {
           width: 100%;
           -webkit-flex: 1 0 auto;

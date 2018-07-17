@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<album accent="" splashImgFormat="svg" analytics="off" xmlVersion="2">
+<album accent="" splashImgFormat="svg" trackImgFormat="jpg" analytics="off" xmlVersion="2">
 
 	<setup program="" course="">
 		<title>HTML5 Audio Player</title>
@@ -10,31 +10,31 @@
 
 	<!-- single track only need one track element -->
 
-	<track img="cartel.jpg" src="FasterRide.mp3" >
+	<track src="FasterRide" >
 		<title>Faster Ride</title>
 		<author name="Cartel"></author>
 	</track>
 
 	<!-- for multiple tracks, add more track elements -->
 	
-	<track img="falloutboy.jpg" src="MySongsKnowWhatYouDidInTheDark.mp3" >
+	<track src="MySongsKnowWhatYouDidInTheDark" >
 		<title>My Songs Know What You Did In The Dark</title>
 		<author name="Fall Out Boy"></author>
 	</track>
 	
-	<track img="psy.jpg" src="Gentleman.mp3" >
+	<track src="Gentleman">
 		<title>Gentleman</title>
 		<author name="Psy"></author>
 	</track>
 	
-	<track img="" src="YesToLove.mp3" >
+	<track src="YesToLove">
 		<title>Yes To Love</title>
-		<author name="Stefano"></author>
+		<author name=""></author>
 	</track>
 	
-	<track img="me.jpg" src="HeresToNeverGrowingUp.mp3" >
+	<track src="HeresToNeverGrowingUp">
 		<title>Here's To Never Growing Up</title>
-		<author name="Avril Lavigne"></author>
+		<author name="">Hello World</author>
 	</track>
 
 </album>

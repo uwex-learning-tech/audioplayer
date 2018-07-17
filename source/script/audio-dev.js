@@ -65,7 +65,9 @@ class APlayer {
             url: 'assets/album.xml',
             program: {},
             downloads: [],
-            currentTrack: 0
+            currentTrack: 0,
+            sameAuthor: true,
+            sameAuthorLoaded: false
         };
         this.player = null;
         this.reference = {
@@ -188,7 +190,8 @@ class APlayer {
             // settings
             self.album.settings = {};
             self.album.settings.accent = xmlSettings.getAttribute( 'accent' );
-            self.album.settings.splashFormat = xmlSettings.getAttribute( 'splashImgFormat' );
+            self.album.settings.splashFormat = '.' + xmlSettings.getAttribute( 'splashImgFormat' );
+            self.album.settings.trackImgFormat = '.' + xmlSettings.getAttribute( 'trackImgFormat' );
             self.album.settings.analytics = xmlSettings.getAttribute( 'analytics' );
             self.album.settings.version = xmlSettings.getAttribute( 'xmlVersion' );
             
@@ -228,12 +231,31 @@ class APlayer {
                 
                 let obj = {};
             
-                obj.img = el.getAttribute( 'img' );
-                obj.src = el.getAttribute( 'src' );
+                obj.src = el.getAttribute( 'src' ) + '.mp3';
                 obj.title = el.querySelector( 'title' ).innerHTML;
                 obj.author = el.querySelector( 'author' ).getAttribute( 'name' );
                 obj.authorProfile = el.querySelector( 'author' ).innerHTML;
                 
+                if ( self._isEmpty( obj.author ) ) {
+                    
+                    obj.author = self.album.author;
+                    
+                }
+                
+                if ( obj.author !== self.album.author ) {
+                    self.album.sameAuthor = false;
+                }
+                
+                if ( self._isEmpty( obj.author ) ) {
+                    
+                    obj.img = self._sanitize( self.album.author ) + self.album.settings.trackImgFormat;
+                    
+                } else {
+                    
+                    obj.img = self._sanitize( obj.author ) + self.album.settings.trackImgFormat;
+                    
+                }
+
                 self.album.tracks.push( obj );
                 
             } );
@@ -249,48 +271,36 @@ class APlayer {
     
     setTrack( num ) {
         
+        // hold the class
         let self = this;
+        
+        
+        // display title
         let currentTitle = self._selector( self.el.trackTitle );
             
         currentTitle.innerHTML = self.album.tracks[num].title;
         
+        // display author
         let currentAuthor = self._selector( self.el.trackAuthor );
         
-        if ( self._isEmpty( self.album.tracks[num].author) ) {
-            
-            currentAuthor.innerHTML = self.album.author;
-            
-        } else {
-            
-            currentAuthor.innerHTML = self.album.tracks[num].author;
+        currentAuthor.innerHTML = self.album.tracks[num].author;
+        
+        // load author picture if the track author is different
+        if ( !self.album.sameAuthor ) {
+
+            self._loadAuthorPic( self.album.tracks[num] );
             
         }
         
-        let currentPic = self._selector( self.el.currentPic );
-        let centralPicUrl = self.manifest.ap_author_directory + self._sanitize( currentAuthor.innerHTML ) + '.jpg';
-        let authorPic = new Image();
-        
-        authorPic.src = self.manifest.ap_root_directory + 'images/pic.png';
-        
-        self._fileExists( centralPicUrl, function( exist ) {
-            
-            if ( exist ) {
+        // load author picture once if same author
+        if ( self.album.sameAuthor && self.album.sameAuthorLoaded === false ) {
                 
-                authorPic.src = centralPicUrl;
-                
-            }
-            
-        } );
-        
-        if ( !self._isEmpty( self.album.tracks[num].img ) ) {
-            
-            authorPic.src = 'assets/images/' + self.album.tracks[num].img;
+            self._loadAuthorPic( self.album.tracks[num] );
+            self.album.sameAuthorLoaded = true;
             
         }
         
-        currentPic.innerHTML = '';
-        currentPic.appendChild( authorPic );
-        
+        // display and get current track number
         if ( self.album.tracks.length > 1 ) {
             
             let currentTrack = self._selector( self.el.currentTrackNum );
@@ -301,6 +311,7 @@ class APlayer {
             
         }
         
+        // display next track title
         let upNextTrackTitle = self._selector( self.el.upNextTrack );
         
         if ( self.album.tracks.length > 1 && num < self.album.tracks.length - 1 ) {
@@ -309,6 +320,7 @@ class APlayer {
             
         }
         
+        // play the audio if the player is ready after setting source
         if ( self.player.ready ) {
             
             self.player.source = {
@@ -324,9 +336,9 @@ class APlayer {
                         
                     }
                     
-                ]
+                ],
                 
-            }
+            };
                 
             self.player.once( 'canplay', function() {
                 
@@ -336,8 +348,46 @@ class APlayer {
             
         }
         
+        // scroll the track title is applicable
         self._stopMarquee( currentTitle );
         self._marqueeEl( currentTitle );
+        
+    }
+    
+    _loadAuthorPic( track ) {
+        
+        let self = this;
+        let currentPic = self._selector( self.el.currentPic );
+        let localPicUrl = 'assets/images/' + track.img;
+        let centralPicUrl = self.manifest.ap_author_directory + self._sanitize( track.author ) + self.album.settings.trackImgFormat;
+        let authorPic = new Image();
+        
+        authorPic.src = self.manifest.ap_root_directory + 'images/pic.png';
+        
+        self._fileExists( localPicUrl, function( exist ) {
+            
+            if ( exist ) {
+                
+                authorPic.src = localPicUrl;
+                
+            } else {
+                
+                self._fileExists( centralPicUrl, function( exist ) {
+    
+                    if ( exist ) {
+                        
+                        authorPic.src = centralPicUrl;
+                        
+                    }
+                    
+                } );
+                
+            }
+            
+        } );
+        
+        currentPic.innerHTML = '';
+        currentPic.appendChild( authorPic );
         
     }
     
@@ -412,11 +462,11 @@ class APlayer {
         // splash background image
         if ( !this._isEmpty( this.album.program.name ) ) {
             
-            let bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/default.' + this.album.settings.splashFormat;
+            let bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/default' + this.album.settings.splashFormat;
             
             if ( !this._isEmpty( self.album.program.course ) ) {
                 
-                bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/' + this.album.program.course + '.' + this.album.settings.splashFormat;
+                bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/' + this.album.program.course + this.album.settings.splashFormat;
                 
             }
             
@@ -492,12 +542,37 @@ class APlayer {
                 
                 titleWrprSpan.appendChild( titleSpan );
                 
-                if ( !self._isEmpty( el.img ) ) {
+                if ( !self.album.sameAuthor ) {
                     
                     let img = document.createElement( 'img' );
+                    let localPicUrl = 'assets/images/' + self.album.tracks[indx].img;
+                    let centralPicUrl = self.manifest.ap_author_directory + self._sanitize( self.album.tracks[indx].author ) + self.album.settings.trackImgFormat;
                     
                     img.classList.add( 'track-img' );
-                    img.src = 'assets/images/' + el.img;
+                    img.src = self.manifest.ap_root_directory + 'images/pic.png';
+        
+                    self._fileExists( localPicUrl, function( exist ) {
+                        
+                        if ( exist ) {
+                            
+                            img.src = localPicUrl;
+                            
+                        } else {
+                            
+                            self._fileExists( centralPicUrl, function( exist ) {
+                
+                                if ( exist ) {
+                                    
+                                    img.src = centralPicUrl;
+                                    
+                                }
+                                
+                            } );
+                            
+                        }
+                        
+                    } );
+                    
                     a.appendChild( img );
                     
                 }
@@ -550,6 +625,7 @@ class APlayer {
                 controls: controls,
                 autoplay: false,
                 volume: 0.8,
+                blankVideo: self.manifest.ap_root_directory + 'images/blank.m4v',
                 clickToPlay: false,
                 fullscreen: {
                     enabled: false,
@@ -847,17 +923,17 @@ class APlayer {
         let self = this;
         let authorProfileDisplay = this._selector( this.el.profileDisplay );
         let closeBtn = this._selector( this.el.closeProfileBtn );
-        let currentAuthor = self.album.author;
-        let currentProfile = self.album.authorProfile;
         let index = Number( self._selector( self.el.currentTrackNum ).innerHTML ) - 1;
         
         if ( self.album.tracks.length <= 1 ) {
             index = 0;
         }
         
-        if ( !self._isEmpty( self.album.tracks[index].author) ) {
+        let currentAuthor = self.album.tracks[index].author;
+        let currentProfile = self.album.authorProfile;
+        
+        if ( !self._isEmpty( self.album.tracks[index].authorProfile) ) {
             
-            currentAuthor = self.album.tracks[index].author;
             currentProfile = self.album.tracks[index].authorProfile;
             
         }
@@ -1366,6 +1442,7 @@ class APlayer {
     
     _slideUp( el, callback ) {
         
+        let self = this;
         el.classList.add( 'slideUp' );
         el.classList.remove( 'slideDown' );
         
@@ -1376,13 +1453,15 @@ class APlayer {
             _callback: callback
         };
         
-        el.addEventListener( animationEvt, this._slideCallback );
+        el.addEventListener( animationEvt, self._slideCallback );
         
     }
     
     _slideCallback( evt ) {
         
-        if ( evt.target.params._callback !== undefined ) {
+        let self = this;
+        
+        if ( evt.target.params !== undefined ) {
             
             if ( typeof evt.target.params._callback === 'function' ) {
                 
@@ -1390,9 +1469,9 @@ class APlayer {
                 
             }
             
+            evt.target.removeEventListener( evt.target.params._event, self._slideCallback );
+            
         }
-        
-        evt.target.removeEventListener( evt.target.params._event, this._slideCallback );
         
     } 
     

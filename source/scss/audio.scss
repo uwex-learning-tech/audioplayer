@@ -482,18 +482,6 @@ html {
                     animation-play-state: paused;
                 }
                 
-/*
-                .marquee:before {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: rem( 10px );
-                    height: 100%;
-                    content: ' ';
-                    z-index: 2;
-                }
-*/
-                
                 .author {
                     @include flex( 1 0 100% );
                     line-height: 0;
