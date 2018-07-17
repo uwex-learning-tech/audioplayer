@@ -513,7 +513,7 @@ html {
                 @include align-items( flex-start );
                 @include justify-content( center );
                 position: relative;
-                background-color: rgba(225, 225, 225, 0.65);
+                background-color: rgba(225, 225, 225, .65);
                 
                 .minimized-display {
                     
@@ -546,6 +546,8 @@ html {
                     height: 100%;
                     overflow-y: hidden;
                     overflow-x: hidden;
+                    z-index: 2;
+                    background-color: rgba(225, 225, 225, 1);
                     
                     .label {
                         @include display-flex();
@@ -608,22 +610,6 @@ html {
                                 
                             }
                             
-                            .marquee {
-                    
-                                position: relative;
-                                height: rem( 40px );
-                                @include flex( 1 0 auto );
-                                
-                                .track-title {
-                                    position: absolute;
-                                    overflow: unset;
-                                    text-overflow: unset;
-                                    @include translateX( 100% );
-                                    @include animation( marquee 15s linear 1 );
-                                }
-                                
-                            }
-                            
                             .track-download {
                                 
                                 background-color: transparent;
@@ -666,7 +652,7 @@ html {
                     border-bottom-right-radius: rem( 30px );
                     background-color: rgba(226, 226, 226, 0.5);
                     cursor: pointer;
-                    z-index: 1;
+                    z-index: 3;
                     
                     .icon {
                         width: rem( 12px );

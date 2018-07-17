@@ -322,36 +322,65 @@ class APlayer {
         // play the audio if the player is ready after setting source
         if ( self.player.ready ) {
             
-            self.player.source = {
+            const captionUrl = 'assets/audio/' + self.album.tracks[num].src + '.vtt';
+            
+            self._fileExists( captionUrl, function( exist ) {
                 
-                type: 'video',
-                title: self.album.tracks[num].title,
-                sources: [
+                if ( exist ) {
                     
-                    {
+                    self.player.source = {
+                
+                        type: 'video',
+                        title: self.album.tracks[num].title,
+                        sources: [
+                            
+                            {
+                                
+                                src: 'assets/audio/' + self.album.tracks[num].src + '.mp3',
+                                type: 'audio/mp3'
+                                
+                            }
+                            
+                        ],
+                        tracks: [
+                            
+                            {
+                                kind: 'captions',
+                                label: 'English',
+                                srclang: 'en',
+                                src: 'assets/audio/' + self.album.tracks[num].src + '.vtt',
+                                default: true
+                            }
+                            
+                        ]
                         
-                        src: 'assets/audio/' + self.album.tracks[num].src + '.mp3',
-                        type: 'audio/mp3'
+                    };
+                    
+                } else {
+                    
+                    self.player.source = {
+                
+                        type: 'video',
+                        title: self.album.tracks[num].title,
+                        sources: [
+                            
+                            {
+                                
+                                src: 'assets/audio/' + self.album.tracks[num].src + '.mp3',
+                                type: 'audio/mp3'
+                                
+                            }
+                            
+                        ]
                         
-                    }
+                    };
                     
-                ],
-                tracks: [
-                    
-                    {
-                        kind: 'captions',
-                        label: 'English',
-                        srcland: 'en',
-                        src: 'assets/audio/' + self.album.tracks[num].src + '.vtt',
-                        default: true
-                    }
-                    
-                ]
+                }
                 
-            };
-                
+            } );
+            
             self.player.once( 'canplay', function() {
-                
+                        
                 self.player.togglePlay();
                 
             } );
@@ -548,6 +577,7 @@ class APlayer {
                 let titleSpan = document.createElement( 'span' );
                 
                 titleSpan.classList.add( 'track-title' );
+                titleSpan.setAttribute( 'title', el.title );
                 titleSpan.innerHTML = el.title;
                 
                 titleWrprSpan.appendChild( titleSpan );
@@ -1096,14 +1126,6 @@ class APlayer {
                 
                 let tracks = document.querySelectorAll( self.el.trackList + ' .track-title-wrapper .track-title' );
                 
-                Array.prototype.forEach.call( tracks, function( el ) {
-                    
-                    self._marqueeEl( el );
-                    
-                } );
-                
-                
-                
             } else {
                 
                 trackList.style.display = 'none';
@@ -1138,10 +1160,14 @@ class APlayer {
         spectrumDisplay.classList.remove( 'active' );
         
         self.player.on( 'canplay', function() {
-            self.player.toggleCaptions( true );
+            
+            if ( self.player.currentTrack !== -1 ) {
+                self.player.toggleCaptions( true );
+            }
+            
         } );
         
-        if ( self.player.playing ) {
+        if ( self.player.playing && self.player.currentTrack !== -1 ) {
             self.player.toggleCaptions( true );
         }
 

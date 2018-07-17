@@ -552,7 +552,9 @@ html {
           list-style: none;
           height: 100%;
           overflow-y: hidden;
-          overflow-x: hidden; }
+          overflow-x: hidden;
+          z-index: 2;
+          background-color: #e1e1e1; }
           #ap-wrapper #ap-main .body .track-list .tracks .label {
             display: -webkit-flex;
             display: flex;
@@ -605,22 +607,6 @@ html {
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap; }
-              #ap-wrapper #ap-main .body .track-list .tracks li a .marquee {
-                position: relative;
-                height: 2.5rem;
-                -webkit-flex: 1 0 auto;
-                flex: 1 0 auto; }
-                #ap-wrapper #ap-main .body .track-list .tracks li a .marquee .track-title {
-                  position: absolute;
-                  overflow: unset;
-                  text-overflow: unset;
-                  -moz-transform: translateX(100%);
-                  -ms-transform: translateX(100%);
-                  -webkit-transform: translateX(100%);
-                  transform: translateX(100%);
-                  -moz-animation: marquee 15s linear 1;
-                  -webkit-animation: marquee 15s linear 1;
-                  animation: marquee 15s linear 1; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-download {
                 background-color: transparent;
                 border: none;
@@ -642,7 +628,7 @@ html {
           border-bottom-right-radius: 1.875rem;
           background-color: rgba(226, 226, 226, 0.5);
           cursor: pointer;
-          z-index: 1; }
+          z-index: 3; }
           #ap-wrapper #ap-main .body .track-list .expand-btn .icon {
             width: 0.75rem;
             height: 0.75rem; }
