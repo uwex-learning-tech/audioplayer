@@ -10,12 +10,17 @@
 
 	<!-- single track only need one track element -->
 
+	<track src="cookie" >
+		<title>Your Favorite Chocolate Chip Cookie</title>
+		<author name=""></author>
+	</track>
+
+	<!-- for multiple tracks, add more track elements -->
+	
 	<track src="FasterRide" >
 		<title>Faster Ride</title>
 		<author name="Cartel"></author>
 	</track>
-
-	<!-- for multiple tracks, add more track elements -->
 	
 	<track src="MySongsKnowWhatYouDidInTheDark" >
 		<title>My Songs Know What You Did In The Dark</title>

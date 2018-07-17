@@ -138,7 +138,7 @@
                 
                 <div class="audio-ui">
                     
-                    <audio id="player"></audio>
+                    <video id="player"></video>
                     
                 </div>
                 

@@ -5,6 +5,8 @@
 @import "compass/css3/flexbox";
 @import "compass/css3/opacity";
 @import "compass/reset/utilities";
+@import "compass/css3/filter";
+@import "compass/css3/box-shadow";
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 
@@ -807,7 +809,25 @@ html {
                     
                 }
                 
-                .plyr--audio {
+                .plyr--video {
+                    
+                    overflow: unset;
+                    
+                    .plyr__video-wrapper {
+                        display: none;
+                    }
+                    
+                    .plyr__captions {
+                        
+                        bottom: unset;
+                        top: -50%;
+                        
+                        .plyr__caption {
+                            background: none;
+                            color: #444;
+                        }
+                        
+                    }
                     
                     .plyr__controls {
                     
@@ -818,6 +838,10 @@ html {
                         background: transparent;
                         height: 100%;
                         padding: rem( $gutter );
+                        
+                        svg {
+                            @include filter( unset );
+                        }
                         
                         input[type="range"] {
                             color: $accent;
@@ -857,6 +881,8 @@ html {
                                     width: 100%;
                                     margin-left: unset;
                                     margin-right: unset;
+                                    color: rgba( 183, 197, 205, 0.66 );
+                                    @include box-shadow( none );
                                 }
                                 
                             }
@@ -922,6 +948,10 @@ html {
                             @include align-items( center );
                             @include justify-content( space-between );
                             
+                            #ap-caption {
+                                display: none;
+                            }
+                            
                             #ap-playbackRate {
                                 font-weight: bold;
                                 font-size: rem( 15px );
@@ -951,6 +981,18 @@ html {
                             
                             input[type="range"] {
                                 color: #444;
+                            }
+                            
+                            input[type='range']::-webkit-slider-runnable-track {
+                              color: rgba( 183, 197, 205, 0.66 );
+                            }
+                            
+                            input[type="range"]::-moz-range-track {  
+                                background-color: rgba( 183, 197, 205, 0.66 );
+                            }
+                            
+                            input[type="range"]::-ms-fill-upper {  
+                                background-color: rgba( 183, 197, 205, 0.66 );
                             }
                             
                         }

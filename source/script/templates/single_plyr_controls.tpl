@@ -72,6 +72,8 @@
             <svg role="presentation"><use xlink:href="{source}images/icons.svg#icon-download"></use></svg>
             <span class="plyr__tooltip" role="tooltip">Download</span>
         </button>
+        
+        <button type="button" id="ap-caption" class="plyr__control" data-plyr="captions" aria-hidden="true">CC</button>
     
     </div>
     

@@ -121,7 +121,6 @@ class APlayer {
             self._checkSupport();
             self._setStartResumeListeners();
             self._expandDownloadBtnMenu();
-            self._CCSpectrumDisplays();
             self._expandTracksToggle();
             self._setShowProfileListener();
             
@@ -231,7 +230,7 @@ class APlayer {
                 
                 let obj = {};
             
-                obj.src = el.getAttribute( 'src' ) + '.mp3';
+                obj.src = el.getAttribute( 'src' );
                 obj.title = el.querySelector( 'title' ).innerHTML;
                 obj.author = el.querySelector( 'author' ).getAttribute( 'name' );
                 obj.authorProfile = el.querySelector( 'author' ).innerHTML;
@@ -325,18 +324,29 @@ class APlayer {
             
             self.player.source = {
                 
-                type: 'audio',
+                type: 'video',
                 title: self.album.tracks[num].title,
                 sources: [
                     
                     {
                         
-                        src: 'assets/audio/' + self.album.tracks[num].src,
+                        src: 'assets/audio/' + self.album.tracks[num].src + '.mp3',
                         type: 'audio/mp3'
                         
                     }
                     
                 ],
+                tracks: [
+                    
+                    {
+                        kind: 'captions',
+                        label: 'English',
+                        srcland: 'en',
+                        src: 'assets/audio/' + self.album.tracks[num].src + '.vtt',
+                        default: true
+                    }
+                    
+                ]
                 
             };
                 
@@ -623,6 +633,7 @@ class APlayer {
             self.el.player = new Plyr( self.el.playerId, {
         
                 controls: controls,
+                hideControls: false,
                 autoplay: false,
                 volume: 0.8,
                 blankVideo: self.manifest.ap_root_directory + 'images/blank.m4v',
@@ -638,6 +649,8 @@ class APlayer {
             self.el.player.on( 'ready', event => {
                 
                 self.player = event.detail.plyr;
+                
+                self._CCSpectrumDisplays();
                 
                 const playpauseBtn = self._selector( '#ap-playpause' );
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
@@ -1112,6 +1125,7 @@ class APlayer {
     
     toggleCC() {
         
+        let self = this;
         let captionDisplay = this._selector( this.el.captionDisplay );
         let spectrumDisplay = this._selector( this.el.spectrumDisplay );
         let ccToggle = this._selector( this.el.ccToggle );
@@ -1123,6 +1137,14 @@ class APlayer {
         captionDisplay.classList.add( 'active' );
         spectrumDisplay.classList.remove( 'active' );
         
+        self.player.on( 'canplay', function() {
+            self.player.toggleCaptions( true );
+        } );
+        
+        if ( self.player.playing ) {
+            self.player.toggleCaptions( true );
+        }
+
     }
     
     toggleSpectrum() {
@@ -1137,6 +1159,10 @@ class APlayer {
         
         spectrumDisplay.classList.add( 'active' );
         captionDisplay.classList.remove( 'active' );
+        
+        if ( this.player !== null && this.player.currentTrack > -1 ) {
+            this.player.toggleCaptions( false );
+        }
         
     }
     
