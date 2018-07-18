@@ -68,39 +68,6 @@
                     </div>
                     <ul class="tracks">
                         <div class="label">Tracks</div>
-                        
-<!--
-                        <li><a href="#">
-                            <img class="track-img" src="{source}images/pic.jpg" />
-                            <span class="track-title">Track 1</span>
-                            <button class="track-download">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="{source}images/icons.svg#icon-download"></use>
-                                </svg>
-                            </button>
-                        </a></li>
-                        
-                        <li><a href="#">
-                            <img class="track-img" src="{source}images/pic.jpg" />
-                            <span class="track-title">Track 2</span>
-                            <button class="track-download">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="{source}images/icons.svg#icon-download"></use>
-                                </svg>
-                            </button>
-                        </a></li>
-                        
-                        <li><a href="#">
-                            <img class="track-img" src="{source}images/pic.jpg" />
-                            <span class="track-title">Track 2</span>
-                            <button class="track-download">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="{source}images/icons.svg#icon-download"></use>
-                                </svg>
-                            </button>
-                        </a></li>
--->
-                        
                     </ul>
                     <button class="expand-btn" aria-label="Expand Track List">
                         <svg class="icon" aria-hidden="true">
@@ -109,14 +76,14 @@
                     </button>
                 </div>
                 
-                <div class="cc-spec-display">
+                <!-- <div class="cc-spec-display">
                     <div class="spectrum"></div>
                     <div class="caption"></div>
-                </div>
+                </div> -->
                 
                 <div class="warning-msg"></div>
                 
-                <div class="controls">
+                <!-- <div class="controls">
                     
                     <button id="cc-toggle" aria-label="Closed Caption">
                         <svg class="icon" aria-hidden="true">
@@ -130,7 +97,7 @@
                             </svg>
                     </button>
                     
-                </div>
+                </div> -->
                 
             </div>
             
@@ -143,9 +110,9 @@
                 </div>
                 
             </div>
-            
-            <div id="author-overlay">
-                <button id="author-close-btn" aria-label="Close Author Profile">&times;</button>
+            <!-- author-overlay author-close-btn -->
+            <div id="overlay-content">
+                <button id="overlay-close-btn" aria-label="Close Author Profile">&times;</button>
                 <div class="content"></div>
                 <div class="spinner" aria-hidden="true">
                     <svg viewBox="0 0 30 30">

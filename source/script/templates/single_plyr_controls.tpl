@@ -46,6 +46,13 @@
             <span class="plyr__tooltip" role="tooltip">Loop</span>
         </button>
         
+        <button type="button" id="ap-caption" class="plyr__control" data-plyr="captions" aria-hidden="true">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="{source}images/icons.svg#icon-cc"></use>
+            </svg>
+            <span class="plyr__tooltip" role="tooltip">Closed Caption</span>
+        </button>
+        
          <select id="ap-playbackRate" name="playback">
           <option value="1">1x</option>
           <option value="1.5">1.5x</option>
@@ -68,12 +75,10 @@
         
         </div>
         
-        <button type="button" class="plyr__control">
+        <button id="ap-download-cntrl" type="button" class="plyr__control">
             <svg role="presentation"><use xlink:href="{source}images/icons.svg#icon-download"></use></svg>
             <span class="plyr__tooltip" role="tooltip">Download</span>
         </button>
-        
-        <button type="button" id="ap-caption" class="plyr__control" data-plyr="captions" aria-hidden="true">CC</button>
     
     </div>
     

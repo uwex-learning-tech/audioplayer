@@ -816,7 +816,7 @@ html {
                         
                         .plyr__caption {
                             background: none;
-                            color: #444;
+                            color: #000;
                         }
                         
                     }
@@ -942,6 +942,8 @@ html {
                             
                             #ap-caption {
                                 display: none;
+                                max-width: rem( 32px );
+                                max-height: rem( 32px );
                             }
                             
                             #ap-playbackRate {
@@ -995,7 +997,7 @@ html {
             
         }
         
-        #author-overlay {
+        #overlay-content {
             
             display: none;
             position: absolute;
@@ -1007,7 +1009,7 @@ html {
             background-color: rgba( 255, 255, 255, 0.95 );
             z-index: 99;
             
-            #author-close-btn {
+            #overlay-close-btn {
                 position: absolute;
                 width: rem( 30px );
                 height: rem( 30px );
@@ -1023,7 +1025,7 @@ html {
                 cursor: pointer;
             }
             
-            #author-close-btn:hover {
+            #overlay-close-btn:hover {
                 color: #000;
                 border-color: #a2a2a2;
             }
@@ -1065,6 +1067,52 @@ html {
             }
             
         } // end overlay
+        
+        #overlay-content.small-overlay {
+            
+            width: 80%;
+            height: 35%;
+            top: 32.5%;
+            left: 10%;
+            padding: rem( $gutter );
+            @include single-box-shadow( 0, 0, rem(6px), 0, #333 );
+            
+            #overlay-close-btn {
+                top: rem( $gutter / 2 );
+                right: rem( $gutter /2 );
+            }
+            
+            .content {
+                
+                padding: 0;
+                
+                .dwnld-list {
+                    
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    
+                    li {
+
+                        margin-bottom: rem( $gutter / 3 );
+                        width: 100%;
+                        background-color: $accent;
+                        @include border-radius( rem( 3px ) );
+                        
+                        a {
+                            display: block;
+                            text-decoration: none;
+                            padding: rem( 5px);
+                            color: #fff;
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
         
     } // end main
     

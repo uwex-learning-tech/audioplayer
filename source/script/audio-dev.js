@@ -26,13 +26,14 @@ class APlayer {
             resumeBtn: '#ap-resume-btn',
             dwnldBtn: '#ap-dwnld-btn',
             dwnldBtnMenu: '#ap-dwnld-btn .dropdown-content',
+            mainDwnldBtn: '#ap-download-cntrl',
             main: '#ap-main',
             mainBody: '#ap-main .body',
             showProfileBtn: '#show-profile',
-            closeProfileBtn: '#author-close-btn',
-            profileDisplay: '#author-overlay',
-            profileDisplayContent: '#author-overlay .content',
-            profileDisplaySpinner: '#author-overlay .spinner',
+            closeOverlayBtn: '#overlay-close-btn',
+            overlayDisplay: '#overlay-content',
+            overlayDisplayContent: '#overlay-content .content',
+            overlayDisplaySpinner: '#overlay-content .spinner',
             currentPic: '.head .track-img button',
             trackTitle: '.track-info .title-wrapper .title',
             trackAuthor: '.track-info .author',
@@ -43,12 +44,12 @@ class APlayer {
             trackList: '.track-list .tracks',
             trackListItem: '.track-list .tracks li .ap-track',
             expandTracksBtn: '.track-list .expand-btn',
-            ccSpecDisplay: '.body .cc-spec-display',
-            spectrumDisplay: '.body .cc-spec-display .spectrum',
-            captionDisplay: '.body .cc-spec-display .caption',
+            //ccSpecDisplay: '.body .cc-spec-display',
+            //spectrumDisplay: '.body .cc-spec-display .spectrum',
+            //captionDisplay: '.body .cc-spec-display .caption',
             bodyControls: '.body .controls',
-            ccToggle: '#cc-toggle',
-            spectrumToggle: '#spectrum-toggle',
+            //ccToggle: '#cc-toggle',
+            //spectrumToggle: '#spectrum-toggle',
             next: '#ap-next',
             previous: '#ap-previous',
             warning: '.body .warning-msg',
@@ -282,7 +283,7 @@ class APlayer {
                 
             } );
             
-            console.log( self.album );
+//            console.log( self.album );
             
             self.setData();
             self._setupAudioPlayer();
@@ -416,6 +417,16 @@ class APlayer {
             self.player.once( 'canplay', function() {
                         
                 self.player.togglePlay();
+                
+                if ( self.player.currentTrack === -1 ) {
+                    
+                   self.player.toggleCaptions( false );
+                   
+                } else {
+                    
+                    self.player.toggleCaptions( true );
+                    
+                }
                 
             } );
             
@@ -724,6 +735,9 @@ class APlayer {
         
                 controls: controls,
                 hideControls: false,
+                captions: {
+                    active: true
+                },
                 autoplay: false,
                 volume: 0.8,
                 blankVideo: self.manifest.ap_root_directory + 'images/blank.m4v',
@@ -740,7 +754,7 @@ class APlayer {
                 
                 self.player = event.detail.plyr;
                 
-                self._CCSpectrumDisplays();
+                //self._CCSpectrumDisplays();
                 
                 const playpauseBtn = self._selector( '#ap-playpause' );
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
@@ -749,6 +763,7 @@ class APlayer {
                 const nextBtn = self._selector( self.el.next );
                 const prevBtn = self._selector( self.el.previous );
                 const totalTracks = self.album.tracks.length - 1;
+                const downloadBtn = self._selector( self.el.mainDwnldBtn );
                 
                 // check playback rate and update playback rate select element
                 for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
@@ -795,6 +810,48 @@ class APlayer {
                         self.setTrack( self.album.currentTrack );
                         
                     }
+                    
+                } );
+                
+                downloadBtn.addEventListener( 'click', function() {
+                    
+                    let overlayDisplay = self._selector( self.el.overlayDisplay );
+                    let overlayDisplayContent = self._selector( self.el.overlayDisplayContent );
+                    let closeBtn = self._selector( self.el.closeOverlayBtn );
+                    
+                    let h4 = document.createElement( 'h4' );
+                    
+                    h4.innerHTML = "Downloads";
+                    
+                    overlayDisplayContent.appendChild( h4 );
+                    
+                    let ul = document.createElement( 'ul' );
+                    
+                    ul.classList.add( 'dwnld-list' );
+                    
+                    Array.prototype.forEach.call( self.album.downloads, function( obj ) {
+                        
+                        let li = document.createElement( 'li' );
+                        let a = document.createElement( 'a' );
+                        
+                        a.href = obj.url;
+                        a.innerHTML = obj.name;
+                        a.setAttribute( 'download', obj.url );
+                        
+                        li.appendChild( a );
+                        ul.appendChild( li );
+                        
+                    } );
+                    
+                    overlayDisplayContent.appendChild( ul );
+                    
+                    overlayDisplay.classList.add( 'small-overlay' );
+                    overlayDisplay.style.display = 'block';
+                    self._fadeIn( overlayDisplay );
+                    
+                    closeBtn.addEventListener( 'click', function() {
+                        self.closeOverlay();
+                    }, {once: true} );
                     
                 } );
                 
@@ -1024,8 +1081,8 @@ class APlayer {
     showProfile() {
         
         const self = this;
-        let authorProfileDisplay = this._selector( this.el.profileDisplay );
-        let closeBtn = this._selector( this.el.closeProfileBtn );
+        let authorOverlayDisplay = this._selector( this.el.overlayDisplay );
+        let closeBtn = this._selector( this.el.closeOverlayBtn );
         let index = Number( self._selector( self.el.currentTrackNum ).innerHTML ) - 1;
         
         if ( self.album.tracks.length <= 1 ) {
@@ -1048,7 +1105,7 @@ class APlayer {
             let $jsonp = ( function() {
                 
                 let that = {};
-                let spinner = self._selector( self.el.profileDisplaySpinner );
+                let spinner = self._selector( self.el.overlayDisplaySpinner );
                 
                 that.send = function( src, options ) {
             
@@ -1106,18 +1163,18 @@ class APlayer {
             
         }
         
-        authorProfileDisplay.style.display = 'block';
-        this._fadeIn( authorProfileDisplay );
+        authorOverlayDisplay.style.display = 'block';
+        this._fadeIn( authorOverlayDisplay );
         
         closeBtn.addEventListener( 'click', function() {
-            self.closeProfile();
+            self.closeOverlay();
         }, {once: true} );
 
     }
     
     _setProfile( author, bio ) {
         
-        let authorProfileDisplayContent = this._selector( this.el.profileDisplayContent );
+        let authoroverlayDisplayContent = this._selector( this.el.overlayDisplayContent );
         
         let name = document.createElement( 'h4' );
                     
@@ -1127,21 +1184,22 @@ class APlayer {
         
         profile.innerHTML = bio;
         
-        authorProfileDisplayContent.appendChild( name );
-        authorProfileDisplayContent.appendChild( profile );
+        authoroverlayDisplayContent.appendChild( name );
+        authoroverlayDisplayContent.appendChild( profile );
         
     }
     
-    closeProfile() {
+    closeOverlay() {
         
-        let authorProfileDisplay = this._selector( this.el.profileDisplay );
-        let authorProfileDisplayContent = this._selector( this.el.profileDisplayContent );
+        let overlayDisplay = this._selector( this.el.overlayDisplay );
+        let overlayDisplayContent = this._selector( this.el.overlayDisplayContent );
         
-        this._fadeOut( authorProfileDisplay, function() {
+        this._fadeOut( overlayDisplay, function() {
             
-            authorProfileDisplay.style.display = '';
+            overlayDisplay.style.display = '';
             
-            authorProfileDisplayContent.innerHTML = '';
+            overlayDisplayContent.innerHTML = '';
+            overlayDisplay.classList.remove( 'small-overlay' );
             
         } );
 
@@ -1175,7 +1233,7 @@ class APlayer {
                 trackList.style.display = 'block';
                 minDisplay.style.display = 'none';
                 
-                self._hideCCSpectrum();
+                //self._hideCCSpectrum();
                 
                 self._slideDown( expandTracksBtn.parentNode, function() {
                     
@@ -1193,7 +1251,7 @@ class APlayer {
                 self._slideUp( expandTracksBtn.parentNode, function() {
                     
                     expandTracksBtn.classList.remove( 'rotate' );
-                    self._CCSpectrumDisplays();
+                    //self._CCSpectrumDisplays();
                     
                 } );
                 
