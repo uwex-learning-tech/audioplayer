@@ -612,12 +612,17 @@ html {
                             
                             .track-download {
                                 
-                                background-color: transparent;
+                                display: block;
+                                padding: 0;
+                                max-width: rem( 14px );
+                                height: rem( 14px );
                                 border: none;
-                                cursor: pointer;
+                                margin: 0 0 0 rem( 3px );
                                 
                                 svg {
-                                    fill: #444;
+                                    width: rem( 14px );
+                                    height: rem( 14px );
+                                    fill: #888;
                                 }
                                 
                             }
@@ -634,8 +639,9 @@ html {
                         
                     }
                     
-                    li:hover {
-                        background-color: rgba(226, 226, 226, 0.5);
+                    li:hover,
+                    .active {
+                        background-color: rgba(194, 194, 194, 0.75);
                     }
                     
                 }

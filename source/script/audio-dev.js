@@ -41,6 +41,7 @@ class APlayer {
             miniDisplay: '.track-list .minimized-display',
             upNextTrack: '.track-list .minimized-display .ap_up_next_title',
             trackList: '.track-list .tracks',
+            trackListItem: '.track-list .tracks li .ap-track',
             expandTracksBtn: '.track-list .expand-btn',
             ccSpecDisplay: '.body .cc-spec-display',
             spectrumDisplay: '.body .cc-spec-display .spectrum',
@@ -56,8 +57,7 @@ class APlayer {
             errorTitle: '#ap-error .title',
             errorBody: '#ap-error .body',
             playerId: '#player',
-            copyright: '.copyright p',
-            player: null
+            copyright: '.copyright p'
         };
         
         this.manifest ={};
@@ -85,7 +85,7 @@ class APlayer {
     
     getManifest() {
         
-        let self = this;
+        const self = this;
         let manifestUrl = self._selector( '#ap-manifest' ).getAttribute( 'href' );
         
         self._requestFile( manifestUrl, function( xhr ) {
@@ -106,7 +106,7 @@ class APlayer {
     
     setUIs() {
         
-        let self = this;
+        const self = this;
         let templateUrl = self.manifest.ap_root_directory + 'script/templates/apui.tpl';
         
         self._requestFile( templateUrl, function( xhr ) {
@@ -128,9 +128,32 @@ class APlayer {
         
     }
     
+    _trackListItemListener() {
+        
+        const self = this;
+        let tracks = self._selector( self.el.trackListItem, true );
+        
+        Array.prototype.forEach.call( tracks, function( track ) {
+            
+            track.addEventListener( 'click', function( evt ) {
+                
+                if ( evt.target.className !== 'track-download' &&
+                evt.target.nodeName !== 'svg' && evt.target.nodeName !== 'use' ) {
+                    
+                    self.setTrack( evt.currentTarget.getAttribute( 'data-index' ) );
+                    evt.preventDefault();
+                    
+                }
+                
+            } );
+            
+        } );
+        
+    }
+    
     _expandDownloadBtnMenu() {
         
-        let self = this;
+        const self = this;
         
         let dwnldBtn = self._selector( self.el.dwnldBtn );
         let btn = dwnldBtn.querySelector( 'button' );
@@ -154,7 +177,7 @@ class APlayer {
     
     _setStartResumeListeners() {
         
-        let self = this;
+        const self = this;
         
         let startBtn = self._selector( self.el.startBtn );
         let resumeBtn = self._selector( self.el.resumeBtn );
@@ -177,7 +200,7 @@ class APlayer {
     
     getAlbum() {
         
-        let self = this;
+        const self = this;
         
         self._requestFile( self.album.url, function( xhr ) {
             
@@ -271,8 +294,9 @@ class APlayer {
     setTrack( num ) {
         
         // hold the class
-        let self = this;
+        const self = this;
         
+        num = Number( num );
         
         // display title
         let currentTitle = self._selector( self.el.trackTitle );
@@ -299,14 +323,24 @@ class APlayer {
             
         }
         
-        // display and get current track number
+        // if more than one track
         if ( self.album.tracks.length > 1 ) {
             
+            // display and get current track number
             let currentTrack = self._selector( self.el.currentTrackNum );
             currentTrack.innerHTML = num + 1;
             
             let totalTracks = self._selector( self.el.totalTracks );
             totalTracks.innerHTML = self.album.tracks.length;
+            
+            // add active class to current track in list
+            const tracks = self._selector( self.el.trackListItem, true );
+            
+            Array.prototype.forEach.call( tracks, function( track ) {
+                track.parentNode.classList.remove( 'active' );
+            } );
+            
+            tracks[num].parentNode.classList.add( 'active' );
             
         }
         
@@ -395,7 +429,7 @@ class APlayer {
     
     _loadAuthorPic( track ) {
         
-        let self = this;
+        const self = this;
         let currentPic = self._selector( self.el.currentPic );
         let localPicUrl = 'assets/images/' + track.img;
         let centralPicUrl = self.manifest.ap_author_directory + self._sanitize( track.author ) + self.album.settings.trackImgFormat;
@@ -432,7 +466,7 @@ class APlayer {
     
     setData() {
         
-        let self = this;
+        const self = this;
         
         // DOM head elements
         let pageTitle = this._selector( 'title' );
@@ -563,7 +597,9 @@ class APlayer {
                 let li = document.createElement( 'li' );
                 let a = document.createElement( 'a' );
                 
+                a.classList.add( 'ap-track' );
                 a.href = 'javascript:void(0);';
+                a.setAttribute( 'data-index', indx );
                 
                 let numSpan = document.createElement( 'span' );
                 
@@ -620,11 +656,35 @@ class APlayer {
                 a.appendChild( numSpan );
                 a.appendChild( titleWrprSpan );
                 
+                // download button
+                let button = document.createElement( 'a' );
+                
+                button.classList.add( 'track-download' );
+                button.setAttribute( 'download', el.src + '.mp3' );
+                button.href = 'assets/audio/' + el.src + '.mp3';
+                button.setAttribute( 'role', 'button' );
+                
+                let svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
+                
+                svg.classList.add( 'icon' );
+                svg.setAttribute( 'aria-hidden', true );
+                svg.setAttribute( 'viewbox', '0 0 30 30' );
+                
+                let use = document.createElementNS( 'http://www.w3.org/2000/svg', 'use' );
+                
+                use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'href', self.manifest.ap_root_directory + 'images/icons.svg#icon-download' );
+                
+                svg.appendChild( use );
+                button.appendChild( svg );
+                a.appendChild( button );
+                
                 li.appendChild( a );
                 
                 trackListDisplay.appendChild( li );
                 
             } );
+            
+            self._trackListItemListener();
             
         } else {
             
@@ -646,7 +706,7 @@ class APlayer {
     
     _setupAudioPlayer() {
         
-        let self = this;
+        const self = this;
         
         let plyrControlsUrl = self.manifest.ap_root_directory + 'script/templates/single_plyr_controls.tpl';
         
@@ -814,7 +874,7 @@ class APlayer {
     
     _setProgram() {
         
-        let self = this;
+        const self = this;
         
         if ( self.manifest.ap_custom_themes ) {
             
@@ -927,7 +987,7 @@ class APlayer {
     
     showWarning( str ) {
     
-        let self = this;
+        const self = this;
         let warning = self._selector( self.el.warning );
         let hideTime = 6000;
         
@@ -963,7 +1023,7 @@ class APlayer {
     
     showProfile() {
         
-        let self = this;
+        const self = this;
         let authorProfileDisplay = this._selector( this.el.profileDisplay );
         let closeBtn = this._selector( this.el.closeProfileBtn );
         let index = Number( self._selector( self.el.currentTrackNum ).innerHTML ) - 1;
@@ -1089,7 +1149,7 @@ class APlayer {
     
     _setShowProfileListener() {
         
-        let self = this;
+        const self = this;
         let showProfileBtn = this._selector( this.el.showProfileBtn );
         
         showProfileBtn.addEventListener( 'click', function() {
@@ -1102,7 +1162,7 @@ class APlayer {
     
     _expandTracksToggle() {
         
-        let self = this;
+        const self = this;
         let expandTracksBtn = self._selector( this.el.expandTracksBtn );
         
         expandTracksBtn.addEventListener( 'click', function() {
@@ -1123,8 +1183,6 @@ class APlayer {
                     trackList.style.setProperty( 'overflow-y', 'auto' );
                     
                 } );
-                
-                let tracks = document.querySelectorAll( self.el.trackList + ' .track-title-wrapper .track-title' );
                 
             } else {
                 
@@ -1147,7 +1205,7 @@ class APlayer {
     
     toggleCC() {
         
-        let self = this;
+        const self = this;
         let captionDisplay = this._selector( this.el.captionDisplay );
         let spectrumDisplay = this._selector( this.el.spectrumDisplay );
         let ccToggle = this._selector( this.el.ccToggle );
@@ -1194,7 +1252,7 @@ class APlayer {
     
     _CCSpectrumDisplays() {
         
-        let self = this;
+        const self = this;
         let toggles = this._selector( this.el.bodyControls );
         let displays = this._selector( this.el.ccSpecDisplay );
         let ccToggle = this._selector( this.el.ccToggle );
@@ -1233,8 +1291,20 @@ class APlayer {
     
     /*** HELPER METHODS ***/
     
-    _selector( str ) {
-        return document.querySelector( str );
+    _selector( str, all ) {
+        
+        all = typeof all === 'boolean' ? all : false;
+        
+        if ( all ) {
+            
+            return document.querySelectorAll( str );
+            
+        } else {
+            
+            return document.querySelector( str );
+            
+        }
+        
     }
     
     _xmlSelector( xml, str, all ) {
@@ -1279,7 +1349,7 @@ class APlayer {
     
     _requestFile( url, callback ) {
         
-        let self = this;
+        const self = this;
         let body = self._selector( 'body' );
         let request = new XMLHttpRequest();
         
@@ -1377,7 +1447,7 @@ class APlayer {
     
     _marqueeEl( el ) {
         
-        let self = this;
+        const self = this;
         
         if ( el.offsetWidth < el.scrollWidth ) {
             
@@ -1494,7 +1564,7 @@ class APlayer {
     
     _slideUp( el, callback ) {
         
-        let self = this;
+        const self = this;
         el.classList.add( 'slideUp' );
         el.classList.remove( 'slideDown' );
         
@@ -1511,7 +1581,7 @@ class APlayer {
     
     _slideCallback( evt ) {
         
-        let self = this;
+        const self = this;
         
         if ( evt.target.params !== undefined ) {
             

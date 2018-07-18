@@ -608,15 +608,21 @@ html {
                   text-overflow: ellipsis;
                   white-space: nowrap; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-download {
-                background-color: transparent;
+                display: block;
+                padding: 0;
+                max-width: 0.875rem;
+                height: 0.875rem;
                 border: none;
-                cursor: pointer; }
+                margin: 0 0 0 0.1875rem; }
                 #ap-wrapper #ap-main .body .track-list .tracks li a .track-download svg {
-                  fill: #444; }
+                  width: 0.875rem;
+                  height: 0.875rem;
+                  fill: #888; }
               #ap-wrapper #ap-main .body .track-list .tracks li a .track-download:hover svg {
                 fill: #0a4a89; }
-          #ap-wrapper #ap-main .body .track-list .tracks li:hover {
-            background-color: rgba(226, 226, 226, 0.5); }
+          #ap-wrapper #ap-main .body .track-list .tracks li:hover,
+          #ap-wrapper #ap-main .body .track-list .tracks .active {
+            background-color: rgba(194, 194, 194, 0.75); }
         #ap-wrapper #ap-main .body .track-list .expand-btn {
           position: absolute;
           border: none;
