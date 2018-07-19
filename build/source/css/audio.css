@@ -786,8 +786,6 @@ html {
               align-items: center;
               -webkit-justify-content: space-between;
               justify-content: space-between; }
-              #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__controls .bottom-controls #ap-caption {
-                display: none; }
               #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__controls .bottom-controls #ap-playbackRate {
                 font-weight: bold;
                 font-size: 0.9375rem;
@@ -803,8 +801,6 @@ html {
                 outline: none;
                 width: 2.25rem;
                 cursor: pointer; }
-              #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__controls .bottom-controls #ap-loop.active {
-                color: #0a4a89; }
               #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__controls .bottom-controls .ap-volcontrols {
                 display: -webkit-flex;
                 display: flex;

@@ -757,7 +757,6 @@ class APlayer {
                 
                 const playpauseBtn = self._selector( '#ap-playpause' );
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
-                const loopBtn = self._selector( '#ap-loop' );
                 const playbackRateBtn = self._selector( '#ap-playbackRate' );
                 const totalTracks = self.album.tracks.length - 1;
                 const downloadBtn = self._selector( self.el.mainDwnldBtn );
@@ -874,34 +873,13 @@ class APlayer {
                 // on playback end
                 self.player.on( 'ended', function() {
                     
-                    if ( self.player.loop === false ) {
-                        
-                        if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
+                    if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
                     
-                            playpauseBtn.classList.add( 'plyr__control--pressed' );
-                            
-                        }
-                        
-                        self.player.restart();
+                        playpauseBtn.classList.add( 'plyr__control--pressed' );
                         
                     }
                     
-                } );
-                
-                // toogle loop button state
-                loopBtn.addEventListener( 'click', function() {
-    
-                    if ( self.player.loop === false ) {
-                        
-                        self.player.loop = true;
-                        loopBtn.classList.add( 'active' );
-                        
-                    } else {
-                        
-                        self.player.loop = false;
-                        loopBtn.classList.remove( 'active' );
-                        
-                    }
+                    self.player.restart();
                     
                 } );
                 
@@ -1483,7 +1461,7 @@ class APlayer {
                 _callback: callback
             };
             
-            el.addEventListener( animationEvt, this._fadeCallback, {once: true} );
+            el.addEventListener( animationEvt, this._fadeCallback );
             
         }
         
@@ -1503,7 +1481,7 @@ class APlayer {
                 _callback: callback
             };
             
-            el.addEventListener( animationEvt, this._fadeCallback, {once: true} );
+            el.addEventListener( animationEvt, this._fadeCallback );
             
         }
         
@@ -1541,7 +1519,7 @@ class APlayer {
                 _callback: callback
             };
             
-            el.addEventListener( animationEvt, self._slideCallback, {once: true} );
+            el.addEventListener( animationEvt, this._slideCallback );
             
         }
         
@@ -1549,7 +1527,6 @@ class APlayer {
     
     _slideUp( el, callback ) {
         
-        const self = this;
         el.classList.add( 'slideUp' );
         el.classList.remove( 'slideDown' );
         
@@ -1562,15 +1539,13 @@ class APlayer {
                 _callback: callback
             };
             
-            el.addEventListener( animationEvt, self._slideCallback, {once: true} );
+            el.addEventListener( animationEvt, this._slideCallback );
             
         }
         
     }
     
     _slideCallback( evt ) {
-        
-        const self = this;
         
         if ( evt.target.params !== undefined ) {
             
@@ -1580,7 +1555,7 @@ class APlayer {
                 
             }
             
-            evt.target.removeEventListener( evt.target.params._event, self._slideCallback );
+            evt.target.removeEventListener( evt.target.params._event, this._slideCallback );
             
         }
         

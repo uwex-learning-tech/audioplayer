@@ -47,11 +47,6 @@
     
     <div class="bottom-controls">
         
-        <button id="ap-loop" type="button" class="plyr__control">
-            <svg role="presentation"><use xlink:href="{source}images/icons.svg#icon-loop"></use></svg>
-            <span class="plyr__tooltip" role="tooltip">Loop</span>
-        </button>
-        
         <button id="ap-caption" type="button" class="plyr__control" data-plyr="captions">
             <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-captions-on"></use></svg>
             <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-captions-off"></use></svg>

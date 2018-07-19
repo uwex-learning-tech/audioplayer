@@ -868,10 +868,6 @@ html {
                             @include align-items( center );
                             @include justify-content( space-between );
                             
-                            #ap-caption {
-                                display: none;
-                            }
-                            
                             #ap-playbackRate {
                                 font-weight: bold;
                                 font-size: rem( 15px );
@@ -887,10 +883,6 @@ html {
                                 outline: none;
                                 width: rem( 36px );
                                 cursor: pointer;
-                            }
-                            
-                            #ap-loop.active {
-                                color: $accent;
                             }
                             
                             .ap-volcontrols {
