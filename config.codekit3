@@ -30,8 +30,7 @@
 		"oF": 0
 		},
 	"\/config.rb": {
-		"cB": 0,
-		"ft": 8192,
+		"ft": 131072,
 		"oA": 0,
 		"oAP": "\/config.rb",
 		"oF": 0
@@ -100,8 +99,8 @@
 		"ft": 2097152,
 		"miP": 0,
 		"oA": 2,
-		"oAP": "\/build\/images\/splash.svg",
-		"oF": 0,
+		"oAP": "\/build\/source\/images\/splash.svg",
+		"oF": 2,
 		"opt": 0,
 		"plM": 3758088159,
 		"prP": 0
@@ -134,6 +133,13 @@
 		"sC": 3,
 		"tS": 1
 		},
+	"\/source\/script\/lib\/plyr\/blank.mp4": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/build\/source\/script\/lib\/plyr\/blank.mp4",
+		"oF": 3
+		},
 	"\/source\/script\/lib\/plyr\/plyr.css": {
 		"aP": 1,
 		"bl": 0,
@@ -160,6 +166,33 @@
 		"oA": 2,
 		"oAP": "\/build\/source\/script\/lib\/plyr\/plyr.min.js.map",
 		"oF": 3
+		},
+	"\/source\/script\/lib\/plyr\/plyr.polyfilled.min.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 0,
+		"oA": 2,
+		"oAP": "\/build\/source\/script\/lib\/plyr\/plyr.polyfilled.min.js",
+		"oF": 3,
+		"sC": 0,
+		"tS": 0
+		},
+	"\/source\/script\/lib\/plyr\/plyr.polyfilled.min.js.map": {
+		"cB": 0,
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/build\/source\/script\/lib\/plyr\/plyr.polyfilled.min.js.map",
+		"oF": 3
+		},
+	"\/source\/script\/lib\/plyr\/plyr.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "\/build\/source\/script\/lib\/plyr\/plyr.svg",
+		"oF": 2,
+		"opt": 0,
+		"plM": 3758088159,
+		"prP": 0
 		},
 	"\/source\/script\/templates\/accent_css.tpl": {
 		"cB": 0,
@@ -213,7 +246,7 @@
 	"displayValueWasSetByUser": 0,
 	"iconImageName": "meme-karate",
 	"iconImageWasSetByUser": 0,
-	"lastBuiltDate": 552323789
+	"lastBuiltDate": 553712027
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
