@@ -1080,6 +1080,14 @@ html {
         
         .foot {
             
+            .plyr--video {
+                
+                .plyr__captions {
+                    top: -60% !important;
+                }
+                
+            }
+            
             .blank {
                 @include opacity( 0 );
             }

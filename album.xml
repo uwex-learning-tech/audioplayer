@@ -17,6 +17,7 @@
 
 	<!-- for multiple tracks, add more track elements -->
 	
+<!--
 	<track src="FasterRide" >
 		<title>Faster Ride</title>
 		<author name="Cartel"></author>
@@ -41,30 +42,6 @@
 		<title>Here's To Never Growing Up</title>
 		<author name="">Hello World</author>
 	</track>
-	
-	<track src="FasterRide" >
-		<title>Faster Ride</title>
-		<author name="Cartel"></author>
-	</track>
-	
-	<track src="MySongsKnowWhatYouDidInTheDark" >
-		<title>My Songs Know What You Did In The Dark</title>
-		<author name="Fall Out Boy"></author>
-	</track>
-	
-	<track src="Gentleman">
-		<title>Gentleman</title>
-		<author name="Psy"></author>
-	</track>
-	
-	<track src="YesToLove">
-		<title>Yes To Love</title>
-		<author name=""></author>
-	</track>
-	
-	<track src="HeresToNeverGrowingUp">
-		<title>Here's To Never Growing Up</title>
-		<author name="">Hello World</author>
-	</track>
+-->
     
 </album>

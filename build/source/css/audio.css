@@ -917,6 +917,8 @@ html {
     display: none; }
   #ap-wrapper .single .body .track-list {
     display: none !important; }
+  #ap-wrapper .single .foot .plyr--video .plyr__captions {
+    top: -60% !important; }
   #ap-wrapper .single .foot .blank {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0; }
