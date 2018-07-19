@@ -683,11 +683,11 @@ html {
           #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__video-wrapper {
             display: none; }
           #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__captions {
-            bottom: unset;
-            top: -50%; }
+            top: -55%; }
             #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__captions .plyr__caption {
-              background: none;
-              color: #000; }
+              padding: 0.3125rem;
+              background-color: #000;
+              line-height: 2; }
           #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__controls {
             display: -webkit-flex;
             display: flex;

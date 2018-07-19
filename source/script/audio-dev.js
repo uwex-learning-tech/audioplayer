@@ -759,8 +759,6 @@ class APlayer {
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
                 const loopBtn = self._selector( '#ap-loop' );
                 const playbackRateBtn = self._selector( '#ap-playbackRate' );
-                const nextBtn = self._selector( self.el.next );
-                const prevBtn = self._selector( self.el.previous );
                 const totalTracks = self.album.tracks.length - 1;
                 const downloadBtn = self._selector( self.el.mainDwnldBtn );
                 
@@ -776,41 +774,48 @@ class APlayer {
                     
                 }
                 
-                if ( self.album.currentTrack <= 0 ) {
+                if ( self.album.tracks.length > 1 ) {
                     
-                    prevBtn.setAttribute( 'disabled', true );
-                    prevBtn.classList.add( 'disabled' );
-                }
-                
-                if ( self.album.currentTrack >= totalTracks ) {
+                    const nextBtn = self._selector( self.el.next );
+                    const prevBtn = self._selector( self.el.previous );
+                    
+                    if ( self.album.tracks.len <= 0 ) {
+                    
+                        prevBtn.setAttribute( 'disabled', true );
+                        prevBtn.classList.add( 'disabled' );
+                    }
+                    
+                    if ( self.album.currentTrack >= totalTracks ) {
+                                
+                        nextBtn.setAttribute( 'disabled', true );
+                        nextBtn.classList.add( 'disabled' );
+                        
+                    }
+                    
+                    nextBtn.addEventListener( 'click', function() {
+                    
+                    
+                        if ( self.album.currentTrack < totalTracks ) {
                             
-                    nextBtn.setAttribute( 'disabled', true );
-                    nextBtn.classList.add( 'disabled' );
+                            self.album.currentTrack++;
+                            self.setTrack( self.album.currentTrack );
+                            
+                        }
+                        
+                    } );
+                    
+                    prevBtn.addEventListener( 'click', function() {
+                        
+                        if ( self.album.currentTrack > 0 ) {
+                            
+                            self.album.currentTrack--;
+                            self.setTrack( self.album.currentTrack );
+                            
+                        }
+                        
+                    } );
                     
                 }
-                
-                nextBtn.addEventListener( 'click', function() {
-                    
-                    
-                    if ( self.album.currentTrack < totalTracks ) {
-                        
-                        self.album.currentTrack++;
-                        self.setTrack( self.album.currentTrack );
-                        
-                    }
-                    
-                } );
-                
-                prevBtn.addEventListener( 'click', function() {
-                    
-                    if ( self.album.currentTrack > 0 ) {
-                        
-                        self.album.currentTrack--;
-                        self.setTrack( self.album.currentTrack );
-                        
-                    }
-                    
-                } );
                 
                 downloadBtn.addEventListener( 'click', function() {
                     
