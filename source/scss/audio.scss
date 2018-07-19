@@ -739,12 +739,12 @@ html {
                     
                     .plyr__captions {
                         
-                        bottom: unset;
-                        top: -50%;
+                        top: -55%;
                         
                         .plyr__caption {
-                            background: none;
-                            color: #000;
+                            padding: rem( 5px );
+                            background-color: #000;
+                            line-height: 2;
                         }
                         
                     }
