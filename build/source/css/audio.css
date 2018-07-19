@@ -138,6 +138,7 @@ html {
   height: 100%;
   font-size: 16px; }
   html body {
+    position: relative;
     height: 100%;
     padding: 0;
     margin: 0;
@@ -148,6 +149,17 @@ html {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box; }
+    html body .warning-msg {
+      display: none;
+      position: absolute;
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 0.25rem;
+      width: 100%;
+      min-height: 1.25rem;
+      background-color: #fff2a2;
+      top: 0;
+      left: 0; }
     html body .error {
       position: absolute;
       top: 0;
@@ -188,6 +200,43 @@ html {
       text-align: center;
       width: 20rem;
       margin: 0 auto; }
+    html body .sr-only {
+      position: absolute;
+      border: 0;
+      clip: rect(0 0 0 0);
+      width: 0.0625rem;
+      height: 0.0625rem;
+      margin: -0.0625rem;
+      overflow: hidden;
+      padding: 0; }
+    html body .fadeIn {
+      -moz-animation: fadeIn 0.5s linear 1;
+      -webkit-animation: fadeIn 0.5s linear 1;
+      animation: fadeIn 0.5s linear 1;
+      filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+      opacity: 1; }
+    html body .fadeOut {
+      -moz-animation: fadeOut 0.5s linear 1;
+      -webkit-animation: fadeOut 0.5s linear 1;
+      animation: fadeOut 0.5s linear 1;
+      filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+      opacity: 0; }
+    html body .slideDown {
+      -moz-animation: slideDown 0.25s linear 1;
+      -webkit-animation: slideDown 0.25s linear 1;
+      animation: slideDown 0.25s linear 1;
+      height: 100%; }
+    html body .slideUp {
+      -moz-animation: slideUp 0.25s linear 1;
+      -webkit-animation: slideUp 0.25s linear 1;
+      animation: slideUp 0.25s linear 1;
+      height: 1.875rem; }
+    html body .spin {
+      display: -webkit-flex;
+      display: flex;
+      -moz-animation: spin 1s linear infinite;
+      -webkit-animation: spin 1s linear infinite;
+      animation: spin 1s linear infinite; }
 
 #ap-wrapper {
   position: relative;
@@ -237,43 +286,6 @@ html {
     vertical-align: baseline;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
-  #ap-wrapper .sr-only {
-    position: absolute;
-    border: 0;
-    clip: rect(0 0 0 0);
-    width: 0.0625rem;
-    height: 0.0625rem;
-    margin: -0.0625rem;
-    overflow: hidden;
-    padding: 0; }
-  #ap-wrapper .fadeIn {
-    -moz-animation: fadeIn 0.5s linear 1;
-    -webkit-animation: fadeIn 0.5s linear 1;
-    animation: fadeIn 0.5s linear 1;
-    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
-    opacity: 1; }
-  #ap-wrapper .fadeOut {
-    -moz-animation: fadeOut 0.5s linear 1;
-    -webkit-animation: fadeOut 0.5s linear 1;
-    animation: fadeOut 0.5s linear 1;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-    opacity: 0; }
-  #ap-wrapper .slideDown {
-    -moz-animation: slideDown 0.25s linear 1;
-    -webkit-animation: slideDown 0.25s linear 1;
-    animation: slideDown 0.25s linear 1;
-    height: 100%; }
-  #ap-wrapper .slideUp {
-    -moz-animation: slideUp 0.25s linear 1;
-    -webkit-animation: slideUp 0.25s linear 1;
-    animation: slideUp 0.25s linear 1;
-    height: 1.875rem; }
-  #ap-wrapper .spin {
-    display: -webkit-flex;
-    display: flex;
-    -moz-animation: spin 1s linear infinite;
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite; }
   #ap-wrapper #ap-error {
     display: none;
     -webkit-align-items: center;
@@ -646,75 +658,6 @@ html {
             -ms-transform: rotate(180deg);
             -webkit-transform: rotate(180deg);
             transform: rotate(180deg); }
-      #ap-wrapper #ap-main .body .cc-spec-display {
-        height: calc( 100% - 30px ); }
-        #ap-wrapper #ap-main .body .cc-spec-display .spectrum {
-          display: none;
-          -webkit-align-items: center;
-          align-items: center;
-          -webkit-justify-content: center;
-          justify-content: center;
-          height: 100%; }
-        #ap-wrapper #ap-main .body .cc-spec-display .caption {
-          display: none;
-          -webkit-align-items: center;
-          align-items: center;
-          -webkit-justify-content: center;
-          justify-content: center;
-          height: 100%; }
-        #ap-wrapper #ap-main .body .cc-spec-display .active {
-          display: -webkit-flex;
-          display: flex; }
-      #ap-wrapper #ap-main .body .warning-msg {
-        display: none;
-        position: absolute;
-        font-size: 0.75rem;
-        text-align: center;
-        padding: 0.25rem;
-        width: 100%;
-        background-color: rgba(255, 242, 162, 0.9);
-        bottom: 0;
-        left: 0; }
-      #ap-wrapper #ap-main .body .controls {
-        position: absolute;
-        display: -webkit-flex;
-        display: flex;
-        top: 2.8125rem;
-        right: 1rem; }
-        #ap-wrapper #ap-main .body .controls button {
-          display: -webkit-flex;
-          display: flex;
-          -webkit-align-items: center;
-          align-items: center;
-          -webkit-justify-content: center;
-          justify-content: center;
-          width: 2.5rem;
-          height: 1.875rem;
-          border: none;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.75);
-          color: #000;
-          cursor: pointer; }
-          #ap-wrapper #ap-main .body .controls button .icon {
-            width: 1.375rem;
-            height: 1.375rem; }
-        #ap-wrapper #ap-main .body .controls .disabled {
-          filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=55);
-          opacity: 0.55;
-          cursor: default; }
-        #ap-wrapper #ap-main .body .controls #cc-toggle {
-          border-right: 0.0625rem solid #ccc;
-          -moz-border-radius: 0.33333rem 0 0 0.33333rem;
-          -webkit-border-radius: 0.33333rem;
-          border-radius: 0.33333rem 0 0 0.33333rem; }
-        #ap-wrapper #ap-main .body .controls #spectrum-toggle {
-          border-bottom: 0.0625rem solid #ccc;
-          -moz-border-radius: 0 0.33333rem 0.33333rem 0;
-          -webkit-border-radius: 0;
-          border-radius: 0 0.33333rem 0.33333rem 0; }
-          #ap-wrapper #ap-main .body .controls #spectrum-toggle .icon {
-            width: 1.25rem;
-            height: 1.25rem; }
     #ap-wrapper #ap-main .foot {
       -webkit-flex: 1 0 auto;
       flex: 1 0 auto;
@@ -844,9 +787,7 @@ html {
               -webkit-justify-content: space-between;
               justify-content: space-between; }
               #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__controls .bottom-controls #ap-caption {
-                display: none;
-                max-width: 2rem;
-                max-height: 2rem; }
+                display: none; }
               #ap-wrapper #ap-main .foot .audio-ui .plyr--video .plyr__controls .bottom-controls #ap-playbackRate {
                 font-weight: bold;
                 font-size: 0.9375rem;
@@ -980,10 +921,6 @@ html {
     display: none; }
   #ap-wrapper .single .body .track-list {
     display: none !important; }
-  #ap-wrapper .single .body .cc-spec-display {
-    height: 100% !important; }
-  #ap-wrapper .single .body .controls {
-    top: 1rem !important; }
   #ap-wrapper .single .foot .blank {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0; }
@@ -1037,11 +974,5 @@ html {
       #ap-wrapper #ap-main .body .track-list .minimized-display {
         height: 3.75rem;
         font-size: 1.75rem; }
-      #ap-wrapper #ap-main .body .cc-spec-display {
-        height: calc( 100% - 60px ); }
-        #ap-wrapper #ap-main .body .cc-spec-display .caption {
-          font-size: 2rem; }
-      #ap-wrapper #ap-main .body .warning-msg {
-        font-size: 1.5rem; }
     #ap-wrapper #ap-main .foot {
       height: 31.25rem; } }

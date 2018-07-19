@@ -1,3 +1,4 @@
+<div class="warning-msg"></div>
 <div class="program-theme" role="presentation"></div>
     
     <div id="ap-wrapper">
@@ -75,29 +76,6 @@
                         </svg>
                     </button>
                 </div>
-                
-                <!-- <div class="cc-spec-display">
-                    <div class="spectrum"></div>
-                    <div class="caption"></div>
-                </div> -->
-                
-                <div class="warning-msg"></div>
-                
-                <!-- <div class="controls">
-                    
-                    <button id="cc-toggle" aria-label="Closed Caption">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="{source}images/icons.svg#icon-cc"></use>
-                        </svg>
-                    </button>
-                    
-                    <button id="spectrum-toggle" aria-label="Spectrum">
-                        <svg class="icon" aria-hidden="true">
-                                <use xlink:href="{source}images/icons.svg#icon-wave"></use>
-                            </svg>
-                    </button>
-                    
-                </div> -->
                 
             </div>
             

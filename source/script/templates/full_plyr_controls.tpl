@@ -52,11 +52,11 @@
             <span class="plyr__tooltip" role="tooltip">Loop</span>
         </button>
         
-        <button type="button" id="ap-caption" class="plyr__control" data-plyr="captions" aria-hidden="true">
-            <svg class="icon" aria-hidden="true">
-                <use xlink:href="{source}images/icons.svg#icon-cc"></use>
-            </svg>
-            <span class="plyr__tooltip" role="tooltip">Closed Caption</span>
+        <button id="ap-caption" type="button" class="plyr__control" data-plyr="captions">
+            <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-captions-on"></use></svg>
+            <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-captions-off"></use></svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Disable captions</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Enable captions</span>
         </button>
         
          <select id="ap-playbackRate" name="playback">

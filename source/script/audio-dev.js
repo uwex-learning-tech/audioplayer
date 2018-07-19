@@ -44,15 +44,9 @@ class APlayer {
             trackList: '.track-list .tracks',
             trackListItem: '.track-list .tracks li .ap-track',
             expandTracksBtn: '.track-list .expand-btn',
-            //ccSpecDisplay: '.body .cc-spec-display',
-            //spectrumDisplay: '.body .cc-spec-display .spectrum',
-            //captionDisplay: '.body .cc-spec-display .caption',
-            bodyControls: '.body .controls',
-            //ccToggle: '#cc-toggle',
-            //spectrumToggle: '#spectrum-toggle',
             next: '#ap-next',
             previous: '#ap-previous',
-            warning: '.body .warning-msg',
+            warning: 'body .warning-msg',
             error: '#ap-error',
             errorIcon: '#ap-error .icon',
             errorTitle: '#ap-error .title',
@@ -72,8 +66,7 @@ class APlayer {
         };
         this.player = null;
         this.reference = {
-            names: this._parseUri( window.location.href ),
-            params: new URLSearchParams( window.location.search )
+            names: this._parseUri( window.location.href )
         };
         this.marquee ={
             start: null,
@@ -355,7 +348,13 @@ class APlayer {
         }
         
         // play the audio if the player is ready after setting source
-        if ( self.player.ready ) {
+        if ( self.player !== null && self.player.ready ) {
+            
+            if ( self.player.playing ) {
+                
+                self.player.stop();
+                
+            }
             
             const captionUrl = 'assets/audio/' + self.album.tracks[num].src + '.vtt';
             
@@ -414,7 +413,7 @@ class APlayer {
                 
             } );
             
-            self.player.once( 'canplay', function() {
+            self.player.once( 'ready', function() {
                         
                 self.player.togglePlay();
                 
@@ -735,26 +734,26 @@ class APlayer {
         
                 controls: controls,
                 hideControls: false,
-                captions: {
-                    active: true
-                },
                 autoplay: false,
                 volume: 0.8,
-                blankVideo: self.manifest.ap_root_directory + 'images/blank.m4v',
                 clickToPlay: false,
                 fullscreen: {
                     enabled: false,
                     fallback: false,
                     iosNative: false
-                }
+                },
+                captions: {
+                    active: true,
+                    language: 'en',
+                    update: false
+                },
+                resetOnEnd: true
                             
             } );
             
             self.el.player.on( 'ready', event => {
                 
                 self.player = event.detail.plyr;
-                
-                //self._CCSpectrumDisplays();
                 
                 const playpauseBtn = self._selector( '#ap-playpause' );
                 const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
@@ -976,7 +975,7 @@ class APlayer {
         
         if ( this.hasAppearanceIusses() ) {
         
-            this.showWarning( 'For better viewing, try a different web browser.' );
+            this.showWarning( 'Your web browser does not support some of the player\'s features. For better viewing experience, try a different web browser.' );
             
         }
         
@@ -1046,7 +1045,7 @@ class APlayer {
     
         const self = this;
         let warning = self._selector( self.el.warning );
-        let hideTime = 6000;
+        let hideTime = 10000;
         
         warning.innerHTML = str;
         warning.style.display = 'block';
@@ -1233,8 +1232,6 @@ class APlayer {
                 trackList.style.display = 'block';
                 minDisplay.style.display = 'none';
                 
-                //self._hideCCSpectrum();
-                
                 self._slideDown( expandTracksBtn.parentNode, function() {
                     
                     expandTracksBtn.classList.add( 'rotate' );
@@ -1251,99 +1248,12 @@ class APlayer {
                 self._slideUp( expandTracksBtn.parentNode, function() {
                     
                     expandTracksBtn.classList.remove( 'rotate' );
-                    //self._CCSpectrumDisplays();
                     
                 } );
                 
             }
             
         } );
-        
-    }
-    
-    toggleCC() {
-        
-        const self = this;
-        let captionDisplay = this._selector( this.el.captionDisplay );
-        let spectrumDisplay = this._selector( this.el.spectrumDisplay );
-        let ccToggle = this._selector( this.el.ccToggle );
-        let spectrumToggle = this._selector( this.el.spectrumToggle );
-        
-        ccToggle.classList.add( 'disabled' );
-        spectrumToggle.classList.remove( 'disabled' );
-        
-        captionDisplay.classList.add( 'active' );
-        spectrumDisplay.classList.remove( 'active' );
-        
-        self.player.on( 'canplay', function() {
-            
-            if ( self.player.currentTrack !== -1 ) {
-                self.player.toggleCaptions( true );
-            }
-            
-        } );
-        
-        if ( self.player.playing && self.player.currentTrack !== -1 ) {
-            self.player.toggleCaptions( true );
-        }
-
-    }
-    
-    toggleSpectrum() {
-        
-        let captionDisplay = this._selector( this.el.captionDisplay );
-        let spectrumDisplay = this._selector( this.el.spectrumDisplay );
-        let ccToggle = this._selector( this.el.ccToggle );
-        let spectrumToggle = this._selector( this.el.spectrumToggle );
-        
-        spectrumToggle.classList.add( 'disabled' );
-        ccToggle.classList.remove( 'disabled' );
-        
-        spectrumDisplay.classList.add( 'active' );
-        captionDisplay.classList.remove( 'active' );
-        
-        if ( this.player !== null && this.player.currentTrack > -1 ) {
-            this.player.toggleCaptions( false );
-        }
-        
-    }
-    
-    _CCSpectrumDisplays() {
-        
-        const self = this;
-        let toggles = this._selector( this.el.bodyControls );
-        let displays = this._selector( this.el.ccSpecDisplay );
-        let ccToggle = this._selector( this.el.ccToggle );
-        let spectrumToggle = this._selector( this.el.spectrumToggle );
-        
-        if ( toggles.style.display === 'none' ) {
-            
-            toggles.style.display = '';
-            displays.style.display = '';
-            
-        } else {
-
-            self.toggleCC();
-            
-        }
-        
-        ccToggle.addEventListener( 'click', function() {
-            self.toggleCC();
-        } );
-        
-        spectrumToggle.addEventListener( 'click', function() {
-            self.toggleSpectrum();
-        } );
-        
-    }
-    
-    _hideCCSpectrum() {
-        
-        let displays = this._selector( this.el.ccSpecDisplay );
-        let toggles = this._selector( this.el.bodyControls );
-        
-        toggles.style.display = 'none';
-        displays.style.display = 'none';
         
     }
     
@@ -1559,14 +1469,18 @@ class APlayer {
         el.classList.remove( 'fadeOut' );
         el.classList.add( 'fadeIn' );
         
-        let animationEvt = this._whichAnimationEvent();
+        if ( callback !== undefined ) {
+            
+            let animationEvt = this._whichAnimationEvent();
         
-        el.params = {
-            _event: animationEvt,
-            _callback: callback
-        };
-        
-        el.addEventListener( animationEvt, this._fadeCallback );
+            el.params = {
+                _event: animationEvt,
+                _callback: callback
+            };
+            
+            el.addEventListener( animationEvt, this._fadeCallback, {once: true} );
+            
+        }
         
     }
     
@@ -1575,14 +1489,18 @@ class APlayer {
         el.classList.remove( 'fadeIn' );
         el.classList.add( 'fadeOut' );
         
-        let animationEvt = this._whichAnimationEvent();
+        if ( callback !== undefined ) {
+            
+            let animationEvt = this._whichAnimationEvent();
         
-        el.params = {
-            _event: animationEvt,
-            _callback: callback
-        };
-        
-        el.addEventListener( animationEvt, this._fadeCallback );
+            el.params = {
+                _event: animationEvt,
+                _callback: callback
+            };
+            
+            el.addEventListener( animationEvt, this._fadeCallback, {once: true} );
+            
+        }
         
     }
     
@@ -1609,14 +1527,18 @@ class APlayer {
         el.classList.add( 'slideDown' );
         el.classList.remove( 'slideUp' );
         
-        let animationEvt = this._whichAnimationEvent();
+        if ( callback !== undefined ) {
+            
+            let animationEvt = this._whichAnimationEvent();
         
-        el.params = {
-            _event: animationEvt,
-            _callback: callback
-        };
-        
-        el.addEventListener( animationEvt, this._slideCallback );
+            el.params = {
+                _event: animationEvt,
+                _callback: callback
+            };
+            
+            el.addEventListener( animationEvt, self._slideCallback, {once: true} );
+            
+        }
         
     }
     
@@ -1626,14 +1548,18 @@ class APlayer {
         el.classList.add( 'slideUp' );
         el.classList.remove( 'slideDown' );
         
-        let animationEvt = this._whichAnimationEvent();
+        if ( callback !== undefined ) {
+            
+            let animationEvt = this._whichAnimationEvent();
         
-        el.params = {
-            _event: animationEvt,
-            _callback: callback
-        };
-        
-        el.addEventListener( animationEvt, self._slideCallback );
+            el.params = {
+                _event: animationEvt,
+                _callback: callback
+            };
+            
+            el.addEventListener( animationEvt, self._slideCallback, {once: true} );
+            
+        }
         
     }
     

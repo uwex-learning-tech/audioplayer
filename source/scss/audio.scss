@@ -62,6 +62,7 @@ html {
     
     body {
         
+        position: relative;
         height: 100%;
         padding: 0;
         margin: 0;
@@ -71,6 +72,19 @@ html {
         
         * {
             @include box-sizing( "border-box" );
+        }
+        
+        .warning-msg {
+            display: none;
+            position: absolute;
+            font-size: rem( 12px );
+            text-align: center;
+            padding: rem( $gutter / 4 );
+            width: 100%;
+            min-height: rem( 20px );
+            background-color: rgb(255, 242, 162);
+            top: 0;
+            left: 0;
         }
         
         .error {
@@ -127,6 +141,43 @@ html {
             margin: 0 auto;
         }
         
+        .sr-only {
+            position: absolute;
+            border: 0;
+            clip: rect( 0 0 0 0 );
+            width: rem( 1px );
+            height: rem( 1px );
+            margin: rem( -1px );
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .fadeIn {
+            @include animation( fadeIn 0.5s linear 1 );
+            @include opacity( 1 );
+        }
+        
+        .fadeOut {
+            @include animation( fadeOut 0.5s linear 1 );
+            @include opacity( 0 );
+        }
+        
+        .slideDown {
+            @include animation( slideDown 0.25s linear 1 );
+            height: 100%;
+        }
+        
+        .slideUp {
+            @include animation( slideUp 0.25s linear 1 );
+            height: rem( 30px );
+        }
+        
+        .spin {
+            @include display-flex();
+            @include animation( spin 1s linear infinite );
+        }
+
+        
     }
     
 }
@@ -150,43 +201,7 @@ html {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    
-    .sr-only {
-        position: absolute;
-        border: 0;
-        clip: rect( 0 0 0 0 );
-        width: rem( 1px );
-        height: rem( 1px );
-        margin: rem( -1px );
-        overflow: hidden;
-        padding: 0;
-    }
-    
-    .fadeIn {
-        @include animation( fadeIn 0.5s linear 1 );
-        @include opacity( 1 );
-    }
-    
-    .fadeOut {
-        @include animation( fadeOut 0.5s linear 1 );
-        @include opacity( 0 );
-    }
-    
-    .slideDown {
-        @include animation( slideDown 0.25s linear 1 );
-        height: 100%;
-    }
-    
-    .slideUp {
-        @include animation( slideUp 0.25s linear 1 );
-        height: rem( 30px );
-    }
-    
-    .spin {
-        @include display-flex();
-        @include animation( spin 1s linear infinite );
-    }
-    
+        
     #ap-error {
         
         display: none;
@@ -680,93 +695,6 @@ html {
                 
             }
             
-            .cc-spec-display {
-                
-                height: calc( 100% - 30px );
-                
-                .spectrum {
-                    display: none;
-                    @include align-items( center );
-                    @include justify-content( center );
-                    height: 100%;
-                }
-                
-                .caption {
-                    display: none;
-                    @include align-items( center );
-                    @include justify-content( center );
-                    height: 100%;
-                }
-                
-                .active {
-                    @include display-flex();
-                }
-                
-            }
-            
-            .warning-msg {
-                display: none;
-                position: absolute;
-                font-size: rem( 12px );
-                text-align: center;
-                padding: rem( $gutter / 4 );
-                width: 100%;
-                background-color: rgba(255, 242, 162, 0.9);
-                bottom: 0;
-                left: 0;
-            }
-            
-            .controls {
-                
-                position: absolute;
-                @include display-flex();
-                top: rem( 45px );
-                right: rem( $gutter );
-                
-                button {
-                    
-                    @include display-flex();
-                    @include align-items( center );
-                    @include justify-content( center );
-                    width: rem( 40px );
-                    height: rem( 30px );
-                    border: none;
-                    padding: 0;
-                    background-color: rgba( 255, 255, 255, 0.75 );
-                    color: #000;
-                    cursor: pointer;
-                    
-                    .icon {
-                        width: rem( 22px );
-                        height: rem( 22px );
-                    }
-                                        
-                }
-                
-                .disabled {
-                    @include opacity( 0.55 );
-                    cursor: default;       
-                }
-                
-                #cc-toggle {
-                    border-right: rem( 1px ) solid $border-color;
-                    @include border-radius( rem( $gutter / 3 ) 0 0 rem( $gutter / 3 ) );
-                }
-                
-                #spectrum-toggle {
-                    
-                    border-bottom: rem( 1px ) solid $border-color;
-                    @include border-radius( 0 rem( $gutter / 3 ) rem( $gutter / 3 ) 0 );
-                    
-                    .icon {
-                        width: rem( 20px );
-                        height: rem( 20px );
-                    }
-                    
-                }
-                
-            }
-            
         }
         
         .foot {
@@ -942,8 +870,6 @@ html {
                             
                             #ap-caption {
                                 display: none;
-                                max-width: rem( 32px );
-                                max-height: rem( 32px );
                             }
                             
                             #ap-playbackRate {
@@ -1158,14 +1084,6 @@ html {
                 display: none !important;
             }
             
-            .cc-spec-display {
-                height: 100% !important;
-            }
-            
-            .controls {
-                top: rem( $gutter ) !important;
-            }
-            
         }
         
         .foot {
@@ -1287,20 +1205,6 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
                         
                     }
                     
-                }
-                
-                .cc-spec-display {
-                
-                    height: calc( 100% - 60px );
-                    
-                    .caption {
-                        font-size: rem( 32px );
-                    }
-                    
-                }
-                
-                .warning-msg {
-                    font-size: rem( 24px );
                 }
                 
             }
