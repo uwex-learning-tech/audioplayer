@@ -17,7 +17,6 @@
 
 	<!-- for multiple tracks, add more track elements -->
 	
-<!--
 	<track src="FasterRide" >
 		<title>Faster Ride</title>
 		<author name="Cartel"></author>
@@ -42,6 +41,5 @@
 		<title>Here's To Never Growing Up</title>
 		<author name="">Hello World</author>
 	</track>
--->
     
 </album>

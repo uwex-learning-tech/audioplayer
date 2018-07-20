@@ -966,7 +966,7 @@ class APlayer {
     
     hasCoreFeaturesSupport() {
     
-        if ( !Modernizr.audio && Modernizr.json && Modernizr.svg
+        if ( !Modernizr.audio && Modernizr.json && Modernizr.json
              && Modernizr.csscalc && Modernizr.flexbox ) {
             return true;
         }
@@ -977,7 +977,7 @@ class APlayer {
     
     hasAppearanceIusses() {
     
-        if ( !Modernizr.canvas ) {
+        if ( !Modernizr.svg ) {
             return true;
         }
         
