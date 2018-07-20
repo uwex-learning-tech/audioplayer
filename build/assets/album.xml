@@ -11,7 +11,7 @@
 	<!-- single track only need one track element -->
 
 	<track src="cookie" >
-		<title>Your Favorite Chocolate Chip Cookie</title>
+		<title>Chocolate Chip Cookie</title>
 		<author name="Bryan Bortz"></author>
 	</track>
 

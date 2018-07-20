@@ -223,13 +223,13 @@ class APlayer {
                 
                 if ( self.reference.names[3] !== undefined ) {
                     
-                    self.album.program.name = self.reference.names[3];
+                    self.album.program.name = self.reference.names[3].toLowerCase();
                     
                 }
                 
             } else {
                 
-                self.album.program.name = xmlSetup.getAttribute( 'program' );
+                self.album.program.name = xmlSetup.getAttribute( 'program' ).toLowerCase();
                 
             }
             
@@ -580,10 +580,14 @@ class APlayer {
         // load accent
         if ( !this._isEmpty( self.album.settings.accent ) ) {
             
+            let textColor = self._colorContrast( self.album.settings.accent );
             let accentUrl = this.manifest.ap_root_directory + 'script/templates/accent_css.tpl';
+            
             this._requestFile( accentUrl, function( xhr ) {
                 
-                const accentStyle = xhr.response.replace( /\{([accent)]+)\}/ig, self.album.settings.accent );
+                let accentStyle = xhr.response.replace( /\{([accent)]+)\}/ig, self.album.settings.accent );
+                
+                accentStyle = accentStyle.replace( /\{([accentText)]+)\}/ig, textColor );
                 
                 let head = self._selector( 'head' );
                 let style = document.createElement( 'style' );
@@ -1391,6 +1395,30 @@ class APlayer {
     	}
     	
     	return this._cleanArray( target.split( '/' ) );
+        
+    }
+    
+    _colorContrast( hex ) {
+        
+        let rgb = this._hexToRGB( hex ).split( ',' );
+        let contrast = Math.round( ( ( parseInt( rgb[0] ) * 299 ) +
+                      ( parseInt( rgb[1] ) * 587 ) +
+                      ( parseInt( rgb[2] ) * 114 ) ) / 1000 );
+                      
+        return contrast > 125 ? '#000' : '#fff';
+        
+    }
+    
+    _hexToRGB( hex ) {
+        
+        hex = hex.replace( /[^0-9A-F]/gi, '' );
+        
+        let bigint = parseInt( hex, 16 );
+        let r = ( bigint >> 16 ) & 255;
+        let g = ( bigint >> 8 ) & 255;
+        let b = bigint & 255;
+    
+        return [r, g, b].join();
         
     }
     
