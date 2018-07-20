@@ -1240,7 +1240,7 @@ class APlayer {
         
     }
     
-    _expandTracksToggle( state ) {
+    _expandTracksToggle() {
         
         const self = this;
         const expandTracksBtn = self._selector( this.el.expandTracksBtn );

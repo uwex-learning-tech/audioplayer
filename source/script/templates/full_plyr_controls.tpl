@@ -53,11 +53,10 @@
             <span class="plyr__tooltip" role="tooltip">Caption</span>
         </button>
         
-         <select id="ap-playbackRate" name="playback">
-          <option value="1">1x</option>
-          <option value="1.5">1.5x</option>
-          <option value="2">2x</option>
-          <option value="2.5">2.5x</option>
+        <select id="ap-playbackRate" name="playback">
+            <option value="1">1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
         </select> 
         
         <div class="ap-volcontrols">
