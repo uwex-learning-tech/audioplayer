@@ -176,7 +176,6 @@ class APlayer {
         const self = this;
         
         let startBtn = self._selector( self.el.startBtn );
-        let resumeBtn = self._selector( self.el.resumeBtn );
         
         startBtn.addEventListener( 'click', function() {
             
@@ -185,12 +184,32 @@ class APlayer {
             
         } );
         
-        resumeBtn.addEventListener( 'click', function() {
+        if ( Modernizr.localstorage ) {
             
-            self.hideSplash();
-            self.setTrack( self.album.currentTrack );
+            let resumeBtn = self._selector( self.el.resumeBtn );
             
-        } );
+            const savedData = JSON.parse( window.localStorage.getItem( 'ap-player' ) );
+            
+            if ( savedData !== null ) {
+                
+                if ( savedData.track >= 1 || savedData.time > 0 ) {
+                    
+                    resumeBtn.style.display = 'block';
+                    
+                    resumeBtn.addEventListener( 'click', function() {
+            
+                        self.hideSplash();
+                        self.setTrack( savedData.track, savedData.time );
+                        
+                    } );
+                    
+                }
+                
+            }
+            
+            console.log(savedData);
+            
+        }
         
     }
     
@@ -287,12 +306,15 @@ class APlayer {
         
     }
     
-    setTrack( num ) {
+    setTrack( num, seektime ) {
+        
+        seektime = typeof seektime !== 'undefined' ? seektime : 0;
         
         // hold the class
         const self = this;
         
         num = Number( num );
+        self.album.currentTrack = num;
         
         // display title
         let currentTitle = self._selector( self.el.trackTitle );
@@ -413,10 +435,29 @@ class APlayer {
                     
                 }
                 
-                self.player.once( 'ready', function() {
+                self.player.on( 'ready', function() {
                 
                     self._handlePlayerReady();
-                    self.player.togglePlay();
+                    
+                    self.player.play();
+                    
+                    if ( seektime > 0 ) {
+                        
+                        document.getElementsByTagName('video')[0].currentTime = seektime;
+                        
+                    } else {
+                        
+                        window.setTimeout( function() {
+                        
+                            if ( Modernizr.localstorage ) {
+                                
+                                window.localStorage.setItem( 'ap-player', JSON.stringify( {track: num, time: seektime } ) );
+                                
+                            }
+                            
+                        }, 3000 );
+                        
+                    }
                     
                 } );
                 
@@ -912,7 +953,28 @@ class APlayer {
             
             playpauseBtn.classList.remove( 'plyr__control--pressed' );
             
+            if ( Modernizr.localstorage ) {
+                            
+                    window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
+                    
+                }
+            
         } );
+        
+        if ( Modernizr.localstorage ) {
+            
+            self.player.on( 'timeupdate', function() {
+                
+                let pTime = self.player.currentTime / self.player.duration;
+                
+                if ( pTime >= 0.45 && pTime <= 0.5 ) {
+                    window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
+                    
+                }
+                
+            } );
+        
+        }
         
         // on playback end
         self.player.on( 'ended', function() {
@@ -920,6 +982,12 @@ class APlayer {
             if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
             
                 playpauseBtn.classList.add( 'plyr__control--pressed' );
+                
+            }
+            
+            if ( Modernizr.localstorage ) {
+                            
+                window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: 0 } ) );
                 
             }
             
