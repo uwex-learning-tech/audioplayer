@@ -50,8 +50,7 @@
         <button id="ap-caption" type="button" class="plyr__control" data-plyr="captions">
             <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-captions-on"></use></svg>
             <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-captions-off"></use></svg>
-            <span class="label--pressed plyr__tooltip" role="tooltip">Disable captions</span>
-            <span class="label--not-pressed plyr__tooltip" role="tooltip">Enable captions</span>
+            <span class="plyr__tooltip" role="tooltip">Caption</span>
         </button>
         
          <select id="ap-playbackRate" name="playback">

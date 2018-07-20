@@ -47,6 +47,7 @@ class APlayer {
             next: '#ap-next',
             previous: '#ap-previous',
             warning: 'body .warning-msg',
+            captionBtn: '#ap-caption',
             error: '#ap-error',
             errorIcon: '#ap-error .icon',
             errorTitle: '#ap-error .title',
@@ -134,7 +135,8 @@ class APlayer {
                 if ( evt.target.className !== 'track-download' &&
                 evt.target.nodeName !== 'svg' && evt.target.nodeName !== 'use' ) {
                     
-                    self.setTrack( evt.currentTarget.getAttribute( 'data-index' ) );
+                    self.album.currentTrack = evt.currentTarget.getAttribute( 'data-index' );
+                    self.setTrack( Number( self.album.currentTrack ) );
                     evt.preventDefault();
                     
                 }
@@ -348,7 +350,7 @@ class APlayer {
         }
         
         // play the audio if the player is ready after setting source
-        if ( self.player !== null && self.player.ready ) {
+        if ( self.player !== null ) {
             
             if ( self.player.playing ) {
                 
@@ -411,21 +413,12 @@ class APlayer {
                     
                 }
                 
-            } );
-            
-            self.player.once( 'ready', function() {
-                        
-                self.player.togglePlay();
+                self.player.once( 'ready', function() {
                 
-                if ( self.player.currentTrack === -1 ) {
+                    self._handlePlayerReady();
+                    self.player.togglePlay();
                     
-                   self.player.toggleCaptions( false );
-                   
-                } else {
-                    
-                    self.player.toggleCaptions( true );
-                    
-                }
+                } );
                 
             } );
             
@@ -698,6 +691,7 @@ class APlayer {
                 
             } );
             
+            self._openTrackList();
             self._trackListItemListener();
             
         } else {
@@ -733,8 +727,14 @@ class APlayer {
         self._requestFile( plyrControlsUrl, function( xhr ) {
             
             const controls = xhr.response.replace( /\{([source)]+)\}/ig, self.manifest.ap_root_directory );
+            
+            let useLocalStorage = false;
+            
+            if ( Modernizr.localstorage ) {
+                useLocalStorage = true;
+            }
                 
-            self.el.player = new Plyr( self.el.playerId, {
+            self.player = new Plyr( self.el.playerId, {
         
                 controls: controls,
                 hideControls: false,
@@ -747,173 +747,209 @@ class APlayer {
                     iosNative: false
                 },
                 captions: {
-                    active: true,
+                    active: false,
                     language: 'en',
                     update: false
                 },
-                resetOnEnd: true
+                resetOnEnd: true,
+                storage: { enabled: useLocalStorage, key: 'plyr' }
                             
-            } );
-            
-            self.el.player.on( 'ready', event => {
-                
-                self.player = event.detail.plyr;
-                
-                const playpauseBtn = self._selector( '#ap-playpause' );
-                const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
-                const playbackRateBtn = self._selector( '#ap-playbackRate' );
-                const totalTracks = self.album.tracks.length - 1;
-                const downloadBtn = self._selector( self.el.mainDwnldBtn );
-                
-                // check playback rate and update playback rate select element
-                for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
-    
-                    if ( Number( playbackRateBtn.options[i].value ) === self.player.speed ) {
-                        
-                        playbackRateBtn.selectedIndex = i;
-                        break;
-                        
-                    }
-                    
-                }
-                
-                if ( self.album.tracks.length > 1 ) {
-                    
-                    const nextBtn = self._selector( self.el.next );
-                    const prevBtn = self._selector( self.el.previous );
-                    
-                    if ( self.album.tracks.len <= 0 ) {
-                    
-                        prevBtn.setAttribute( 'disabled', true );
-                        prevBtn.classList.add( 'disabled' );
-                    }
-                    
-                    if ( self.album.currentTrack >= totalTracks ) {
-                                
-                        nextBtn.setAttribute( 'disabled', true );
-                        nextBtn.classList.add( 'disabled' );
-                        
-                    }
-                    
-                    nextBtn.addEventListener( 'click', function() {
-                    
-                    
-                        if ( self.album.currentTrack < totalTracks ) {
-                            
-                            self.album.currentTrack++;
-                            self.setTrack( self.album.currentTrack );
-                            
-                        }
-                        
-                    } );
-                    
-                    prevBtn.addEventListener( 'click', function() {
-                        
-                        if ( self.album.currentTrack > 0 ) {
-                            
-                            self.album.currentTrack--;
-                            self.setTrack( self.album.currentTrack );
-                            
-                        }
-                        
-                    } );
-                    
-                }
-                
-                downloadBtn.addEventListener( 'click', function() {
-                    
-                    let overlayDisplay = self._selector( self.el.overlayDisplay );
-                    let overlayDisplayContent = self._selector( self.el.overlayDisplayContent );
-                    let closeBtn = self._selector( self.el.closeOverlayBtn );
-                    
-                    let h4 = document.createElement( 'h4' );
-                    
-                    h4.innerHTML = "Downloads";
-                    
-                    overlayDisplayContent.appendChild( h4 );
-                    
-                    let ul = document.createElement( 'ul' );
-                    
-                    ul.classList.add( 'dwnld-list' );
-                    
-                    Array.prototype.forEach.call( self.album.downloads, function( obj ) {
-                        
-                        let li = document.createElement( 'li' );
-                        let a = document.createElement( 'a' );
-                        
-                        a.href = obj.url;
-                        a.innerHTML = obj.name;
-                        a.setAttribute( 'download', obj.url );
-                        
-                        li.appendChild( a );
-                        ul.appendChild( li );
-                        
-                    } );
-                    
-                    overlayDisplayContent.appendChild( ul );
-                    
-                    overlayDisplay.classList.add( 'small-overlay' );
-                    overlayDisplay.style.display = 'block';
-                    self._fadeIn( overlayDisplay );
-                    
-                    closeBtn.addEventListener( 'click', function() {
-                        self.closeOverlay();
-                    }, {once: true} );
-                    
-                } );
-                
-                self.player.on( 'playing', function() {
-                    
-                    playpauseBtn.classList.add( 'plyr__control--pressed' );
-                    
-                } );
-                
-                self.player.on( 'pause', function() {
-                    
-                    playpauseBtn.classList.remove( 'plyr__control--pressed' );
-                    
-                } );
-                
-                // on playback end
-                self.player.on( 'ended', function() {
-                    
-                    if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
-                    
-                        playpauseBtn.classList.add( 'plyr__control--pressed' );
-                        
-                    }
-                    
-                    self.player.restart();
-                    
-                } );
-                
-                // change playback rate
-                playbackRateBtn.addEventListener( 'change', function( evt ) {
-                    
-                    self.player.speed = Number( evt.target.options[evt.target.selectedIndex].value );
-                    
-                } );
-                
-                // toglle mute/unmute state
-                muteUnmuteBtn.addEventListener( 'click', function( evt ) {
-                    
-                    if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
-                        
-                        evt.target.classList.remove( 'plyr__control--pressed' );
-                        
-                    } else {
-                        
-                        evt.target.classList.add( 'plyr__control--pressed' );
-                        
-                    }
-                    
-                } );
-                    
-            } ); // end player ready event
+            } ); 
             
         } );
         
     } // end _setupAudioPlayer
+    
+    _handlePlayerReady() {
+        
+        const self = this;
+           
+        const playpauseBtn = self._selector( '#ap-playpause' );
+        const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
+        const playbackRateBtn = self._selector( '#ap-playbackRate' );
+        const totalTracks = self.album.tracks.length - 1;
+        const downloadBtn = self._selector( self.el.mainDwnldBtn );
+        const captionBtn = self._selector( self.el.captionBtn );
+        
+        // check playback rate and update playback rate select element
+        for ( var i = 0; i < playbackRateBtn.options.length; i++ ) {
+
+            if ( Number( playbackRateBtn.options[i].value ) === self.player.speed ) {
+                
+                playbackRateBtn.selectedIndex = i;
+                break;
+                
+            }
+            
+        }
+        
+        if ( self.album.tracks.length > 1 ) {
+            
+            const nextBtn = self._selector( self.el.next );
+            const prevBtn = self._selector( self.el.previous );
+            
+            if ( self.album.currentTrack <= 0 ) {
+            
+                prevBtn.setAttribute( 'disabled', true );
+                prevBtn.classList.add( 'disabled' );
+            }
+            
+            if ( self.album.currentTrack >= totalTracks ) {
+                        
+                nextBtn.setAttribute( 'disabled', true );
+                nextBtn.classList.add( 'disabled' );
+                
+            }
+            
+            nextBtn.addEventListener( 'click', function() {
+            
+            
+                if ( self.album.currentTrack < totalTracks ) {
+                    
+                    self.album.currentTrack++;
+                    self.setTrack( self.album.currentTrack );
+                    
+                }
+                
+            } );
+            
+            prevBtn.addEventListener( 'click', function() {
+                
+                if ( self.album.currentTrack > 0 ) {
+                    
+                    self.album.currentTrack--;
+                    self.setTrack( self.album.currentTrack );
+                    
+                }
+                
+            } );
+            
+        }
+        
+        downloadBtn.addEventListener( 'click', function() {
+            
+            let overlayDisplay = self._selector( self.el.overlayDisplay );
+            let overlayDisplayContent = self._selector( self.el.overlayDisplayContent );
+            let closeBtn = self._selector( self.el.closeOverlayBtn );
+            
+            let h4 = document.createElement( 'h4' );
+            
+            h4.innerHTML = "Downloads";
+            
+            overlayDisplayContent.appendChild( h4 );
+            
+            let ul = document.createElement( 'ul' );
+            
+            ul.classList.add( 'dwnld-list' );
+            
+            Array.prototype.forEach.call( self.album.downloads, function( obj ) {
+                
+                let li = document.createElement( 'li' );
+                let a = document.createElement( 'a' );
+                
+                a.href = obj.url;
+                a.innerHTML = obj.name;
+                a.setAttribute( 'download', obj.url );
+                
+                li.appendChild( a );
+                ul.appendChild( li );
+                
+            } );
+            
+            overlayDisplayContent.appendChild( ul );
+            
+            overlayDisplay.classList.add( 'small-overlay' );
+            overlayDisplay.style.display = 'block';
+            self._fadeIn( overlayDisplay );
+            
+            closeBtn.addEventListener( 'click', function() {
+                self.closeOverlay();
+            }, {once: true} );
+            
+        } );
+        
+        // check caption
+        if ( self.player.currentTrack >= 0 ) {
+            
+            captionBtn.classList.add( 'plyr__control--pressed' );
+            
+        } else {
+            
+            captionBtn.classList.remove( 'plyr__control--pressed' );
+            
+        }
+        
+        self.player.on( 'captionsenabled', function() {
+            
+            captionBtn.classList.add( 'plyr__control--pressed' );
+            
+            if ( self.album.tracks.length > 1 ) {
+                
+                self._closeTrackList();
+                
+            }
+            
+        } );
+        
+        self.player.on( 'captionsdisabled', function() {
+            
+            captionBtn.classList.remove( 'plyr__control--pressed' );
+            if ( self.album.tracks.length > 1 ) {
+                
+                self._openTrackList();
+                
+            }
+            
+        } );
+        
+        self.player.on( 'playing', function() {
+            
+            playpauseBtn.classList.add( 'plyr__control--pressed' );
+            
+        } );
+        
+        self.player.on( 'pause', function() {
+            
+            playpauseBtn.classList.remove( 'plyr__control--pressed' );
+            
+        } );
+        
+        // on playback end
+        self.player.on( 'ended', function() {
+            
+            if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
+            
+                playpauseBtn.classList.add( 'plyr__control--pressed' );
+                
+            }
+            
+            self.player.restart();
+            
+        } );
+        
+        // change playback rate
+        playbackRateBtn.addEventListener( 'change', function( evt ) {
+            
+            self.player.speed = Number( evt.target.options[evt.target.selectedIndex].value );
+            
+        } );
+        
+        // toglle mute/unmute state
+        muteUnmuteBtn.addEventListener( 'click', function( evt ) {
+            
+            if ( evt.target.classList.contains( 'plyr__control--pressed' ) ) {
+                
+                evt.target.classList.remove( 'plyr__control--pressed' );
+                
+            } else {
+                
+                evt.target.classList.add( 'plyr__control--pressed' );
+                
+            }
+            
+        } );
+            
+    } // end player ready event
     
     _setProgram() {
         
@@ -1204,41 +1240,62 @@ class APlayer {
         
     }
     
-    _expandTracksToggle() {
+    _expandTracksToggle( state ) {
         
         const self = this;
-        let expandTracksBtn = self._selector( this.el.expandTracksBtn );
+        const expandTracksBtn = self._selector( this.el.expandTracksBtn );
         
         expandTracksBtn.addEventListener( 'click', function() {
             
-            let trackList = self._selector( self.el.trackList );
-            let minDisplay = self._selector( self.el.miniDisplay );
+            const trackList = self._selector( self.el.trackList );
             
             if ( trackList.style.display == 'none' || trackList.style.display == '' ) {
                 
-                trackList.style.display = 'block';
-                minDisplay.style.display = 'none';
-                
-                self._slideDown( expandTracksBtn.parentNode, function() {
-                    
-                    expandTracksBtn.classList.add( 'rotate' );
-                    trackList.style.setProperty( 'overflow-y', 'auto' );
-                    
-                } );
+                self._openTrackList();
                 
             } else {
                 
-                trackList.style.display = 'none';
-                trackList.style.setProperty( 'overflow-y', 'hidden' );
-                minDisplay.style.display = 'flex';
-                
-                self._slideUp( expandTracksBtn.parentNode, function() {
-                    
-                    expandTracksBtn.classList.remove( 'rotate' );
-                    
-                } );
+                self._closeTrackList();
                 
             }
+            
+        } );
+        
+    }
+    
+    _openTrackList() {
+        
+        const self = this;
+        const trackList = self._selector( self.el.trackList );
+        const minDisplay = self._selector( self.el.miniDisplay );
+        const expandTracksBtn = self._selector( this.el.expandTracksBtn );
+        
+        trackList.style.display = 'block';
+        minDisplay.style.display = 'none';
+        
+        self._slideDown( expandTracksBtn.parentNode, function() {
+            
+            expandTracksBtn.classList.add( 'rotate' );
+            trackList.style.setProperty( 'overflow-y', 'auto' );
+            
+        } );
+        
+    }
+    
+    _closeTrackList() {
+        
+        const self = this;
+        const trackList = self._selector( self.el.trackList );
+        const minDisplay = self._selector( self.el.miniDisplay );
+        const expandTracksBtn = self._selector( this.el.expandTracksBtn );
+        
+        trackList.style.display = 'none';
+        trackList.style.setProperty( 'overflow-y', 'hidden' );
+        minDisplay.style.display = 'flex';
+        
+        self._slideUp( expandTracksBtn.parentNode, function() {
+            
+            expandTracksBtn.classList.remove( 'rotate' );
             
         } );
         
