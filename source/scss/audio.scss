@@ -1106,15 +1106,17 @@ html {
         height: unset;
         
         body {
+            
             height: unset;
-        }
-        
-        .program-theme {
-            @include display-flex( flex !important );
-        }
-        
-        .copyright {
-            display: block !important;
+            
+            .program-theme {
+                @include display-flex( flex );
+            }
+            
+            .copyright {
+                display: block;
+            }
+            
         }
         
     }
@@ -1137,7 +1139,21 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
         height: 100%;
         
         body {
+            
             height: 100%;
+            
+            .slideUp {
+                height: rem( 60px );
+            }
+            
+            .program-theme {
+                display: none;
+            }
+            
+            .copyright {
+                display: none;
+            }
+            
         }
         
     }
@@ -1147,6 +1163,78 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
         max-width: unset;
         margin: unset;
         height: 100%;
+        
+        #ap-splash {
+            
+            .cover-info {
+                
+                padding: rem( $gutter * 2 );
+                @include border-radius( rem( $gutter / 2 ) );
+                
+                .title {
+                    font-size: rem( 48px );
+                    line-height: rem( 52px );
+                }
+                
+                .subtitle {
+                    font-size: rem( 40px );
+                    line-height: rem( 48px );
+                }
+                
+                .author, .length {
+                    font-size: rem( 32px );
+                    line-height: rem( 40px );
+                }
+                
+                .actions {
+                    
+                    .btn {
+                        font-size: rem( 40px );
+                        height: rem( 80px );
+                        @include border-radius( rem( $gutter / 2 ) );
+                    }
+                    
+                    .btn:first-child {
+                        margin-top: rem( $gutter );
+                    }
+                    
+                    #ap-dwnld-btn,
+                    #ap-resume-btn {
+                        display: none;
+                    }
+                    
+                    .dropdown {
+                        
+                        position: relative;
+                        
+                        .download-btn {
+                        
+                            font-size: rem( 28px );
+                            height: rem( 60px );
+                            
+                            .icon {
+                                width: rem( 20px );
+                                height: rem( 20px );
+                            }
+                            
+                        }
+                        
+                        .dropdown-content {
+                            
+                            a {
+                                font-size: rem( 28px );
+                                padding: rem( $gutter );
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        } // end splash
         
         #ap-main {
             
@@ -1170,22 +1258,21 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
                     .title-wrapper {
                         
                         .title {
-                            font-weight: bold;
-                            font-size: rem( 34px );
+                            font-size: rem( 40px );
                         }
                         
                     }
                     
                     .marquee {
-                        height: rem( 46px );
+                        height: rem( 55px );
                     }
                     
                     .author {
-                        font-size: rem( 30px );
+                        font-size: rem( 40px );
                     }
                     
                     .meta {
-                        font-size: rem( 26px );
+                        font-size: rem( 30px );
                     }
                     
                 }
@@ -1199,9 +1286,67 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
                 .track-list {
                     
                     .minimized-display {
-                        
                         height: rem( 60px );
                         font-size: rem( 28px );
+                    }
+                    
+                    .tracks {
+                        
+                        .label {
+                            height: rem( 40px );
+                            font-size: rem( 24px );
+                        }
+                        
+                        li {
+                            
+                            font-size: rem( 28px );
+                            
+                            a {
+                                
+                                height: rem( 80px );
+                                
+                                .track-img {
+                                    display: block;
+                                    width: rem( 65px );
+                                    height: rem( 65px );
+                                    margin-right: rem( 10px );
+                                }
+                                
+                                .track-num {
+                                    width: rem( 40px );
+                                    min-width: rem( 40px );
+                                }
+                                
+                                .track-download {
+                                    
+                                    max-width: rem( 28px );
+                                    height: rem( 28px );
+                                    border: none;
+                                    margin: 0 0 0 rem( 6px );
+                                    
+                                    svg {
+                                        width: rem( 28px );
+                                        height: rem( 28px );
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                    .expand-btn {
+                            
+                        width: rem( 60px );
+                        height: rem( 30px );
+                        bottom: rem( -30px );
+                        
+                        .icon {
+                            width: rem( 24px );
+                            height: rem( 24px );
+                        }
                         
                     }
                     
@@ -1210,7 +1355,151 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
             }
             
             .foot {
+                
                 height: rem( 500px );
+                
+                .audio-ui {
+                    
+                    .plyr__tooltip {
+                        display: none;
+                    }
+                    
+                    .plyr--video {
+                        
+                        overflow: unset;
+                        
+                        .plyr__video-wrapper {
+                            display: none;
+                        }
+                        
+                        .plyr__captions {
+                            
+                            top: -80%;
+                            
+                            .plyr__caption {
+                                font-size: rem( 50px );
+                                padding: rem( 10px );
+                                line-height: 1.55;
+                            }
+                            
+                        }
+                        
+                        .plyr__controls {
+                            
+                            .top-controls {
+                                
+                                padding: rem( $gutter ) 0 0 0;
+                                
+                                .plyr__time--current {
+                                    font-size: rem( 28px );
+                                }
+                                
+                                .plyr__progress {
+                                    
+                                    input[type="range"] {
+                                        width: 100%;
+                                        margin-left: unset;
+                                        margin-right: unset;
+                                        height: rem( 38px );
+                                    }
+                                    
+                                }
+                                
+                                .plyr__time--duration {
+                                    font-size: rem( 28px );
+                                }
+                                
+                            }
+                            
+                            .middle-controls {
+                                
+                                height: calc( 100% - 139px );
+                                
+                                svg {
+                                    width: rem( 60px );
+                                    height: rem( 60px );
+                                }
+                                
+                                #ap-playpause {
+                                    
+                                    width: rem( 180px );
+                                    height: rem( 180px );
+                                    
+                                    .icon--not-pressed {
+                                        margin-left: rem( 20px );
+                                    }
+                                    
+                                    svg {
+                                        width: rem( 100px );
+                                        height: rem( 100px );
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                            .bottom-controls {
+                                
+                                padding-bottom: rem( $gutter );
+                                
+                                #ap-playbackRate {
+                                    font-size: rem( 50px );
+                                    width: rem( 95px );
+                                }
+                                
+                                svg {
+                                    width: rem( 50px );
+                                    height: rem( 50px );
+                                }
+                                
+                            }
+                        }
+                    }
+                    
+                }
+                
+            }
+            
+            #overlay-content {
+                
+                #overlay-close-btn {
+                    width: rem( 60px );
+                    height: rem( 60px );
+                    font-size: rem( 48px );
+                }
+                
+                .content {
+                    
+                    font-size: rem( 36px );
+                    line-height: rem( 48px );
+                    
+                    h4 {
+                        font-size: rem( 46px );
+                        line-height: rem( 58px );
+                    }
+                    
+                }
+                
+            } // end overlay
+            
+            #overlay-content.small-overlay {
+                
+                .content {
+                    
+                    .dwnld-list {
+                        
+                        li {
+                            
+                            a {
+                                padding: rem( 10px);
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
             }
             
         } // end main

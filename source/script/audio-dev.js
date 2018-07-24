@@ -207,8 +207,6 @@ class APlayer {
                 
             }
             
-            console.log(savedData);
-            
         }
         
     }
