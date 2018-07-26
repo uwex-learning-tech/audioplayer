@@ -1,3 +1,16 @@
+/*
+AUDIO PLAYER
+@version: 2.0.0
+@author: Ethan Lin
+@url: https://github.com/oel-mediateam/audioplayer
+@license: The MIT License (MIT)
+Copyright 2018 UWEX CEOEL Media
+*/
+
+
+/* IMPORTS
+--------------------------------------------------------------------------------- */
+
 @import "compass/css3/animation";
 @import "compass/css3/transform";
 @import "compass/css3/box-sizing";
@@ -10,15 +23,26 @@
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 
+/* VARIABLES
+--------------------------------------------------------------------------------- */
+
 $font: 'Open Sans', sans-serif;
 $font-size: 16px;
 $accent: #0a4a89;
 $gutter: 16px;
 $border-color: #ccc;
+$body-bg: #EFEEE8;
+$error-red: #d43131;
+
+/* FUNCTIONS
+--------------------------------------------------------------------------------- */
 
 @function rem( $px, $base: $font-size ) {
     @return ( $px / $base ) * 1rem;
 }
+
+/* ANIMATION KEYFRAMES
+--------------------------------------------------------------------------------- */
 
 @include keyframes( marquee ) {
     0% { @include translateX( 0% ); }
@@ -55,6 +79,10 @@ $border-color: #ccc;
     100% { @include rotate( 360deg ); }
 }
 
+
+/* GENERAL
+--------------------------------------------------------------------------------- */
+
 html {
     
     height: 100%;
@@ -67,8 +95,8 @@ html {
         padding: 0;
         margin: 0;
         font-family: $font;
-        font-size: rem( 16px );
-        background-color: #EFEEE8;
+        font-size: rem( $font-size );
+        background-color: $body-bg;
         
         * {
             @include box-sizing( "border-box" );
@@ -82,7 +110,7 @@ html {
             padding: rem( $gutter / 4 );
             width: 100%;
             min-height: rem( 20px );
-            background-color: rgb(255, 242, 162);
+            background-color: rgb( 255, 242, 162 );
             top: 0;
             left: 0;
         }
@@ -95,7 +123,7 @@ html {
             font-size: rem( 14px );
             text-align: center;
             color: #fff;
-            background-color: #d43131;
+            background-color: $error-red;
             z-index: 99;
             padding: rem( 5px) 0;
         }
@@ -152,6 +180,8 @@ html {
             padding: 0;
         }
         
+        /* ANIMATIONS
+        ------------------------------------------------------------------------- */
         .fadeIn {
             @include animation( fadeIn 0.5s linear 1 );
             @include opacity( 1 );
@@ -182,6 +212,9 @@ html {
     
 }
 
+/* AUDIO PLAYER WRAPPER
+--------------------------------------------------------------------------------- */
+
 #ap-wrapper {
     
     @include nested-reset();
@@ -201,7 +234,10 @@ html {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-        
+    
+    /* ERROR SCREEN
+    ----------------------------------------------------------------------------- */
+
     #ap-error {
         
         display: none;
@@ -212,7 +248,7 @@ html {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #d43131;
+        background-color: $error-red;
         z-index: 10;
         
         .msg {
@@ -243,7 +279,10 @@ html {
             
         }
         
-    } // end error
+    }
+    
+    /* SPLASH SCREEN
+    ----------------------------------------------------------------------------- */
     
     #ap-splash {
         
@@ -368,7 +407,7 @@ html {
             
         }
         
-    } // end splash
+    }
     
     #ap-splash.hide-splash {
         
@@ -379,6 +418,9 @@ html {
         }
         
     }
+    
+    /* MAIN INTERFACE SCREEN
+    ----------------------------------------------------------------------------- */
     
     #ap-main {
         
@@ -391,6 +433,8 @@ html {
         height: 100%;
         overflow: hidden;
         
+        /* HEAD BANNER
+        ------------------------------------------------------------------------- */
         .head {
             
             @include display-flex();
@@ -512,7 +556,10 @@ html {
                 
             }
             
-        } // end head
+        }
+        
+        /* BODY (TRACK LIST AND CAPTION AREA)
+        ------------------------------------------------------------------------- */
         
         .body {
             
@@ -696,6 +743,9 @@ html {
             }
             
         }
+        
+        /* FOOT (PLAYBACK CONTROLS)
+        ------------------------------------------------------------------------- */
         
         .foot {
             
@@ -915,6 +965,9 @@ html {
             
         }
         
+        /* OVERLAY SCREEN
+        ------------------------------------------------------------------------- */
+        
         #overlay-content {
             
             display: none;
@@ -984,7 +1037,10 @@ html {
                 
             }
             
-        } // end overlay
+        }
+        
+        /* DIALOG STYLE OVERYLAY SCREEN
+        ------------------------------------------------------------------------- */
         
         #overlay-content.small-overlay {
             
@@ -1032,7 +1088,7 @@ html {
             
         }
         
-    } // end main
+    }
     
     #ap-main:before {
         display: block;
@@ -1049,6 +1105,9 @@ html {
         content: ' ';
         z-index: -1;
     }
+    
+    /* MAIN INTERFACE SCREEN FOR SINGLE TRACK
+    ----------------------------------------------------------------------------- */
     
     .single {
         
@@ -1099,6 +1158,9 @@ html {
     
 }
 
+/* FOR SCREEN RESOLUTION LARGER THAN 768 PIXELS
+--------------------------------------------------------------------------------- */
+
 @media only screen and (min-width: 768px) {
     
     html {
@@ -1130,6 +1192,9 @@ html {
     }
     
 }
+
+/* FOR iPHONE (OR SIMILAR DEVICE) SCREEN
+--------------------------------------------------------------------------------- */
 
 @media only screen and ( min-device-width : 414px ) 
 and ( max-device-width : 736px ) and ( orientation : portrait ) {

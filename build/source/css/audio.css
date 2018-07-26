@@ -1,4 +1,20 @@
+/*
+AUDIO PLAYER
+@version: 2.0.0
+@author: Ethan Lin
+@url: https://github.com/oel-mediateam/audioplayer
+@license: The MIT License (MIT)
+Copyright 2018 UWEX CEOEL Media
+*/
+/* IMPORTS
+--------------------------------------------------------------------------------- */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
+/* VARIABLES
+--------------------------------------------------------------------------------- */
+/* FUNCTIONS
+--------------------------------------------------------------------------------- */
+/* ANIMATION KEYFRAMES
+--------------------------------------------------------------------------------- */
 @-moz-keyframes marquee {
   0% {
     -moz-transform: translateX(0%);
@@ -134,6 +150,8 @@
     -ms-transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+/* GENERAL
+--------------------------------------------------------------------------------- */
 html {
   height: 100%;
   font-size: 16px; }
@@ -144,7 +162,9 @@ html {
     margin: 0;
     font-family: "Open Sans", sans-serif;
     font-size: 1rem;
-    background-color: #EFEEE8; }
+    background-color: #EFEEE8;
+    /* ANIMATIONS
+    ------------------------------------------------------------------------- */ }
     html body * {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -238,11 +258,21 @@ html {
       -webkit-animation: spin 1s linear infinite;
       animation: spin 1s linear infinite; }
 
+/* AUDIO PLAYER WRAPPER
+--------------------------------------------------------------------------------- */
 #ap-wrapper {
   position: relative;
   min-width: 20rem;
   height: 100%;
-  background-color: #ccc; }
+  background-color: #ccc;
+  /* ERROR SCREEN
+  ----------------------------------------------------------------------------- */
+  /* SPLASH SCREEN
+  ----------------------------------------------------------------------------- */
+  /* MAIN INTERFACE SCREEN
+  ----------------------------------------------------------------------------- */
+  /* MAIN INTERFACE SCREEN FOR SINGLE TRACK
+  ----------------------------------------------------------------------------- */ }
   #ap-wrapper div, #ap-wrapper span, #ap-wrapper applet, #ap-wrapper object, #ap-wrapper iframe,
   #ap-wrapper h1, #ap-wrapper h2, #ap-wrapper h3, #ap-wrapper h4, #ap-wrapper h5, #ap-wrapper h6, #ap-wrapper p, #ap-wrapper blockquote, #ap-wrapper pre,
   #ap-wrapper a, #ap-wrapper abbr, #ap-wrapper acronym, #ap-wrapper address, #ap-wrapper big, #ap-wrapper cite, #ap-wrapper code,
@@ -415,7 +445,17 @@ html {
     position: relative;
     z-index: 1;
     height: 100%;
-    overflow: hidden; }
+    overflow: hidden;
+    /* HEAD BANNER
+    ------------------------------------------------------------------------- */
+    /* BODY (TRACK LIST AND CAPTION AREA)
+    ------------------------------------------------------------------------- */
+    /* FOOT (PLAYBACK CONTROLS)
+    ------------------------------------------------------------------------- */
+    /* OVERLAY SCREEN
+    ------------------------------------------------------------------------- */
+    /* DIALOG STYLE OVERYLAY SCREEN
+    ------------------------------------------------------------------------- */ }
     #ap-wrapper #ap-main .head {
       display: -webkit-flex;
       display: flex;
@@ -923,6 +963,8 @@ html {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0; }
 
+/* FOR SCREEN RESOLUTION LARGER THAN 768 PIXELS
+--------------------------------------------------------------------------------- */
 @media only screen and (min-width: 768px) {
   html {
     height: unset; }
@@ -938,6 +980,8 @@ html {
     max-width: 20rem;
     margin: 1rem auto;
     height: 35.5rem; } }
+/* FOR iPHONE (OR SIMILAR DEVICE) SCREEN
+--------------------------------------------------------------------------------- */
 @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: portrait) {
   html {
     height: 100%; }
