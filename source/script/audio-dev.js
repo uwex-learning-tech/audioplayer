@@ -12,10 +12,12 @@
 
 'use strict';
 
+// audio player class
 class APlayer {
     
     constructor() {
         
+        // elements of the audio player
         this.el = {
             splash: '#ap-splash',
             splashTitle: '#ap-splash .cover-info .title',
@@ -56,7 +58,10 @@ class APlayer {
             copyright: '.copyright p'
         };
         
+        // manifest object to hold data from the manifest JSON file
         this.manifest ={};
+        
+        // album object to hold data from the album XML file
         this.album = {
             url: 'assets/album.xml',
             program: {},
@@ -65,19 +70,27 @@ class APlayer {
             sameAuthor: true,
             sameAuthorLoaded: false
         };
+        
+        // holds the reference to the audio player instance
         this.player = null;
+        
+        // reference object to hold reference values
         this.reference = {
             names: this._parseUri( window.location.href )
         };
+        
+        // marquee object to hold start and stop timers
         this.marquee ={
             start: null,
             stop: null
         };
         
+        // start the player by loading and getting the manifest
         this.getManifest();
         
     }
     
+    // function to get the manifest data and then set the player UIs
     getManifest() {
         
         const self = this;
@@ -99,6 +112,8 @@ class APlayer {
         
     }
     
+    // function to set the player UIs from loading the template file and then
+    // check for support, bind event listners, and get album data
     setUIs() {
         
         const self = this;
@@ -111,18 +126,19 @@ class APlayer {
             
             body.innerHTML += res;
             
-            self.getAlbum();
-            
             self._checkSupport();
             self._setStartResumeListeners();
             self._expandDownloadBtnMenu();
-            self._expandTracksToggle();
+            self.expandTracksToggle();
             self._setShowProfileListener();
+            
+            self.getAlbum();
             
         } );
         
     }
     
+    // "private" function to add track list click event listener
     _trackListItemListener() {
         
         const self = this;
@@ -147,6 +163,7 @@ class APlayer {
         
     }
     
+     // "private" function to add expand download button event listeners
     _expandDownloadBtnMenu() {
         
         const self = this;
@@ -171,6 +188,7 @@ class APlayer {
         
     }
     
+     // "private" function to add start and resume click event listeners
     _setStartResumeListeners() {
         
         const self = this;
@@ -211,6 +229,7 @@ class APlayer {
         
     }
     
+     // function to get the data from the album XML file and set the data to it respective UIs and set up the audio player
     getAlbum() {
         
         const self = this;
@@ -295,8 +314,6 @@ class APlayer {
                 
             } );
             
-//            console.log( self.album );
-            
             self.setData();
             self._setupAudioPlayer();
             
@@ -304,6 +321,7 @@ class APlayer {
         
     }
     
+    // function to set track
     setTrack( num, seektime ) {
         
         seektime = typeof seektime !== 'undefined' ? seektime : 0;
@@ -469,6 +487,7 @@ class APlayer {
         
     }
     
+     // "private" function to determind and load the author profile image
     _loadAuthorPic( track ) {
         
         const self = this;
@@ -506,6 +525,7 @@ class APlayer {
         
     }
     
+    // function to set the album data to their respective UI elements
     setData() {
         
         const self = this;
@@ -751,6 +771,7 @@ class APlayer {
         
     }
     
+     // "private" function to setup the audio player settings
     _setupAudioPlayer() {
         
         const self = this;
@@ -797,8 +818,9 @@ class APlayer {
             
         } );
         
-    } // end _setupAudioPlayer
+    }
     
+     // "private" function handle player ready event
     _handlePlayerReady() {
         
         const self = this;
@@ -1017,6 +1039,7 @@ class APlayer {
             
     } // end player ready event
     
+    // "private" function to set program theme bar
     _setProgram() {
         
         const self = this;
@@ -1053,6 +1076,7 @@ class APlayer {
         
     }
     
+    // "private" function to check for core feature support from web browser
     _checkSupport() {
         
         if ( this.hasCoreFeaturesSupport() ) {
@@ -1070,6 +1094,7 @@ class APlayer {
         
     }
     
+    // function to determine the core feature support
     hasCoreFeaturesSupport() {
     
         if ( !Modernizr.audio && Modernizr.json && Modernizr.json
@@ -1081,6 +1106,7 @@ class APlayer {
         
     }
     
+    // function to determine any appearance issues
     hasAppearanceIusses() {
     
         if ( !Modernizr.svg ) {
@@ -1103,6 +1129,7 @@ class APlayer {
         
     }
     
+    // function to show error
     showError( iconStr, titleStr, bodyStr ) {
     
         let splash = this._selector( this.el.splash );
@@ -1130,6 +1157,7 @@ class APlayer {
         
     }
     
+    // function to show warning
     showWarning( str ) {
     
         const self = this;
@@ -1154,6 +1182,7 @@ class APlayer {
         
     }
     
+    // function to hide the splash screen
     hideSplash() {
     
         let splash = this._selector( this.el.splash );
@@ -1166,6 +1195,7 @@ class APlayer {
         
     }
     
+    // function to show author profile
     showProfile() {
         
         const self = this;
@@ -1260,6 +1290,7 @@ class APlayer {
 
     }
     
+    // "private" function to set the author profile
     _setProfile( author, bio ) {
         
         let authoroverlayDisplayContent = this._selector( this.el.overlayDisplayContent );
@@ -1277,6 +1308,7 @@ class APlayer {
         
     }
     
+    // function to close the overlay screen
     closeOverlay() {
         
         let overlayDisplay = this._selector( this.el.overlayDisplay );
@@ -1293,6 +1325,7 @@ class APlayer {
 
     }
     
+    // function to add event listener to show the profile
     _setShowProfileListener() {
         
         const self = this;
@@ -1306,7 +1339,8 @@ class APlayer {
         
     }
     
-    _expandTracksToggle() {
+    // function to expand and close the track list
+    expandTracksToggle() {
         
         const self = this;
         const expandTracksBtn = self._selector( this.el.expandTracksBtn );
@@ -1329,6 +1363,7 @@ class APlayer {
         
     }
     
+    // "private" functiont to open the track list
     _openTrackList() {
         
         const self = this;
@@ -1348,6 +1383,7 @@ class APlayer {
         
     }
     
+    // "private" functiont to close the track list
     _closeTrackList() {
         
         const self = this;
@@ -1367,7 +1403,7 @@ class APlayer {
         
     }
     
-    /*** HELPER METHODS ***/
+    /*** HELPER FUNCTIONS ***/
     
     _selector( str, all ) {
         
@@ -1737,7 +1773,8 @@ class APlayer {
     
 } // end APlayer class
 
-/**** ON DOM READY ****/
+// ON DOM READY
+
 ( function ready( fn ) {
     
     if ( document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading' ) {
