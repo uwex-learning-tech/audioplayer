@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <album accent="" splashImgFormat="svg" trackImgFormat="jpg" analytics="off" xmlVersion="2">
-
+    
+    <!--
+        Album General Setup
+        - Program (optional): change the theme and splash screen image
+        - Course (optional): change the splash screen image to reflect a course in
+          the same program
+        - Title: title of the presentation
+        - Subtitle: supplement title
+        - Author name: the name of the author and will be used for the author
+          picture (without an special characters)
+          - Content within the author tag will replace centralized content
+        - Length: the total duration of all tracks combined
+    -->
+    
 	<setup program="" course="">
 		<title>HTML5 Audio Player</title>
 		<subtitle>Version 2 Demo</subtitle>
@@ -8,21 +21,29 @@
 		<length>15 Minutes</length>
 	</setup>
 
-	<!-- single track only need one track element -->
+	<!--
+    	Single track only need one track element
+    	- every track will have a required author tag; leave it blank if not needed
+    	  - will override author info from the centrailzed server or the author
+    	    specified in the setup above
+          - same rules as the author tag in the setup
+        - each track must have src attribute which holds the MP3 file name
+          - .mp3 file extenion is not required and should not be included
+    -->
 
-	<track src="cookie" >
+	<track src="cookie">
 		<title>Chocolate Chip Cookie</title>
 		<author name="Bryan Bortz"></author>
 	</track>
 
 	<!-- for multiple tracks, add more track elements -->
 	
-	<track src="FasterRide" >
+	<track src="FasterRide">
 		<title>Faster Ride</title>
 		<author name="Cartel"></author>
 	</track>
 	
-	<track src="MySongsKnowWhatYouDidInTheDark" >
+	<track src="MySongsKnowWhatYouDidInTheDark">
 		<title>My Songs Know What You Did In The Dark</title>
 		<author name="Fall Out Boy"></author>
 	</track>
