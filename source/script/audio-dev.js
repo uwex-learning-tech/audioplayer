@@ -68,7 +68,8 @@ class APlayer {
             downloads: [],
             currentTrack: 0,
             sameAuthor: true,
-            sameAuthorLoaded: false
+            sameAuthorLoaded: false,
+            analyticsOn: false
         };
         
         // holds the reference to the audio player instance
@@ -76,7 +77,8 @@ class APlayer {
         
         // reference object to hold reference values
         this.reference = {
-            names: this._parseUri( window.location.href )
+            names: this._parseUri( window.location.href ),
+            fileName: 'album'
         };
         
         // marquee object to hold start and stop timers
@@ -198,6 +200,8 @@ class APlayer {
         startBtn.addEventListener( 'click', function() {
             
             self.hideSplash();
+            self.sendEventToGA( 'StartBtn', 'click', self.reference.fileName );
+            
             self.setTrack( self.album.currentTrack );
             
         } );
@@ -215,7 +219,9 @@ class APlayer {
                     resumeBtn.style.display = 'block';
                     
                     resumeBtn.addEventListener( 'click', function() {
-            
+                        
+                        self.sendEventToGA( 'ResumeBtn', 'click', self.reference.fileName );
+                        
                         self.hideSplash();
                         self.setTrack( savedData.track, savedData.time );
                         
@@ -314,6 +320,17 @@ class APlayer {
                 
             } );
             
+            if ( self.album.settings.analytics === "on" || 
+            self.album.settings.analytics === "yes" ) {
+                
+                if ( !self._isEmpty( self.manifest.ap_google_tracking_id ) ) {
+                    
+                    self.addGATracking( self.manifest.ap_google_tracking_id, self.album.settings.version );
+                    
+                }
+                
+            }
+            
             self.setData();
             self._setupAudioPlayer();
             
@@ -329,6 +346,7 @@ class APlayer {
         // hold the class
         const self = this;
         
+        // update current track
         num = Number( num );
         self.album.currentTrack = num;
         
@@ -547,21 +565,15 @@ class APlayer {
         length.innerHTML = this.album.length;
         
         // splash download menu list
-        let fileName = self.reference.names;
-        
-        if ( fileName.length === 0 ) {
+        if ( self.reference.names.length > 0 ) {
             
-            fileName = 'album';
-            
-        } else {
-            
-            fileName = self.reference.names[self.reference.names.length - 1];
+            this.reference.fileName = self.reference.names[self.reference.names.length - 1];
             
         }
         
         Array.prototype.forEach.call( this.manifest.ap_download_files, function( el ) {
             
-            let file = fileName + '.' + el.format;
+            let file = self.reference.fileName + '.' + el.format;
             
             self._fileExists( file, function( exist ) {
                 
@@ -570,9 +582,15 @@ class APlayer {
                     let link = document.createElement( 'a' );
             
                     link.href = file;
-                    link.setAttribute( 'download', file );
                     link.setAttribute( 'role', 'menuitem' );
+                    link.setAttribute( 'download', file );
                     link.innerHTML = el.label;
+                    
+                    link.addEventListener( 'click', function() {
+                        
+                        self.sendEventToGA( el.label + 'DwnldLink', 'click', self.reference.fileName );
+                        
+                    } );
                     
                     let dwnldMenu = self._selector( self.el.dwnldBtnMenu );
                     dwnldMenu.appendChild( link );
@@ -729,6 +747,12 @@ class APlayer {
                 button.setAttribute( 'download', el.src + '.mp3' );
                 button.href = 'assets/audio/' + el.src + '.mp3';
                 button.setAttribute( 'role', 'button' );
+                
+                button.addEventListener( 'click', function() {
+                        
+                    self.sendEventToGA( el.src + 'TrackDwnldLink', 'click', self.reference.fileName );
+                    
+                } );
                 
                 let svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
                 
@@ -912,6 +936,12 @@ class APlayer {
                 a.innerHTML = obj.name;
                 a.setAttribute( 'download', obj.url );
                 
+                a.addEventListener( 'click', function() {
+                        
+                    self.sendEventToGA( obj.name + 'DwnldLink', 'click', self.reference.fileName );
+                    
+                } );
+                
                 li.appendChild( a );
                 ul.appendChild( li );
                 
@@ -985,10 +1015,21 @@ class APlayer {
             
             self.player.on( 'timeupdate', function() {
                 
-                let pTime = self.player.currentTime / self.player.duration;
+                let trackNum = Number( self.album.currentTrack ) + 1;
+                let currentTime = self.player.currentTime;
+                let pTime = currentTime / self.player.duration;
+                
+                if ( currentTime >= 3 && currentTime <= 4 ) {
+                    
+                    self.sendEventToGA( 'Playback', 'start', self.reference.fileName + ':track' + trackNum );
+                    
+                }
                 
                 if ( pTime >= 0.45 && pTime <= 0.5 ) {
+                    
                     window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
+                    
+                    self.sendEventToGA( 'Playback', 'halfway', self.reference.fileName + ':track' + trackNum );
                     
                 }
                 
@@ -998,6 +1039,8 @@ class APlayer {
         
         // on playback end
         self.player.on( 'ended', function() {
+            
+            let trackNum = Number( self.album.currentTrack ) + 1;
             
             if ( playpauseBtn.classList.contains( 'plyr__control--pressed' ) ) {
             
@@ -1010,6 +1053,8 @@ class APlayer {
                 window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: 0 } ) );
                 
             }
+            
+            self.sendEventToGA( 'Playback', 'completed', self.reference.fileName + ':track' + trackNum );
             
             self.player.restart();
             
@@ -1578,6 +1623,32 @@ class APlayer {
         let b = bigint & 255;
     
         return [r, g, b].join();
+        
+    }
+    
+    /*** GOOGLE ANALYTICS METHODS ***/
+    
+    // function to add google analytics tracking
+    addGATracking( id, version ) {
+        
+        this.album.analyticsOn = true;
+        
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+        ga( 'create', id, 'auto' );
+        ga( 'set', { 'appName': 'Audio Player', 'appVersion': version } );
+        ga( 'send', 'screenview', { screenName: this.reference.fileName } );
+        
+    }
+    
+    sendEventToGA( category, action, label ) {
+        
+        if ( this.album.analyticsOn ) {
+            
+            ga( 'send', 'event', category, action, label, 1, { screenName: this.reference.fileName } );
+            
+        }
         
     }
     
