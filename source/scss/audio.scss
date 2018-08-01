@@ -789,12 +789,14 @@ html {
                     
                     .plyr__captions {
                         
-                        top: -55%;
+                        @include display-flex();
+                        @include align-items( center );
+                        @include justify-content( center );
+                        bottom: unset;
                         
                         .plyr__caption {
                             padding: rem( 5px );
-                            background-color: #000;
-                            line-height: 2;
+                            background-color: rgba( 0, 0, 0, 0.75);
                         }
                         
                     }
@@ -939,6 +941,10 @@ html {
                                 @include display-flex();
                                 @include align-items( center );
                                 @include justify-content( center );
+                            }
+                            
+                            .plyr__volume {
+                                min-width: rem( 100px );
                             }
                             
                             input[type="range"] {
@@ -1109,16 +1115,16 @@ html {
     /* MAIN INTERFACE SCREEN FOR SINGLE TRACK
     ----------------------------------------------------------------------------- */
     
-    .single {
+    #ap-main.single {
         
         .head {
             
             .track-info {
                 
-                display: block !important;
+                display: block;
                 
                 .author {
-                    line-height: normal !important;
+                    line-height: normal;
                 }
                 
             }
@@ -1132,27 +1138,18 @@ html {
         .body {
             
             .track-list {
-                display: none !important;
+                display: none;
             }
             
         }
         
         .foot {
             
-            .plyr--video {
-                
-                .plyr__captions {
-                    top: -60% !important;
-                }
-                
-            }
-            
             .blank {
                 @include opacity( 0 );
             }
             
         }
-        
         
     }
     
@@ -1439,12 +1436,9 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
                         
                         .plyr__captions {
                             
-                            top: -80%;
-                            
                             .plyr__caption {
                                 font-size: rem( 50px );
                                 padding: rem( 10px );
-                                line-height: 1.55;
                             }
                             
                         }

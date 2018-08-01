@@ -69,7 +69,8 @@ class APlayer {
             currentTrack: 0,
             sameAuthor: true,
             sameAuthorLoaded: false,
-            analyticsOn: false
+            analyticsOn: false,
+            hasCaption: false
         };
         
         // holds the reference to the audio player instance
@@ -448,6 +449,9 @@ class APlayer {
                         
                     };
                     
+                    self._closeTrackList();
+                    self.album.hasCaption = true;
+                    
                 } else {
                     
                     self.player.source = {
@@ -467,6 +471,9 @@ class APlayer {
                         
                     };
                     
+                    self._openTrackList();
+                    self.album.hasCaption = false;
+                    
                 }
                 
                 self.player.on( 'ready', function() {
@@ -474,6 +481,12 @@ class APlayer {
                     self._handlePlayerReady();
                     
                     self.player.play();
+                    
+                    if ( self.album.hasCaption ) {
+                        
+                        self.player.toggleCaptions( true );
+                        
+                    }
                     
                     if ( seektime > 0 ) {
                         
@@ -831,14 +844,26 @@ class APlayer {
                     iosNative: false
                 },
                 captions: {
-                    active: false,
+                    active: true,
                     language: 'en',
                     update: false
                 },
                 resetOnEnd: true,
                 storage: { enabled: useLocalStorage, key: 'plyr' }
                             
-            } ); 
+            } );
+            
+            self.player.on( 'ready', function() {
+                
+                let captionArea = self._selector( '.plyr__captions' );
+                let bodyAreaHeight = self._selector( self.el.mainBody ).offsetHeight;
+                
+                let top = ( bodyAreaHeight - 40 ) * -1;
+                
+                captionArea.style.top = top + 'px';
+                captionArea.style.height = bodyAreaHeight + 'px';
+                
+            } );
             
         } );
         
@@ -991,6 +1016,16 @@ class APlayer {
                 
             }
             
+            if ( Modernizr.localstorage ) {
+                            
+                let plyrSettings = JSON.parse( window.localStorage.getItem( 'plyr' ) );
+                
+                delete plyrSettings.captions;
+                
+                window.localStorage.setItem( 'plyr', JSON.stringify( plyrSettings ) );
+                    
+            }
+            
         } );
         
         self.player.on( 'playing', function() {
@@ -1007,7 +1042,7 @@ class APlayer {
                             
                     window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
                     
-                }
+            }
             
         } );
         
