@@ -1797,6 +1797,11 @@ class APlayer {
         evt.target.classList.remove( 'fadeOut' );
         evt.target.removeEventListener( evt.target.params._event, this._fadeCallback );
         
+        evt.target.params = {
+            _event: '',
+            _callback: ''
+        };
+        
     }
     
     _slideDown( el, callback ) {
