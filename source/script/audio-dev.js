@@ -863,6 +863,100 @@ class APlayer {
                 captionArea.style.top = top + 'px';
                 captionArea.style.height = bodyAreaHeight + 'px';
                 
+                const downloadBtn = self._selector( self.el.mainDwnldBtn );
+                
+                if ( self.album.tracks.length > 1 ) {
+                    
+                    const totalTracks = self.album.tracks.length - 1;
+                    const nextBtn = self._selector( self.el.next );
+                    const prevBtn = self._selector( self.el.previous );
+                    
+                    if ( self.album.currentTrack <= 0 ) {
+                    
+                        prevBtn.setAttribute( 'disabled', true );
+                        prevBtn.classList.add( 'disabled' );
+                    }
+                    
+                    if ( self.album.currentTrack >= totalTracks ) {
+                                
+                        nextBtn.setAttribute( 'disabled', true );
+                        nextBtn.classList.add( 'disabled' );
+                        
+                    }
+                    
+                    nextBtn.addEventListener( 'click', function() {
+                    
+                    
+                        if ( self.album.currentTrack < totalTracks ) {
+                            
+                            self.album.currentTrack++;
+                            self.setTrack( self.album.currentTrack );
+                            
+                        }
+                        
+                    } );
+                    
+                    prevBtn.addEventListener( 'click', function() {
+                        
+                        if ( self.album.currentTrack > 0 ) {
+                            
+                            self.album.currentTrack--;
+                            self.setTrack( self.album.currentTrack );
+                            
+                        }
+                        
+                    } );
+                    
+                }
+                
+                downloadBtn.addEventListener( 'click', function() {
+                    
+                    let overlayDisplay = self._selector( self.el.overlayDisplay );
+                    let overlayDisplayContent = self._selector( self.el.overlayDisplayContent );
+                    let closeBtn = self._selector( self.el.closeOverlayBtn );
+                    
+                    let h4 = document.createElement( 'h4' );
+                    
+                    h4.innerHTML = "Downloads";
+                    
+                    overlayDisplayContent.appendChild( h4 );
+                    
+                    let ul = document.createElement( 'ul' );
+                    
+                    ul.classList.add( 'dwnld-list' );
+                    
+                    Array.prototype.forEach.call( self.album.downloads, function( obj ) {
+                        
+                        let li = document.createElement( 'li' );
+                        let a = document.createElement( 'a' );
+                        
+                        a.href = obj.url;
+                        a.innerHTML = obj.name;
+                        a.setAttribute( 'download', obj.url );
+                        
+                        a.addEventListener( 'click', function() {
+                                
+                            self.sendEventToGA( obj.name + 'DwnldLink', 'click', self.reference.fileName );
+                            
+                        } );
+                        
+                        li.appendChild( a );
+                        ul.appendChild( li );
+                        
+                    } );
+                    
+                    overlayDisplayContent.appendChild( ul );
+                    
+                    overlayDisplay.classList.add( 'small-overlay' );
+                    overlayDisplay.style.display = 'block';
+                    self._fadeIn( overlayDisplay );
+                    
+                    closeBtn.addEventListener( 'click', function() {
+                        self.closeOverlay();
+                    }, {once: true} );
+                    
+                } );
+                
             } );
             
         } );
@@ -877,8 +971,6 @@ class APlayer {
         const playpauseBtn = self._selector( '#ap-playpause' );
         const muteUnmuteBtn = self._selector( '#ap-muteunmute' );
         const playbackRateBtn = self._selector( '#ap-playbackRate' );
-        const totalTracks = self.album.tracks.length - 1;
-        const downloadBtn = self._selector( self.el.mainDwnldBtn );
         const captionBtn = self._selector( self.el.captionBtn );
         
         // check playback rate and update playback rate select element
@@ -892,97 +984,6 @@ class APlayer {
             }
             
         }
-        
-        if ( self.album.tracks.length > 1 ) {
-            
-            const nextBtn = self._selector( self.el.next );
-            const prevBtn = self._selector( self.el.previous );
-            
-            if ( self.album.currentTrack <= 0 ) {
-            
-                prevBtn.setAttribute( 'disabled', true );
-                prevBtn.classList.add( 'disabled' );
-            }
-            
-            if ( self.album.currentTrack >= totalTracks ) {
-                        
-                nextBtn.setAttribute( 'disabled', true );
-                nextBtn.classList.add( 'disabled' );
-                
-            }
-            
-            nextBtn.addEventListener( 'click', function() {
-            
-            
-                if ( self.album.currentTrack < totalTracks ) {
-                    
-                    self.album.currentTrack++;
-                    self.setTrack( self.album.currentTrack );
-                    
-                }
-                
-            } );
-            
-            prevBtn.addEventListener( 'click', function() {
-                
-                if ( self.album.currentTrack > 0 ) {
-                    
-                    self.album.currentTrack--;
-                    self.setTrack( self.album.currentTrack );
-                    
-                }
-                
-            } );
-            
-        }
-        
-        downloadBtn.addEventListener( 'click', function() {
-            
-            let overlayDisplay = self._selector( self.el.overlayDisplay );
-            let overlayDisplayContent = self._selector( self.el.overlayDisplayContent );
-            let closeBtn = self._selector( self.el.closeOverlayBtn );
-            
-            let h4 = document.createElement( 'h4' );
-            
-            h4.innerHTML = "Downloads";
-            
-            overlayDisplayContent.appendChild( h4 );
-            
-            let ul = document.createElement( 'ul' );
-            
-            ul.classList.add( 'dwnld-list' );
-            
-            Array.prototype.forEach.call( self.album.downloads, function( obj ) {
-                
-                let li = document.createElement( 'li' );
-                let a = document.createElement( 'a' );
-                
-                a.href = obj.url;
-                a.innerHTML = obj.name;
-                a.setAttribute( 'download', obj.url );
-                
-                a.addEventListener( 'click', function() {
-                        
-                    self.sendEventToGA( obj.name + 'DwnldLink', 'click', self.reference.fileName );
-                    
-                } );
-                
-                li.appendChild( a );
-                ul.appendChild( li );
-                
-            } );
-            
-            overlayDisplayContent.appendChild( ul );
-            
-            overlayDisplay.classList.add( 'small-overlay' );
-            overlayDisplay.style.display = 'block';
-            self._fadeIn( overlayDisplay );
-            
-            closeBtn.addEventListener( 'click', function() {
-                self.closeOverlay();
-            }, {once: true} );
-            
-        } );
         
         // check caption
         if ( self.player.currentTrack >= 0 ) {
