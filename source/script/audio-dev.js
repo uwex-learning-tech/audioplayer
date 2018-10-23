@@ -281,7 +281,7 @@ class APlayer {
             // set course
             if ( !self._isEmpty( xmlSetup.getAttribute( 'course' ) ) ) {
                 
-                self.album.program.course = xmlSetup.getAttribute( 'course' );
+                self.album.course = xmlSetup.getAttribute( 'course' );
                 
             }
             
@@ -625,40 +625,71 @@ class APlayer {
             
         } );
         
-        // splash background image
-        if ( !this._isEmpty( this.album.program.name ) ) {
+        this._fileExists( 'assets/splash' + self.album.settings.splashFormat , function( exist ) {
             
-            let bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/default' + this.album.settings.splashFormat;
-            
-            if ( !this._isEmpty( self.album.program.course ) ) {
+            if ( exist ) {
                 
-                bgUrl = this.manifest.ap_splash_directory + this.album.program.name + '/' + this.album.program.course + this.album.settings.splashFormat;
+                let splashBg = self._selector( self.el.splash );
+                let head = self._selector( 'head' );
+                let bgImg = 'url("assets/splash"' + self.album.settings.splashFormat + '")';
                 
-            }
-            
-            this._fileExists( bgUrl, function( exist ) {
+                splashBg.style.backgroundImage = bgImg;
+        
+                // change the bg in the ap-main:before as well
+                let style = document.createElement( 'style' );
                 
-                if ( exist ) {
-                    
-                    let splashBg = self._selector( self.el.splash );
-                    let head = self._selector( 'head' );
-                    let bgImg = 'url("' + bgUrl + '")';
-                    
-                    splashBg.style.backgroundImage = bgImg;
+                style.setAttribute( 'type', 'text/css' );
+                style.innerHTML = '#ap-main:before{background-image: ' + bgImg + ' !important;}';
+                
+                head.appendChild( style );
+                
+            } else {
+                
+                if ( !self._isEmpty( self.album.program.name ) ) {
             
-                    // change the bg in the ap-main:before as well
-                    let style = document.createElement( 'style' );
+                    let bgUrl = self.manifest.ap_splash_directory + self.album.program.name + '/default' + self.album.settings.splashFormat;
                     
-                    style.setAttribute( 'type', 'text/css' );
-                    style.innerHTML = '#ap-main:before{background-image: ' + bgImg + ' !important;}';
+                    if ( !self._isEmpty( self.album.course ) ) {
+                        
+                        bgUrl = self.manifest.ap_splash_directory + self.album.program.name + '/' + self.album.course + self.album.settings.splashFormat;
+                        
+                    }
                     
-                    head.appendChild( style );
+                    self._fileExists( bgUrl, function( exist ) {
+                        
+                        let imgUrl = ""
+                        
+                        if ( exist ) {
+                            
+                            imgUrl = bgUrl;
+                            
+                        } else {
+                            
+                            imgUrl = self.manifest.ap_root_directory + 'images/splash.svg';
+                            
+                        }
+                        
+                        let splashBg = self._selector( self.el.splash );
+                        let head = self._selector( 'head' );
+                        let bgImg = 'url("' + imgUrl + '")';
+                        
+                        splashBg.style.backgroundImage = bgImg;
+                
+                        // change the bg in the ap-main:before as well
+                        let style = document.createElement( 'style' );
+                        
+                        style.setAttribute( 'type', 'text/css' );
+                        style.innerHTML = '#ap-main:before{background-image: ' + bgImg + ' !important;}';
+                        
+                        head.appendChild( style );
+                        
+                    } );
                     
                 }
                 
-            } );
+            }
             
-        }
+        } );
         
         // load accent
         if ( !this._isEmpty( self.album.settings.accent ) ) {
