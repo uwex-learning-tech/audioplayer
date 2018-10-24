@@ -360,6 +360,7 @@ class APlayer {
         let currentAuthor = self._selector( self.el.trackAuthor );
         
         currentAuthor.innerHTML = self.album.tracks[num].author;
+        self.getCentralAuthorName( self.album.tracks[num].author, self.el.trackAuthor );
         
         // load author picture if the track author is different
         if ( !self.album.sameAuthor ) {
@@ -574,7 +575,10 @@ class APlayer {
         
         title.innerHTML = this.album.title;
         subtitle.innerHTML = this.album.subtitle;
+        
         author.innerHTML = this.album.author;
+        this.getCentralAuthorName( this.album.author, this.el.splashAuthor );
+        
         length.innerHTML = this.album.length;
         
         // splash download menu list
@@ -625,6 +629,7 @@ class APlayer {
             
         } );
         
+        // set splash screen image
         this._fileExists( 'assets/splash' + self.album.settings.splashFormat , function( exist ) {
             
             if ( exist ) {
@@ -1344,7 +1349,7 @@ class APlayer {
                     let callback_name = options.callbackName || 'callback',
                         on_success = options.onSuccess || function() {},
                         on_timeout = options.onTimeout || function() {},
-                        timeout = options.timeout || 10; // sec
+                        timeout = options.timeout || 5; // sec
                 
                     let timeout_trigger = window.setTimeout( function() {
                         window[callback_name] = function() {};
@@ -1400,6 +1405,60 @@ class APlayer {
             self.closeOverlay();
         }, {once: true} );
 
+    }
+    
+    getCentralAuthorName( author, obj ) {
+        
+        var self = this;
+        var url = self.manifest.ap_author_directory + self._sanitize( author ) + '.json?callback=author'
+        
+        let $jsonp = ( function() {
+                
+            let that = {};
+            
+            that.send = function( src, options ) {
+                
+                let callback_name = options.callbackName || 'callback',
+                    on_success = options.onSuccess || function() {},
+                    on_timeout = options.onTimeout || function() {},
+                    timeout = options.timeout || 5; // sec
+            
+                let timeout_trigger = window.setTimeout( function() {
+                    window[callback_name] = function() {};
+                    on_timeout();
+                }, timeout * 1000);
+                
+                window[callback_name] = function( data ) {
+                    window.clearTimeout( timeout_trigger );
+                    on_success( data );
+                }
+                
+                let script = document.createElement( 'script' );
+                script.type = 'text/javascript';
+                script.async = true;
+                script.src = src;
+                
+                document.getElementsByTagName( 'head' )[0].appendChild( script );
+            
+            }
+            
+            return that;
+            
+        } )();
+    
+        $jsonp.send( url, {
+            
+            callbackName: 'author',
+            onSuccess: function( json ) {
+                
+                self._selector( obj ).innerHTML = json.name;
+                
+            },
+            onTimeout: function() {},
+            timeout: 0
+            
+        } );
+        
     }
     
     // "private" function to set the author profile

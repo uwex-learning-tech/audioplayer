@@ -22,7 +22,8 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 #### Version Change Log
 
 **Pending**
-* refactor splash image request
+* Refactor splash image request
+* Use central author name if available
 
 **2.0.0 (8/20/2018)**
 * New UIs for uniform design
