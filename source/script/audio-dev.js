@@ -3,10 +3,10 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/audioplayer
- * @version: 2.0.0
+ * @version: 2.0.1
  *
  * @license: The MIT License (MIT)
- * Copyright (c) 2014 - 2018 Media Serivces
+ * Copyright (c) 2014 - 2019 Media Serivces
  *
  */
 

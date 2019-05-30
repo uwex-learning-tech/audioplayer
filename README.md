@@ -1,5 +1,5 @@
 # Audio Player 
-_version 2.0.0_
+_version 2.0.1_
 
 ### Minimum Supported Web Browsers
 * Microsoft IE 11
@@ -22,8 +22,12 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 #### Version Change Log
 
 **Pending**
+_none_
+
+**2.0.1 (05/30/2019)**
 * Refactor splash image request
 * Use central author name if available
+* Fixed an issue where local splash image is not displaying
 
 **2.0.0 (8/20/2018)**
 * New UIs for uniform design
@@ -59,4 +63,4 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 
 ---
 ### License & Copyright
-(c) 2013 - 2018. [Ethan Lin](http://www.ethanslin.com), [Media Services](https://media.uwex.edu), and [University of Wisconsin-Extension Division of Continuing Education, Outreach & E-Learning](http://ce.uwex.edu/). All rights reserved.
+(c) 2013 - 2019. [Ethan Lin](http://www.ethanslin.com), [Media Services](https://media.uwex.edu), and [University of Wisconsin Extended Campus](http://ce.uwex.edu/). All rights reserved.
