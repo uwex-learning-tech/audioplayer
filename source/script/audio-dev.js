@@ -270,6 +270,10 @@ class APlayer {
                     
                     self.album.program.name = self.reference.names[3].toLowerCase();
                     
+                } else {
+                    
+                    self.album.program.name = "";
+                    
                 }
                 
             } else {
@@ -636,7 +640,7 @@ class APlayer {
                 
                 let splashBg = self._selector( self.el.splash );
                 let head = self._selector( 'head' );
-                let bgImg = 'url("assets/splash"' + self.album.settings.splashFormat + '")';
+                let bgImg = 'url("assets/splash' + self.album.settings.splashFormat + '")';
                 
                 splashBg.style.backgroundImage = bgImg;
         
@@ -651,7 +655,7 @@ class APlayer {
             } else {
                 
                 if ( !self._isEmpty( self.album.program.name ) ) {
-            
+                    
                     let bgUrl = self.manifest.ap_splash_directory + self.album.program.name + '/default' + self.album.settings.splashFormat;
                     
                     if ( !self._isEmpty( self.album.course ) ) {
@@ -660,11 +664,11 @@ class APlayer {
                         
                     }
                     
-                    self._fileExists( bgUrl, function( exist ) {
+                    self._fileExists( bgUrl, function( bexist ) {
                         
-                        let imgUrl = ""
+                        let imgUrl = "";
                         
-                        if ( exist ) {
+                        if ( bexist ) {
                             
                             imgUrl = bgUrl;
                             

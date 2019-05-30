@@ -25,10 +25,14 @@
 		"oAP": "/build/assets/album.xml",
 		"oF": 3
 		},
+	"/build": {
+		"ft": 65536,
+		"oA": 1,
+		"oAP": "/build/build",
+		"oF": 0
+		},
 	"/config.rb": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
+		"ft": 131072,
 		"oA": 0,
 		"oAP": "/config.rb",
 		"oF": 0
@@ -259,7 +263,7 @@
 	"displayValueWasSetByUser": 0,
 	"iconImageName": "meme-karate",
 	"iconImageWasSetByUser": 0,
-	"lastBuiltDate": 553712027
+	"lastBuiltDate": 580929850.55566204
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
