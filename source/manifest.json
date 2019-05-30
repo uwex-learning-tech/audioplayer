@@ -12,9 +12,9 @@
     "ap_author_directory": "https://media.uwex.edu/content/media/storybook_support/author/",
     "ap_splash_directory": "https://media.uwex.edu/content/media/storybook_support/splash/",
     "ap_logo_directory": "https://media.uwex.edu/content/media/storybook_support/logo/",
-    "ap_logo_default": "ceoel",
+    "ap_logo_default": "uwex",
     
-    "ap_copyright": "University of Wisconsin System and University of Wisconsin-Extension, Division of Continuing Education, Outreach, &amp; E-Learning. All rights reserved.",
+    "ap_copyright": "Board of Regents of the University of Wisconsin System and University of Wisconsin Extended Campus. All rights reserved.",
     "ap_download_files": [ 
         
         {
@@ -35,8 +35,8 @@
     "ap_custom_themes": [
         
         {
-            "name": "ceoel",
-            "colors": [ "#0a4a89", "#2a6b9f", "#578db5", "#88b1ce", "#c1d7e6" ]
+            "name": "uwex",
+            "colors": [ "#990033", "#880063", "#592C5F", "#645D9C", "#003764" ]
         },
         
         {
