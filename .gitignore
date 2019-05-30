@@ -10,7 +10,7 @@ bower_components/
 .sass-cache
 **/.sass-cache
 
-#ignore dev directory
-dev/
+#ignore build directory
+build/
 
 **/.DS_Store
