@@ -694,6 +694,22 @@ class APlayer {
                         
                     } );
                     
+                } else {
+                    
+                    let splashBg = self._selector( self.el.splash );
+                    let head = self._selector( 'head' );
+                    let bgImg = 'url("' + self.manifest.ap_root_directory + 'images/splash.svg' + '")';
+                    
+                    splashBg.style.backgroundImage = bgImg;
+            
+                    // change the bg in the ap-main:before as well
+                    let style = document.createElement( 'style' );
+                    
+                    style.setAttribute( 'type', 'text/css' );
+                    style.innerHTML = '#ap-main:before{background-image: ' + bgImg + ' !important;}';
+                    
+                    head.appendChild( style );
+                    
                 }
                 
             }
@@ -1164,18 +1180,19 @@ class APlayer {
     _setProgram() {
         
         const self = this;
+        let theme = self.album.program.name;
         
         if ( self.manifest.ap_custom_themes ) {
             
-            self.album.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+            theme = self.manifest.ap_custom_themes.find( function ( obj ) {
                 
                 return obj.name === self.album.program.name;
                 
             } );
             
-            if ( self.album.program === undefined ) {
+            if ( theme === undefined || theme === "" ) {
                 
-                self.album.program = self.manifest.ap_custom_themes.find( function ( obj ) {
+                theme = self.manifest.ap_custom_themes.find( function ( obj ) {
                     
                     return obj.name === self.manifest.ap_logo_default;
                     
@@ -1187,7 +1204,7 @@ class APlayer {
         
         let decorationBar = self._selector( '.program-theme' );
     
-        self.album.program.colors.forEach( function( hex ) {
+        theme.colors.forEach( function( hex ) {
                         
             let span = document.createElement( 'span' );
             span.style.backgroundColor = hex;

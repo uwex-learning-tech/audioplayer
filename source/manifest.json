@@ -9,9 +9,9 @@
     
     "ap_google_tracking_id": "UA-123041852-1",
     "ap_root_directory": "",
-    "ap_author_directory": "https://media.uwex.edu/content/media/storybook_support/author/",
-    "ap_splash_directory": "https://media.uwex.edu/content/media/storybook_support/splash/",
-    "ap_logo_directory": "https://media.uwex.edu/content/media/storybook_support/logo/",
+    "ap_author_directory": "https://media.uwex.edu/content/media/player_support/author/",
+    "ap_splash_directory": "https://media.uwex.edu/content/media/player_support/splash/",
+    "ap_logo_directory": "https://media.uwex.edu/content/media/player_support/logo/",
     "ap_logo_default": "uwex",
     
     "ap_copyright": "Board of Regents of the University of Wisconsin System and University of Wisconsin Extended Campus. All rights reserved.",

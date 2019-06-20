@@ -22,7 +22,7 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 #### Version Change Log
 
 **Pending**
-_none_
+* Fixed an issue where splash image is not loading
 
 **2.0.1 (05/30/2019)**
 * Refactor splash image request
