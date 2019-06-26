@@ -1,5 +1,5 @@
 # Audio Player 
-_version 2.0.1_
+_version 2.0.2_
 
 ### Minimum Supported Web Browsers
 * Microsoft IE 11
@@ -22,7 +22,11 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 #### Version Change Log
 
 **Pending**
+_none_
+
+**2.0.2 (06/26/2019)**
 * Fixed an issue where splash image is not loading
+* Updated manifest file to get program theme and copyright from centralized themes.json file
 
 **2.0.1 (05/30/2019)**
 * Refactor splash image request
