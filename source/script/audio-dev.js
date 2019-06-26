@@ -3,7 +3,7 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/audioplayer
- * @version: 2.0.1
+ * @version: 2.0.2
  *
  * @license: The MIT License (MIT)
  * Copyright (c) 2014 - 2019 Media Serivces
@@ -59,7 +59,8 @@ class APlayer {
         };
         
         // manifest object to hold data from the manifest JSON file
-        this.manifest ={};
+        this.manifest = {};
+        this.theme = {};
         
         // album object to hold data from the album XML file
         this.album = {
@@ -857,7 +858,7 @@ class APlayer {
         let date = new Date();
         let year = date.getFullYear();
         
-        copyright.innerHTML += '&copy; ' + year + '. ' + this.manifest.ap_copyright;
+        copyright.innerHTML += '&copy; ' + year + '.';
         
         // program theme
         this._setProgram();
@@ -1180,36 +1181,54 @@ class APlayer {
     _setProgram() {
         
         const self = this;
-        let theme = self.album.program.name;
         
-        if ( self.manifest.ap_custom_themes ) {
+        self._requestFile( self.manifest.ap_program_themes, function( xhr ) {
             
-            theme = self.manifest.ap_custom_themes.find( function ( obj ) {
-                
-                return obj.name === self.album.program.name;
-                
-            } );
+            self.theme = JSON.parse( xhr.response );
             
-            if ( theme === undefined || theme === "" ) {
+            let program = self.album.program.name;
+        
+            if ( self.theme.program_themes ) {
                 
-                theme = self.manifest.ap_custom_themes.find( function ( obj ) {
+                program = self.theme.program_themes.find( function ( obj ) {
                     
-                    return obj.name === self.manifest.ap_logo_default;
+                    return obj.name === self.album.program.name;
+                    
+                } );
+                
+                if ( program === undefined || program === "" ) {
+                    
+                    program = self.theme.program_themes.find( function ( obj ) {
+                        
+                        return obj.name === self.manifest.ap_logo_default;
+                        
+                    } );
+                    
+                }
+                
+            }
+            
+            if ( program.colors !== undefined ) {
+                
+                let decorationBar = self._selector( '.program-theme' );
+        
+                program.colors.forEach( function( hex ) {
+                                
+                    let span = document.createElement( 'span' );
+                    span.style.backgroundColor = hex;
+                    decorationBar.appendChild( span );
                     
                 } );
                 
             }
             
-        }
-        
-        let decorationBar = self._selector( '.program-theme' );
-    
-        theme.colors.forEach( function( hex ) {
-                        
-            let span = document.createElement( 'span' );
-            span.style.backgroundColor = hex;
-            decorationBar.appendChild( span );
-            
+            if ( self.theme.copyright ) {
+                
+                let copyright = self._selector( self.el.copyright );
+                
+                copyright.innerHTML += ' ' + self.theme.copyright;
+            }
+
         } );
         
     }
