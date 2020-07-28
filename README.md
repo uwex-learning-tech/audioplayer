@@ -14,9 +14,9 @@ For documentation, please visit: https://media.uwex.edu/resources/documentation/
 
 ---
 ### Bug Reporting and Questions
-If any bugs/glitches are found in this Storybook Plus application, please report them under the "**[Issues](https://github.com/oel-mediateam/audioplayer/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
+If any bugs/glitches are found in this Storybook Plus application, please report them under the "**[Issues](https://github.com/uwex-learning-tech/audioplayer/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
 
-For questions, please also post them under the "**[Issues](https://github.com/oel-mediateam/audioplayer/issues)**" page on GitHub.
+For questions, please also post them under the "**[Issues](https://github.com/uwex-learning-tech/audioplayer/issues)**" page on GitHub.
 
 ---
 #### Version Change Log
@@ -67,4 +67,4 @@ _none_
 
 ---
 ### License & Copyright
-(c) 2013 - 2019. [Ethan Lin](http://www.ethanslin.com), [Media Services](https://media.uwex.edu), and [University of Wisconsin Extended Campus](http://ce.uwex.edu/). All rights reserved.
+(c) 2013 - 2020. [Learning Technology & Media](https://media.uwex.edu), and [University of Wisconsin Extended Campus](http://ce.uwex.edu/). All rights reserved.
