@@ -4,7 +4,7 @@
 	{
 		"name": "Process All Remaining Files and Folders",
 		"stepType": 1,
-		"uuidString": "F384F7F8-410D-4206-9BD7-8C9DCCD72B3F"
+		"uuidString": "D77B7E43-7997-43B0-BB33-3EBED265843D"
 		}
 	],
 "creatorBuild": "32186",
@@ -31,21 +31,13 @@
 		"oAP": "/build/build",
 		"oF": 0
 		},
-	"/config.rb": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/config.rb",
-		"oF": 0
-		},
 	"/index.html": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
-		"oA": 0,
+		"oA": 2,
 		"oAP": "/build/index.html",
-		"oF": 0
+		"oF": 3
 		},
 	"/LICENSE": {
 		"cB": 0,
@@ -87,19 +79,19 @@
 		"miP": 0,
 		"oA": 2,
 		"oAP": "/build/source/images/icons.svg",
-		"oF": 2,
+		"oF": 3,
 		"opt": 0,
-		"plM": 3758088159,
+		"plM": 52780316221407,
 		"prP": 0
 		},
 	"/source/images/pic.png": {
 		"ft": 32768,
 		"iS": 4668,
-		"oA": 0,
+		"oA": 2,
 		"oAP": "/build/source/images/pic.png",
-		"oF": 2,
+		"oF": 3,
 		"oIPL": 0,
-		"opt": 1,
+		"opt": 0,
 		"oT": 1,
 		"q": 100
 		},
@@ -108,9 +100,9 @@
 		"miP": 0,
 		"oA": 2,
 		"oAP": "/build/source/images/splash.svg",
-		"oF": 2,
+		"oF": 3,
 		"opt": 0,
-		"plM": 3758088159,
+		"plM": 52780316221407,
 		"prP": 0
 		},
 	"/source/manifest.json": {
@@ -124,24 +116,24 @@
 	"/source/script/audio-dev.js": {
 		"bF": 0,
 		"ft": 64,
-		"ma": 1,
+		"ma": 0,
 		"mi": 1,
 		"oA": 0,
 		"oAP": "/build/source/script/audio.js",
 		"oF": 2,
 		"sC": 3,
-		"tS": 1
+		"tS": 0
 		},
 	"/source/script/lib/modernizr.js": {
 		"bF": 0,
 		"ft": 64,
-		"ma": 1,
+		"ma": 0,
 		"mi": 1,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/modernizr.js",
+		"oAP": "/build/source/script/lib/modernizr-min.js",
 		"oF": 3,
 		"sC": 3,
-		"tS": 1
+		"tS": 0
 		},
 	"/source/script/lib/plyr/blank.mp4": {
 		"cB": 0,
@@ -157,7 +149,7 @@
 		"ft": 16,
 		"ma": 0,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/plyr/plyr.css",
+		"oAP": "/build/source/script/lib/plyr/plyr-min.css",
 		"oF": 3,
 		"oS": 3
 		},
@@ -165,11 +157,11 @@
 		"bF": 0,
 		"ft": 64,
 		"ma": 0,
-		"mi": 0,
+		"mi": 1,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/plyr/plyr.min.js",
+		"oAP": "/build/source/script/lib/plyr/plyr.min-min.js",
 		"oF": 3,
-		"sC": 0,
+		"sC": 3,
 		"tS": 0
 		},
 	"/source/script/lib/plyr/plyr.min.js.map": {
@@ -184,11 +176,11 @@
 		"bF": 0,
 		"ft": 64,
 		"ma": 0,
-		"mi": 0,
+		"mi": 1,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/plyr/plyr.polyfilled.min.js",
+		"oAP": "/build/source/script/lib/plyr/plyr.polyfilled.min-min.js",
 		"oF": 3,
-		"sC": 0,
+		"sC": 3,
 		"tS": 0
 		},
 	"/source/script/lib/plyr/plyr.polyfilled.min.js.map": {
@@ -204,55 +196,55 @@
 		"miP": 0,
 		"oA": 2,
 		"oAP": "/build/source/script/lib/plyr/plyr.svg",
-		"oF": 2,
+		"oF": 3,
 		"opt": 0,
-		"plM": 3758088159,
+		"plM": 52780316221407,
 		"prP": 0
 		},
 	"/source/script/templates/accent_css.tpl": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
-		"oA": 2,
+		"oA": 0,
 		"oAP": "/build/source/script/templates/accent_css.tpl",
-		"oF": 3
+		"oF": 2
 		},
 	"/source/script/templates/apui.tpl": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
-		"oA": 2,
+		"oA": 0,
 		"oAP": "/build/source/script/templates/apui.tpl",
-		"oF": 3
+		"oF": 2
 		},
 	"/source/script/templates/full_plyr_controls.tpl": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
-		"oA": 2,
+		"oA": 0,
 		"oAP": "/build/source/script/templates/full_plyr_controls.tpl",
-		"oF": 3
+		"oF": 2
 		},
 	"/source/script/templates/single_plyr_controls.tpl": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
-		"oA": 2,
+		"oA": 0,
 		"oAP": "/build/source/script/templates/single_plyr_controls.tpl",
-		"oF": 3
+		"oF": 2
 		},
 	"/source/scss/audio.scss": {
-		"aP": 0,
-		"bl": 0,
+		"aP": 1,
+		"bl": 1,
 		"dP": 10,
 		"ec": 1,
 		"ft": 4,
-		"ma": 0,
+		"ma": 1,
 		"oA": 0,
 		"oAP": "/build/source/css/audio.css",
-		"oF": 0,
-		"oS": 0,
-		"sct": 1
+		"oF": 2,
+		"oS": 3,
+		"sct": 0
 		}
 	},
 "hooks": [
@@ -260,12 +252,11 @@
 "manualImportLinks": {
 	},
 "projectAttributes": {
-	"creationDate": 550087987,
+	"creationDate": 640898043.264974,
 	"displayValue": "audioplayer",
 	"displayValueWasSetByUser": 0,
-	"iconImageName": "meme-karate",
-	"iconImageWasSetByUser": 0,
-	"lastBuiltDate": 580932527.98784494
+	"iconImageName": "brackets-rose",
+	"iconImageWasSetByUser": 0
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
@@ -707,7 +698,7 @@
 	"esLintRules": {
 		"accessor-pairs": {
 			"active": 0,
-			"optionString": "{'setWithoutGet': true, 'getWithoutSet': false}"
+			"optionString": "{'setWithoutGet': true, 'getWithoutSet': false, 'enforceForClassMembers': true}"
 			},
 		"array-bracket-newline": {
 			"active": 0,
@@ -755,7 +746,7 @@
 			},
 		"camelcase": {
 			"active": 0,
-			"optionString": "{'properties': 'always'}"
+			"optionString": "{'properties': 'always', 'ignoreDestructuring': false, 'ignoreImports': false}"
 			},
 		"capitalized-comments": {
 			"active": 0,
@@ -783,7 +774,7 @@
 			},
 		"computed-property-spacing": {
 			"active": 0,
-			"optionString": "'never'"
+			"optionString": "'never', {'enforceForClassMembers': true}"
 			},
 		"consistent-return": {
 			"active": 0,
@@ -839,11 +830,11 @@
 			},
 		"func-name-matching": {
 			"active": 0,
-			"optionString": "'always', {'includeCommonJSModuleExports': false}"
+			"optionString": "'always', {'considerPropertyDescriptor': false, 'includeCommonJSModuleExports': false}"
 			},
 		"func-names": {
 			"active": 0,
-			"optionString": "'always'"
+			"optionString": "'always', {'generators': 'always'}"
 			},
 		"func-style": {
 			"active": 0,
@@ -887,7 +878,7 @@
 			},
 		"id-match": {
 			"active": 0,
-			"optionString": "'^[a-z]+([A-Z][a-z]+)*$', {'properties': false, 'onlyDeclarations': true}"
+			"optionString": "'^[a-z]+([A-Z][a-z]+)*$', {'properties': false, 'onlyDeclarations': true, 'ignoreDestructuring': false}"
 			},
 		"implicit-arrow-linebreak": {
 			"active": 0,
@@ -979,7 +970,7 @@
 			},
 		"new-parens": {
 			"active": 0,
-			"optionString": ""
+			"optionString": "'always'"
 			},
 		"newline-per-chained-call": {
 			"active": 0,
@@ -1031,7 +1022,7 @@
 			},
 		"no-confusing-arrow": {
 			"active": 0,
-			"optionString": "{'allowParens': false}"
+			"optionString": "{'allowParens': true}"
 			},
 		"no-console": {
 			"active": 1,
@@ -1139,7 +1130,7 @@
 			},
 		"no-extra-parens": {
 			"active": 0,
-			"optionString": "'all', {'conditionalAssign': false, 'returnAssign': false, 'nestedBinaryExpressions': false, 'ignoreJSX': 'none', 'enforceForArrowConditionals': false}"
+			"optionString": "'all', {'conditionalAssign': false, 'returnAssign': false, 'nestedBinaryExpressions': false, 'ignoreJSX': 'none', 'enforceForArrowConditionals': false, 'enforceForSequenceExpressions': false, 'enforceForNewInMemberExpressions': false}"
 			},
 		"no-extra-semi": {
 			"active": 1,
@@ -1191,7 +1182,7 @@
 			},
 		"no-invalid-this": {
 			"active": 0,
-			"optionString": ""
+			"optionString": "{'capIsConstructor': true}"
 			},
 		"no-irregular-whitespace": {
 			"active": 1,
@@ -1379,7 +1370,7 @@
 			},
 		"no-self-assign": {
 			"active": 1,
-			"optionString": "{'props': false}"
+			"optionString": "{'props': true}"
 			},
 		"no-self-compare": {
 			"active": 0,
@@ -1411,7 +1402,7 @@
 			},
 		"no-tabs": {
 			"active": 0,
-			"optionString": ""
+			"optionString": "{allowIndentationTabs: false}"
 			},
 		"no-template-curly-in-string": {
 			"active": 0,
@@ -1447,7 +1438,7 @@
 			},
 		"no-underscore-dangle": {
 			"active": 0,
-			"optionString": "{'allow': [], 'allowAfterThis': false, 'allowAfterSuper': false, 'enforceInMethodNames': false}"
+			"optionString": "{'allow': [], 'allowAfterThis': false, 'allowAfterSuper': false, 'allowAfterThisConstructor': false, 'enforceInMethodNames': false}"
 			},
 		"no-unexpected-multiline": {
 			"active": 1,
@@ -1471,7 +1462,7 @@
 			},
 		"no-unsafe-negation": {
 			"active": 1,
-			"optionString": ""
+			"optionString": "{'enforceForOrderingRelations': false}"
 			},
 		"no-unused-expressions": {
 			"active": 0,
@@ -1503,7 +1494,7 @@
 			},
 		"no-useless-computed-key": {
 			"active": 0,
-			"optionString": ""
+			"optionString": "{'enforceForClassMembers': false}"
 			},
 		"no-useless-concat": {
 			"active": 0,
@@ -1531,7 +1522,7 @@
 			},
 		"no-void": {
 			"active": 0,
-			"optionString": ""
+			"optionString": "{'allowAsStatement': false}"
 			},
 		"no-warning-comments": {
 			"active": 0,
@@ -1551,7 +1542,7 @@
 			},
 		"object-curly-newline": {
 			"active": 0,
-			"optionString": "{'ObjectExpression': {'multiline': true}, 'ObjectPattern': {'multiline': true}}"
+			"optionString": "{'ObjectExpression': {'multiline': true, 'consistent': true}, 'ObjectPattern': {'multiline': true, 'consistent': true}}"
 			},
 		"object-curly-spacing": {
 			"active": 0,
@@ -1691,7 +1682,7 @@
 			},
 		"sort-keys": {
 			"active": 0,
-			"optionString": "'asc', {'caseSensitive': true, 'natural': false}"
+			"optionString": "'asc', {'caseSensitive': true, 'natural': false, 'minKeys': 2}"
 			},
 		"sort-vars": {
 			"active": 0,
@@ -1747,7 +1738,7 @@
 			},
 		"use-isnan": {
 			"active": 1,
-			"optionString": ""
+			"optionString": "{'enforceForSwitchCase': true, 'enforceForIndexOf': false}"
 			},
 		"valid-jsdoc": {
 			"active": 0,
@@ -1782,7 +1773,7 @@
 	"externalServerAddress": "http://localhost:8888",
 	"gitIgnoreBuildFolder": 0,
 	"hideConfigFile": 0,
-	"jsCheckerReservedNamesString": "Modernizr,Plyr,ga",
+	"jsCheckerReservedNamesString": "Modernizr,ga,Plyr",
 	"jsHintFlags2": {
 		"asi": {
 			"active": 0,
@@ -2196,12 +2187,12 @@
 		"autoOutputPathRelativePath": "/min",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0,
+		"autoOutputPathStyle": 1,
 		"bundleFormat": 0,
-		"createSourceMap": 1,
+		"createSourceMap": 0,
 		"minifyOutput": 1,
 		"syntaxCheckerStyle": 3,
-		"transpilerStyle": 1
+		"transpilerStyle": 0
 		},
 	"languageDefaultsJSON": {
 		"autoOutputAction": 1,
@@ -2230,7 +2221,7 @@
 		"autoOutputPathRelativePath": "../css",
 		"autoOutputPathReplace1": "less",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 2,
+		"autoOutputPathStyle": 0,
 		"createSourceMap": 1,
 		"enableJavascript": 0,
 		"mathStyle": 0,
@@ -2297,17 +2288,17 @@
 	"languageDefaultsSASS": {
 		"autoOutputAction": 0,
 		"autoOutputPathFilenamePattern": "*.css",
-		"autoOutputPathRelativePath": "../css",
+		"autoOutputPathRelativePath": "source/css",
 		"autoOutputPathReplace1": "sass",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 2,
-		"compilerType": 1,
-		"createSourceMap": 0,
+		"autoOutputPathStyle": 1,
+		"compilerType": 0,
+		"createSourceMap": 1,
 		"decimalPrecision": 10,
 		"emitCharset": 1,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 0,
-		"shouldRunBless": 0
+		"outputStyle": 3,
+		"shouldRunAutoprefixer": 1,
+		"shouldRunBless": 1
 		},
 	"languageDefaultsSLIM": {
 		"autoOutputAction": 0,
@@ -2330,7 +2321,7 @@
 		"autoOutputPathRelativePath": "../css",
 		"autoOutputPathReplace1": "stylus",
 		"autoOutputPathReplace2": "css",
-		"autoOutputPathStyle": 2,
+		"autoOutputPathStyle": 0,
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"importCSS": 0,
@@ -2346,7 +2337,7 @@
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
-		"pluginMask": 3758088159
+		"pluginMask": 52780316221407
 		},
 	"languageDefaultsTS": {
 		"autoOutputAction": 0,
@@ -2354,7 +2345,7 @@
 		"autoOutputPathRelativePath": "/js",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 2,
+		"autoOutputPathStyle": 0,
 		"createDeclarationFile": 0,
 		"createSourceMap": 0,
 		"minifyOutput": 0,
@@ -2459,7 +2450,7 @@
 			"flagValue": -1
 			},
 		"dead_code": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"directives": {
@@ -2491,7 +2482,7 @@
 			"flagValue": -1
 			},
 		"hoist_funs": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"hoist_props": {
@@ -2535,7 +2526,7 @@
 			"flagValue": -1
 			},
 		"keep_fargs": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"keep_fnames": {
@@ -2663,7 +2654,7 @@
 			"flagValue": -1
 			},
 		"unused": {
-			"active": 0,
+			"active": 1,
 			"flagValue": -1
 			},
 		"warnings": {
@@ -2680,7 +2671,7 @@
 			}
 		},
 	"uglifyMangleNames": 1,
-	"uglifyReservedNamesString": "$",
+	"uglifyReservedNamesString": "$,exports,require",
 	"websiteRelativeRoot": "/build"
 	},
 "settingsFileVersion": "3"
