@@ -131,7 +131,6 @@ class APlayer {
             body.innerHTML += res;
             
             self._checkSupport();
-            self._setStartResumeListeners();
             self._expandDownloadBtnMenu();
             self.expandTracksToggle();
             self._setShowProfileListener();
@@ -211,9 +210,8 @@ class APlayer {
         if ( Modernizr.localstorage ) {
             
             let resumeBtn = self._selector( self.el.resumeBtn );
-            
-            const savedData = JSON.parse( window.localStorage.getItem( 'ap-player' ) );
-            
+            const savedData = JSON.parse( window.localStorage.getItem( self.reference.fileName ) );
+
             if ( savedData !== null ) {
                 
                 if ( savedData.track >= 1 || savedData.time > 0 ) {
@@ -339,6 +337,7 @@ class APlayer {
             
             self.setData();
             self._setupAudioPlayer();
+            self._setStartResumeListeners();
             
         } );
         
@@ -504,7 +503,7 @@ class APlayer {
                         
                             if ( Modernizr.localstorage ) {
                                 
-                                window.localStorage.setItem( 'ap-player', JSON.stringify( {track: num, time: seektime } ) );
+                                window.localStorage.setItem( self.reference.fileName, JSON.stringify( {track: num, time: seektime } ) );
                                 
                             }
                             
@@ -932,6 +931,7 @@ class APlayer {
                     
                         prevBtn.setAttribute( 'disabled', true );
                         prevBtn.classList.add( 'disabled' );
+
                     }
                     
                     if ( self.album.currentTrack >= totalTracks ) {
@@ -942,7 +942,6 @@ class APlayer {
                     }
                     
                     nextBtn.addEventListener( 'click', function() {
-                    
                     
                         if ( self.album.currentTrack < totalTracks ) {
                             
@@ -1098,7 +1097,7 @@ class APlayer {
             
             if ( Modernizr.localstorage ) {
                             
-                    window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
+                window.localStorage.setItem( self.reference.fileName, JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
                     
             }
             
@@ -1120,7 +1119,7 @@ class APlayer {
                 
                 if ( pTime >= 0.45 && pTime <= 0.5 ) {
                     
-                    window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
+                    window.localStorage.setItem( self.reference.fileName, JSON.stringify( {track: self.album.currentTrack, time: self.player.currentTime } ) );
                     
                     self.sendEventToGA( 'Playback', 'halfway', self.reference.fileName + ':track' + trackNum );
                     
@@ -1143,7 +1142,7 @@ class APlayer {
             
             if ( Modernizr.localstorage ) {
                             
-                window.localStorage.setItem( 'ap-player', JSON.stringify( {track: self.album.currentTrack, time: 0 } ) );
+                window.localStorage.setItem( self.reference.fileName, JSON.stringify( {track: self.album.currentTrack, time: 0 } ) );
                 
             }
             

@@ -25,12 +25,6 @@
 		"oAP": "/build/assets/album.xml",
 		"oF": 3
 		},
-	"/build": {
-		"ft": 65536,
-		"oA": 1,
-		"oAP": "/build/build",
-		"oF": 0
-		},
 	"/index.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -130,7 +124,7 @@
 		"ma": 0,
 		"mi": 1,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/modernizr-min.js",
+		"oAP": "/build/source/script/lib/modernizr.js",
 		"oF": 3,
 		"sC": 3,
 		"tS": 0
@@ -149,7 +143,7 @@
 		"ft": 16,
 		"ma": 0,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/plyr/plyr-min.css",
+		"oAP": "/build/source/script/lib/plyr/plyr.css",
 		"oF": 3,
 		"oS": 3
 		},
@@ -159,7 +153,7 @@
 		"ma": 0,
 		"mi": 1,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/plyr/plyr.min-min.js",
+		"oAP": "/build/source/script/lib/plyr/plyr.min.js",
 		"oF": 3,
 		"sC": 3,
 		"tS": 0
@@ -178,7 +172,7 @@
 		"ma": 0,
 		"mi": 1,
 		"oA": 2,
-		"oAP": "/build/source/script/lib/plyr/plyr.polyfilled.min-min.js",
+		"oAP": "/build/source/script/lib/plyr/plyr.polyfilled.min.js",
 		"oF": 3,
 		"sC": 3,
 		"tS": 0
@@ -256,7 +250,8 @@
 	"displayValue": "audioplayer",
 	"displayValueWasSetByUser": 0,
 	"iconImageName": "brackets-rose",
-	"iconImageWasSetByUser": 0
+	"iconImageWasSetByUser": 0,
+	"lastBuiltDate": 647448442.98823798
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
