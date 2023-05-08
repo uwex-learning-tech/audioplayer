@@ -1,5 +1,5 @@
 # Audio Player 
-_version 2.0.2_
+_version 2.0.4_
 
 ### Minimum Supported Web Browsers
 * Microsoft IE 11
@@ -10,7 +10,7 @@ _version 2.0.2_
 
 *Latest stable version is always recommended.*
 
-For documentation, please visit: https://media.uwex.edu/resources/documentation/audio-player-v2/
+For documentation, please visit: https://media.uwex.edu/staff-documentation/media-services-documentation/audio-player-v2
 
 ---
 ### Bug Reporting and Questions
@@ -23,6 +23,12 @@ For questions, please also post them under the "**[Issues](https://github.com/uw
 
 **Pending**
 _none_
+
+**2.0.4 (05/08/2023)**
+* Migrated to GA4
+
+**2.0.3 (07/08/2021)**
+* Fixed an issue where the resume button is not resuming the correct track
 
 **2.0.2 (06/26/2019)**
 * Fixed an issue where splash image is not loading
@@ -67,4 +73,4 @@ _none_
 
 ---
 ### License & Copyright
-(c) 2013 - 2020. [Learning Technology & Media](https://media.uwex.edu), and [University of Wisconsin Extended Campus](http://ce.uwex.edu/). All rights reserved.
+(c) 2013 - 2023. [Learning Technology & Media Services](https://media.uwex.edu) and [University of Wisconsin Extended Campus](http://uwex.wisconsin.edu). All rights reserved.

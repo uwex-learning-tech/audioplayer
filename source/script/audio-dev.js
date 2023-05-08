@@ -2,11 +2,11 @@
  * Audio Player
  *
  * @author: Ethan Lin
- * @url: https://github.com/oel-mediateam/audioplayer
- * @version: 2.0.2
+ * @url: https://github.com/uwex-learning-tech/audioplayer
+ * @version: 2.0.4
  *
  * @license: The MIT License (MIT)
- * Copyright (c) 2014 - 2019 Media Serivces
+ * Copyright (c) 2013 - 2023 Learning Technology & Media Services and University of Wisconsin Extended Campus. All rights reserved.
  *
  */
 
