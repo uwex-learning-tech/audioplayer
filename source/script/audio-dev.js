@@ -10,6 +10,8 @@
  *
  */
 
+import '../scss/audio.scss';
+
 'use strict';
 
 // audio player class

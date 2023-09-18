@@ -1,12 +1,16 @@
 /*
-AUDIO PLAYER
-@version: 2.0.0
-@author: Ethan Lin
-@url: https://github.com/oel-mediateam/audioplayer
-@license: The MIT License (MIT)
-Copyright 2018 UWEX CEOEL Media
-*/
+ * Audio Player
+ *
+ * @author: Ethan Lin
+ * @url: https://github.com/uwex-learning-tech/audioplayer
+ * @version: 2.0.4
+ *
+ * @license: The MIT License (MIT)
+ * Copyright (c) 2013 - 2023 Learning Technology & Media Services and University of Wisconsin Extended Campus. All rights reserved.
+ *
+ */
 
+@use 'sass:math';
 
 /* IMPORTS
 --------------------------------------------------------------------------------- */
@@ -28,7 +32,7 @@ $error-red: #d43131;
 --------------------------------------------------------------------------------- */
 
 @function rem( $px, $base: $font-size ) {
-    @return ( $px / $base ) * 1rem;
+    @return ( math.div( $px , $base ) ) * 1rem;
 }
 
 @mixin nested-reset {
@@ -163,7 +167,7 @@ html {
             position: absolute;
             font-size: rem( 12px );
             text-align: center;
-            padding: rem( $gutter / 4 );
+            padding: rem( math.div( $gutter, 4 ) );
             width: 100%;
             min-height: rem( 20px );
             background-color: rgb( 255, 242, 162 );
@@ -364,14 +368,14 @@ html {
             min-width: rem( 280px );
             width: 80%;
             max-height: 80%;
-            border-radius: rem( $gutter / 3);
+            border-radius: rem( math.div( $gutter, 3 ) );
             background-color: rgba( 255, 255, 255, 0.55 );
             
             .title {
                 font-weight: bold;
                 font-size: rem( 24px );
                 line-height: rem( 28px );
-                margin-bottom: rem( $gutter / 2 );
+                margin-bottom: rem( math.div( $gutter, 2 ) );
             }
             
             .subtitle {
@@ -394,12 +398,12 @@ html {
                     background-color: $accent;
                     color: #fff;
                     width: 100%;
-                    margin-top: rem( $gutter / 2 );
+                    margin-top: rem( math.div( $gutter, 2 ) );
                     font-size: rem( 18px );
                     line-height: 0;
                     height: rem( 40px );
                     text-transform: uppercase;
-                    border-radius: rem( $gutter / 3);
+                    border-radius: rem( math.div( $gutter, 3 ) );
                 }
                 
                 .btn:first-child {
@@ -444,7 +448,7 @@ html {
                             font-size: rem( 14px );
                             color: $accent;
                             text-decoration: none;
-                            padding: rem( $gutter / 2 ) rem( $gutter );
+                            padding: rem( math.div( $gutter, 2 ) ) rem( $gutter );
                         }
                         
                         a:hover {
@@ -533,7 +537,7 @@ html {
                     position: absolute;
                     display: flex;
                     align-items: center;
-                    padding: rem( $gutter / 2 );
+                    padding: rem( math.div( $gutter, 2 ) );
                     width: 100%;
                     height: 100%;
                     top: 0;
@@ -647,7 +651,7 @@ html {
                     span {
                         display: inline-block;
                         max-width: 81%;
-                        margin-left: rem( $gutter / 3 );
+                        margin-left: rem( math.div( $gutter, 3 ) );
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
@@ -691,7 +695,7 @@ html {
                             align-items: center;
                             width: 100%;
                             height: rem( 40px );
-                            padding: rem( $gutter / 4 ) rem( $gutter );
+                            padding: rem( math.div( $gutter, 4 ) ) rem( $gutter );
                             color: #000;
                             text-decoration: none;
                             border-bottom: rem( 1px ) solid rgba(226, 226, 226, 0.9);
@@ -710,7 +714,7 @@ html {
                                 width: rem( 20px );
                                 min-width: rem( 20px );
                                 text-align: right;
-                                margin-right: rem( $gutter / 3 );
+                                margin-right: rem( math.div( $gutter, 3 ) );
                             }
                             
                             .track-title-wrapper {
@@ -877,7 +881,7 @@ html {
                         }
                         
                         .plyr__tooltip {
-                            padding: rem( $gutter / 3 );
+                            padding: rem( math.div( $gutter, 3 ) );
                             font-size: rem( 12px );
                         }
                         
@@ -893,7 +897,7 @@ html {
                             
                             .plyr__time--current {
                                 font-size: rem( 14px );
-                                margin-right: rem( $gutter / 2 );
+                                margin-right: rem( math.div( $gutter, 2 ) );
                             }
                             
                             .plyr__progress {
@@ -918,7 +922,7 @@ html {
                             
                             .plyr__time--duration {
                                 font-size: rem( 14px );
-                                margin-left: rem( $gutter / 2 );
+                                margin-left: rem( math.div( $gutter, 2 ) );
                             }
                             
                         }
@@ -1115,8 +1119,8 @@ html {
             box-shadow: 0 0 rem(6px) 0 #333;
             
             #overlay-close-btn {
-                top: rem( $gutter / 2 );
-                right: rem( $gutter /2 );
+                top: rem( math.div( $gutter, 2 ) );
+                right: rem( math.div( $gutter, 2 ) );
             }
             
             .content {
@@ -1131,7 +1135,7 @@ html {
                     
                     li {
 
-                        margin-bottom: rem( $gutter / 3 );
+                        margin-bottom: rem( math.div( $gutter, 3 ) );
                         width: 100%;
                         background-color: $accent;
                         border-radius: rem( 3px );
@@ -1288,7 +1292,7 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
             .cover-info {
                 
                 padding: rem( $gutter * 2 );
-                border-radius: rem( $gutter / 2 );
+                border-radius: rem( math.div( $gutter, 2 ) );
                 
                 .title {
                     font-size: rem( 48px );
@@ -1310,7 +1314,7 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
                     .btn {
                         font-size: rem( 40px );
                         height: rem( 80px );
-                        border-radius: rem( $gutter / 2 );
+                        border-radius: rem( math.div( $gutter, 2 ) );
                     }
                     
                     .btn:first-child {
@@ -1360,7 +1364,7 @@ and ( max-device-width : 736px ) and ( orientation : portrait ) {
             .head {
             
                 height: rem( 214px );
-                padding-bottom: rem( $gutter / 2 );
+                padding-bottom: rem( math.div( $gutter, 2 ) );
                 
                 .track-img {
                     

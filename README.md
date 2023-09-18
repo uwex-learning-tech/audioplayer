@@ -2,7 +2,6 @@
 _version 2.0.4_
 
 ### Minimum Supported Web Browsers
-* Microsoft IE 11
 * Microsoft Edge 17+
 * Mozilla Firefox 61+
 * Google Chrome 49+
